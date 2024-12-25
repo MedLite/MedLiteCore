@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true">
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <springProfile name="dev">
+        <logger name="org.apache" level="WARN"/>
+        <logger name="com.MangmentRessources.MangRess" level="DEBUG"/>
+        <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+        <logger name="org.bson" level="WARN"/>
+        <logger name="org.hibernate.validator" level="OFF"/>
+        <logger name="org.hibernate" level="OFF"/>
+        <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
+        <logger name="org.springframework" level="OFF"/>
+        <logger name="org.springframework.web" level="OFF"/>
+        <logger name="sun.net" level="OFF"/>
+        <logger name="org.hibernate.type.BasicTypeRegistry" level="INFO"/>
+        <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="INFO"/>
+        <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
+        <logger name="com.netflix.hystrix" level="INFO"/>
+        <logger name="org.hibernate.stat" level="OFF"/> 
+        <logger name="org.springframework.orm.jpa" level="OFF"/>
+        <logger name="org.springframework.transaction" level="OFF"/>
+        <logger name="org.springframework.batch.core" level="OFF"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+       <logger name="net.bull.javamelody.monitoring.http.HttpMonitoring" level="OFF" /> 
+
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.DevPointSystem.MedLite.MedLiteCoreApplication" level="INFO"/>
+        <!--<logger name="com.csys.csysstarter.gracefulshutdown" level="INFO"/>-->
+<!--        <root level="ERROR">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+          <logger name="net.bull.javamelody.monitoring.http.HttpMonitoring" level="OFF" />
+            <logger name="net.bull.javamelody.monitoring.http.HttpMonitoring" level="OFF" /> -->
+    </springProfile>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+</configuration>
