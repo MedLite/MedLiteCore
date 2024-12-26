@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
@@ -35,6 +36,11 @@ public class MedecinDTO {
     private SpecialiteMedecinDTO specialiteMedecinDTO;
 
     private Integer codeSpecialiteMedecin;
+    
+        private PrestationDTO prestationConsultationDTO;
+ 
+    private Integer codePrestationConsultation;
+    
 
     public MedecinDTO() {
     }
@@ -128,6 +134,24 @@ public class MedecinDTO {
     public void setCodeSpecialiteMedecin(Integer codeSpecialiteMedecin) {
         this.codeSpecialiteMedecin = codeSpecialiteMedecin;
     }
+
+    public PrestationDTO getPrestationConsultationDTO() {
+        return prestationConsultationDTO;
+    }
+
+    public void setPrestationConsultationDTO(PrestationDTO prestationConsultationDTO) {
+        this.prestationConsultationDTO = prestationConsultationDTO;
+    }
+
+    public Integer getCodePrestationConsultation() {
+        return codePrestationConsultation;
+    }
+
+    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
+        this.codePrestationConsultation = codePrestationConsultation;
+    }
+    
+    
     
     
 

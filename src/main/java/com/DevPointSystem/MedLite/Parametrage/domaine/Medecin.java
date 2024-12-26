@@ -76,6 +76,14 @@ public class Medecin {
     @Column(name = "Code_Specialite", updatable = false, insertable = false, nullable = false)
     private Integer codeSpecialiteMedecin;
 
+    @JoinColumn(name = "Code_Prestation_Consultation", referencedColumnName = "Code", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Prestation prestationConsultation;
+
+    @Column(name = "Code_Prestation_Consultation", updatable = false, insertable = false, nullable = false)
+    private Integer codePrestationConsultation;
+
     public Medecin() {
     }
 
@@ -166,5 +174,23 @@ public class Medecin {
     public void setCodeSpecialiteMedecin(Integer codeSpecialiteMedecin) {
         this.codeSpecialiteMedecin = codeSpecialiteMedecin;
     }
+
+    public Prestation getPrestationConsultation() {
+        return prestationConsultation;
+    }
+
+    public void setPrestationConsultation(Prestation prestationConsultation) {
+        this.prestationConsultation = prestationConsultation;
+    }
+
+    public Integer getCodePrestationConsultation() {
+        return codePrestationConsultation;
+    }
+
+    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
+        this.codePrestationConsultation = codePrestationConsultation;
+    }
+    
+    
 
 }

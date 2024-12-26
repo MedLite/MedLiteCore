@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MedecinFactory {
-     public static Medecin createMedecinByCode(int code) {
+
+    public static Medecin createMedecinByCode(int code) {
         Medecin domaine = new Medecin();
         domaine.setCode(code);
         return domaine;
@@ -44,6 +45,11 @@ public class MedecinFactory {
                 domaine.setTypeIntervenant(TypeIntervenantFactory.createTypeIntervenantByCode(dto.getCodeTypeIntervenant()));
             }
 
+            domaine.setCodePrestationConsultation(dto.getCodePrestationConsultation());
+            if (domaine.getCodePrestationConsultation() != null) {
+                domaine.setPrestationConsultation(PrestationFactory.createPrestationByCode(dto.getCodePrestationConsultation()));
+            }
+
             return domaine;
         } else {
             return null;
@@ -66,6 +72,9 @@ public class MedecinFactory {
 
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
+
+            dto.setPrestationConsultationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestationConsultation()));
+            dto.setCodePrestationConsultation(domaine.getCodePrestationConsultation());
 
             dto.setSpecialiteMedecinDTO(SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine.getSpecialiteMedecin()));
             dto.setCodeSpecialiteMedecin(domaine.getCodeSpecialiteMedecin());

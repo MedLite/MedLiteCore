@@ -78,18 +78,18 @@ public class PrestationRessource {
         this.accessUserService = accessUserService;
     }
 
-    @GetMapping("alimentation_caisse/{code}")
+    @GetMapping("prestation/{code}")
     public ResponseEntity<PrestationDTO> getPrestationByCode(@PathVariable Integer code) {
         PrestationDTO dTO = prestationService.findOne(code);
         return ResponseEntity.ok().body(dTO);
     }
 
-    @GetMapping("alimentation_caisse/all")
+    @GetMapping("prestation/all")
     public ResponseEntity<List<PrestationDTO>> getAllPrestation() {
         return ResponseEntity.ok().body(prestationService.findAllPrestation());
     }
  
-    @PostMapping("alimentation_caisse")
+    @PostMapping("prestation")
     public ResponseEntity<PrestationDTO> postPrestation(@Valid @RequestBody PrestationDTO dTO, BindingResult bindingResult) throws URISyntaxException, MethodArgumentNotValidException {
         PrestationDTO result = prestationService.save(dTO);
         return ResponseEntity.created(new URI("/api/parametrage/" + result.getCode())).body(result);
@@ -100,13 +100,13 @@ public class PrestationRessource {
 //        PrestationDTO result = prestationService.update(dto);
 //        return ResponseEntity.ok().body(result);
 //    }
-    @PutMapping("alimentation_caisse/update")
+    @PutMapping("prestation/update")
     public ResponseEntity<PrestationDTO> updatePrestation(@Valid @RequestBody PrestationDTO dTO, BindingResult bindingResult) throws MethodArgumentNotValidException {
         PrestationDTO result = prestationService.updateNewWithFlush(dTO);
         return ResponseEntity.ok().body(result);
     }
  
-    @DeleteMapping("alimentation_caisse/delete/{code}")
+    @DeleteMapping("prestation/delete/{code}")
     public ResponseEntity<Prestation> deletePrestation(@PathVariable("Code") Integer code) {
         prestationService.deletePrestation(code);
         return new ResponseEntity<>(HttpStatus.OK);
