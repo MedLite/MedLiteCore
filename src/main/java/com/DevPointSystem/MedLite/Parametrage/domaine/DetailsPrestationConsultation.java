@@ -35,7 +35,7 @@ public class DetailsPrestationConsultation {
     protected DetailsPrestationConsultationPK detailsPrestationConsultationPK;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Fk_Prestation_Consultation", referencedColumnName = "Code", nullable = false) 
+    @JoinColumn(name = "Fk_Prestation_Consultation", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false) // Fix: added insertable/updatable = false
     private PrestationConsultation codePrestationConsultationFK;
 
     @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
