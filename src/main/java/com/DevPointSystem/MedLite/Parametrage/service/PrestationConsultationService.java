@@ -59,7 +59,7 @@ public class PrestationConsultationService {
     public PrestationConsultationDTO updateNewWithFlush(PrestationConsultationDTO dto) {
         PrestationConsultation inBase = prestationConsultationRepo.findByCode(dto.getCode());
         Preconditions.checkArgument(inBase != null, "error.PrestationConsultationNotFound");
-        detailsPrestationConsultationRepo.deleteByFkPrestationConsultation(dto.getCode());
+        detailsPrestationConsultationRepo.deleteByCodePrestConsult(dto.getCode());
         inBase = PrestationConsultationFactory.prestationConsultationDTOToPrestationConsultation(dto, inBase);
         inBase = prestationConsultationRepo.save(inBase);
         PrestationConsultationDTO resultDTO = PrestationConsultationFactory.prestationConsultationToPrestationConsultationDTO(inBase);
@@ -73,7 +73,7 @@ public class PrestationConsultationService {
 
     @Transactional(readOnly = true)
     public Collection<DetailsPrestationConsultationDTO> findOneWithDetails(Integer code) {
-        Collection<DetailsPrestationConsultation> domaine = detailsPrestationConsultationRepo.findByDetailsPrestationConsultationPK_fkPrestationConsultation(code);
+        Collection<DetailsPrestationConsultation> domaine = detailsPrestationConsultationRepo.findByDetailsPrestationConsultationPK_codePrestConsult(code);
         return DetailsPrestationConsultationFactory.detailsPrestationConsultationTodetailsPrestationConsultationDTOCollections(domaine);
     }
 }

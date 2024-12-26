@@ -61,8 +61,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwtToken = null;
 
-        if (requestUri.equals("/api/auth/login")) {
+        if (requestUri.equals("/api/auth/login")  || requestUri.equals("/api/auth/signup")) {
             chain.doFilter(request, response);
+            System.out.println("com.DevPointS" + requestUri);
             return; // Stop processing the request
         } else {
             if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
@@ -159,7 +160,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("error", status.value());
         errorResponse.put("description", message);
-
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(errorResponse));
     }

@@ -20,8 +20,8 @@ public class DetailsPrestationConsultationFactory {
         if (domaine != null) {
             DetailsPrestationConsultationDTO dto = new DetailsPrestationConsultationDTO();
 
-            dto.setFkPrestationConsultation(domaine.getDetailsPrestationConsultationPK().getCodePrestationConsultation());
-            dto.setFkPrestationConsultation(domaine.getPrestationConsultation().getCode());
+            dto.setCodePrestConsult(domaine.getDetailsPrestationConsultationPK().getCodePrestConsult());
+            dto.setCodePrestConsult(domaine.getPrestationConsultation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
             dto.setMontant(domaine.getMontant());
@@ -52,8 +52,8 @@ public class DetailsPrestationConsultationFactory {
         if (domaine != null) {
             DetailsPrestationConsultationDTO dto = new DetailsPrestationConsultationDTO();
 
-            dto.setFkPrestationConsultation(domaine.getDetailsPrestationConsultationPK().getCodePrestationConsultation());
-            dto.setFkPrestationConsultation(domaine.getPrestationConsultation().getCode());
+            dto.setCodePrestConsult(domaine.getDetailsPrestationConsultationPK().getCodePrestationConsultation());
+            dto.setCodePrestConsult(domaine.getPrestationConsultation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
             dto.setMontant(domaine.getMontant()); 

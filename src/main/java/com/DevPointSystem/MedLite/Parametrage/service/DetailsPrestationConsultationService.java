@@ -22,7 +22,7 @@ public class DetailsPrestationConsultationService {
     
     
       public Boolean deleteByCodePrestationConsultation(Integer codePrestationConsultation) {
-        detailsPrestationConsultationRepo.deleteByFkPrestationConsultation(codePrestationConsultation);
+        detailsPrestationConsultationRepo.deleteByCodePrestConsult(codePrestationConsultation);
         return true;
     }
 }

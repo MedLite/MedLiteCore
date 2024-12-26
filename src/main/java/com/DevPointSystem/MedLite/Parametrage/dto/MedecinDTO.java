@@ -39,7 +39,7 @@ public class MedecinDTO {
     
         private PrestationDTO prestationConsultationDTO;
  
-    private Integer codePrestationConsultation;
+    private Integer codePrestationConsult;
     
 
     public MedecinDTO() {
@@ -143,14 +143,15 @@ public class MedecinDTO {
         this.prestationConsultationDTO = prestationConsultationDTO;
     }
 
-    public Integer getCodePrestationConsultation() {
-        return codePrestationConsultation;
+    public Integer getCodePrestationConsult() {
+        return codePrestationConsult;
     }
 
-    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
-        this.codePrestationConsultation = codePrestationConsultation;
+    public void setCodePrestationConsult(Integer codePrestationConsult) {
+        this.codePrestationConsult = codePrestationConsult;
     }
-    
+
+   
     
     
     

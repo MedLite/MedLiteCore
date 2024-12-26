@@ -4,7 +4,6 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.repository;
 
-import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestation;
 import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestationConsultation;
 import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestationConsultationPK; 
 import java.util.Collection;
@@ -21,10 +20,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DetailsPrestationConsultationRepo extends JpaRepository<DetailsPrestationConsultation, DetailsPrestationConsultationPK> {
 
-    Collection<DetailsPrestationConsultation> findByDetailsPrestationConsultationPK_fkPrestationConsultation(Integer fkPrestationConsultation);
+    Collection<DetailsPrestationConsultation> findByDetailsPrestationConsultationPK_codePrestConsult(Integer codePrestConsult);
 
     @Modifying
-    @Query("delete from DetailsPrestationConsultation det where det.detailsPrestationConsultationPK.fkPrestationConsultation=?1 ")
-    public void deleteByFkPrestationConsultation(Integer fkPrestationConsultation);
+    @Query("delete from DetailsPrestationConsultation det where det.detailsPrestationConsultationPK.codePrestConsult=?1 ")
+    public void deleteByCodePrestConsult(Integer codePrestConsult);
 
 }

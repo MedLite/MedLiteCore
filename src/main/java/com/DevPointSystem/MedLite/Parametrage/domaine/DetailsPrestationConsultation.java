@@ -34,10 +34,9 @@ public class DetailsPrestationConsultation {
     @EmbeddedId
     protected DetailsPrestationConsultationPK detailsPrestationConsultationPK;
 
-    @MapsId("codePrestationConsultation")
-    @JoinColumn(name = "Code_Prestation_Consultation", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false)
-    private PrestationConsultation fkPrestationConsultation;
+    @JoinColumn(name = "Fk_Prestation_Consultation", referencedColumnName = "Code", nullable = false) 
+    private PrestationConsultation codePrestationConsultationFK;
 
     @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
     private String usercreate;
@@ -77,12 +76,12 @@ public class DetailsPrestationConsultation {
         this.detailsPrestationConsultationPK = detailsPrestationConsultationPK;
     }
 
-    public PrestationConsultation getFkPrestationConsultation() {
-        return fkPrestationConsultation;
+    public PrestationConsultation getCodePrestationConsultationFK() {
+        return codePrestationConsultationFK;
     }
 
-    public void setFkPrestationConsultation(PrestationConsultation fkPrestationConsultation) {
-        this.fkPrestationConsultation = fkPrestationConsultation;
+    public void setCodePrestationConsultationFK(PrestationConsultation codePrestationConsultationFK) {
+        this.codePrestationConsultationFK = codePrestationConsultationFK;
     }
 
     public String getUsercreate() {
@@ -140,7 +139,5 @@ public class DetailsPrestationConsultation {
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
-    
-    
 
 }

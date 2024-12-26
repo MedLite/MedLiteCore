@@ -8,6 +8,8 @@ import com.DevPointSystem.MedLite.Authentification.domaine.User;
 import com.DevPointSystem.MedLite.Authentification.dto.AccessUserDTO;
 import com.DevPointSystem.MedLite.Authentification.dto.LoginResponse;
 import com.DevPointSystem.MedLite.Authentification.dto.LoginUserDto;
+import com.DevPointSystem.MedLite.Authentification.dto.RegisterUserDto;
+import com.DevPointSystem.MedLite.Authentification.repository.UserRepository;
 import com.DevPointSystem.MedLite.Authentification.service.AccessUserService;
 import com.DevPointSystem.MedLite.Authentification.service.AuthenticationService;
 import com.DevPointSystem.MedLite.Authentification.service.JwtService;
@@ -27,7 +29,11 @@ import org.springframework.http.MediaType;
  */
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -49,31 +55,57 @@ public class AuthenticationController {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final AccessUserService accessUserService;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
 
-    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService
-            , AccessUserService accessUserService
-    ) {
+    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService, AccessUserService accessUserService, AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
         this.accessUserService = accessUserService;
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
-//    @PostMapping("/signup")
-//    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-//        User registeredUser = authenticationService.signup(registerUserDto);
+    @PostMapping("/signup")
+    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
+        
+        User registeredUser = authenticationService.signup(registerUserDto);
+
+        return ResponseEntity.ok(registeredUser);
+    }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+//        User authenticatedUser = authenticationService.authenticate(loginUserDto);
 //
-//        return ResponseEntity.ok(registeredUser);
+//        String jwtToken = jwtService.generateToken(authenticatedUser); 
+//        LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime()); 
+//        return ResponseEntity.ok(loginResponse);
 //    }
+    @PostMapping("/login")
+    public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto) {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginUserDto.getUserName(),
+                            loginUserDto.getPassword()
+                    )
+            );
 
-    @PostMapping("login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
+            User authenticatedUser = userRepository.findByUserName(loginUserDto.getUserName())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found")); // More specific exception
 
-        String jwtToken = jwtService.generateToken(authenticatedUser); 
-        LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime()); 
-        return ResponseEntity.ok(loginResponse);
+            String jwtToken = jwtService.generateToken(authenticatedUser);
+            LoginResponse loginResponse = new LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.getExpirationTime());
+            return ResponseEntity.ok(loginResponse);
+
+        } catch (AuthenticationException e) { // Catch authentication failures
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginError("Invalid username or password",HttpStatus.UNAUTHORIZED)); // Return error response
+        }
     }
-   
+
+    record LoginError(String description , HttpStatus status) {
+    }
 
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
@@ -112,12 +144,12 @@ public class AuthenticationController {
     }
 
     @GetMapping("/accessUser/all")
-    public ResponseEntity<List<AccessUserDTO>> getAllAccessUserWithOutPasswrod() { 
+    public ResponseEntity<List<AccessUserDTO>> getAllAccessUserWithOutPasswrod() {
         return ResponseEntity.ok().body(accessUserService.findAllAcessUserWithOutPassword());
     }
 
     @GetMapping("/accessUser/allWithPass")
-    public ResponseEntity<List<AccessUserDTO>> getAllAccessUser() { 
+    public ResponseEntity<List<AccessUserDTO>> getAllAccessUser() {
         return ResponseEntity.ok().body(accessUserService.findAllAcessUser());
     }
 

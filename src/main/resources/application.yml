@@ -78,7 +78,7 @@ spring:
 lang:
     secondary: ar
 server:
-    port: 9090
+    port: 9099
     contextPath: /MedLite-core
     error:
         include-stacktrace: ON_PARAM

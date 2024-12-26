@@ -16,7 +16,7 @@ import java.util.List;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
-@Table(name = "users", schema = "access")
+@Table(name = "Users", schema = "access")
 @Entity
 @Audited
 @AuditTable("users_AUD")

@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class DetailsPrestationConsultationDTO {
 
-    private int fkPrestationConsultation;
+    private int codePrestConsult;
     private String codeSaisieFKPrestationConsultation;
 
     @NotNull
@@ -43,14 +43,16 @@ public class DetailsPrestationConsultationDTO {
     public DetailsPrestationConsultationDTO() {
     }
 
-    public int getFkPrestationConsultation() {
-        return fkPrestationConsultation;
+    public int getCodePrestConsult() {
+        return codePrestConsult;
     }
 
-    public void setFkPrestationConsultation(int fkPrestationConsultation) {
-        this.fkPrestationConsultation = fkPrestationConsultation;
+    public void setCodePrestConsult(int codePrestConsult) {
+        this.codePrestConsult = codePrestConsult;
     }
 
+ 
+   
     public String getCodeSaisieFKPrestationConsultation() {
         return codeSaisieFKPrestationConsultation;
     }

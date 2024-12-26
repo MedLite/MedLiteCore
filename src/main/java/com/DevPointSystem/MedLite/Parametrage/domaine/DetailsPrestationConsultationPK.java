@@ -16,10 +16,9 @@ import jakarta.validation.constraints.NotNull;
 @Embeddable
 public class DetailsPrestationConsultationPK {
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Code_Prestation_Consultation", nullable = false)
-    private int fkPrestationConsultation;
+      @Column(name = "Fk_Prestation_Consultation", nullable = false)
+    private int codePrestConsult; // This field MUST match the @MapsId value
+
 
     @Basic(optional = false)
     @NotNull
@@ -34,13 +33,17 @@ public class DetailsPrestationConsultationPK {
     public DetailsPrestationConsultationPK() {
     }
 
-    public int getFkPrestationConsultation() {
-        return fkPrestationConsultation;
+    public int getCodePrestConsult() {
+        return codePrestConsult;
     }
 
-    public void setFkPrestationConsultation(int fkPrestationConsultation) {
-        this.fkPrestationConsultation = fkPrestationConsultation;
+    public void setCodePrestConsult(int codePrestConsult) {
+        this.codePrestConsult = codePrestConsult;
     }
+
+ 
+    
+   
 
     public int getCodeTypeIntervenant() {
         return codeTypeIntervenant;

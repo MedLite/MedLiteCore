@@ -30,30 +30,44 @@ import org.hibernate.envers.Audited;
  *
  * @author Administrator
  */
-
 @Entity
 @Table(name = "Prestation_Consultation", schema = "param")
 @Audited
 @AuditTable("Prestation_Consultation_AUD")
 public class PrestationConsultation {
-    
-     @Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Code")
     private Integer code;
- 
+
     @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
     private String userCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
     private Date dateCreate;
- 
 
     @Column(name = "Montant", columnDefinition = ("decimal(18,3)"), nullable = false)
     private BigDecimal montant;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "prestationConsultation")
+    @JoinColumn(name = "Code_Medecin", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Medecin medecin;
+
+    @Column(name = "Code_Medecin", insertable = false, updatable = false)
+    private Integer codeMedecin;
+
+    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Prestation prestationConsultation;
+
+    @Column(name = "Code_Prestation", insertable = false, updatable = false)
+    private Integer codePrestationConsultation;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codePrestationConsultationFK") // Changed to codePrestationConsultationFK
     private Collection<DetailsPrestationConsultation> detailsPrestationConsultations;
 
     public PrestationConsultation() {
@@ -99,7 +113,36 @@ public class PrestationConsultation {
         this.detailsPrestationConsultations = detailsPrestationConsultations;
     }
 
-    
-    
-    
+    public Medecin getMedecin() {
+        return medecin;
+    }
+
+    public void setMedecin(Medecin medecin) {
+        this.medecin = medecin;
+    }
+
+    public Integer getCodeMedecin() {
+        return codeMedecin;
+    }
+
+    public void setCodeMedecin(Integer codeMedecin) {
+        this.codeMedecin = codeMedecin;
+    }
+
+    public Prestation getPrestationConsultation() {
+        return prestationConsultation;
+    }
+
+    public void setPrestationConsultation(Prestation prestationConsultation) {
+        this.prestationConsultation = prestationConsultation;
+    }
+
+    public Integer getCodePrestationConsultation() {
+        return codePrestationConsultation;
+    }
+
+    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
+        this.codePrestationConsultation = codePrestationConsultation;
+    }
+
 }

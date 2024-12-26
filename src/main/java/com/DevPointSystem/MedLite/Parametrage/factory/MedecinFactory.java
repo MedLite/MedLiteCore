@@ -45,10 +45,10 @@ public class MedecinFactory {
                 domaine.setTypeIntervenant(TypeIntervenantFactory.createTypeIntervenantByCode(dto.getCodeTypeIntervenant()));
             }
 
-            domaine.setCodePrestationConsultation(dto.getCodePrestationConsultation());
-            if (domaine.getCodePrestationConsultation() != null) {
-                domaine.setPrestationConsultation(PrestationFactory.createPrestationByCode(dto.getCodePrestationConsultation()));
-            }
+            domaine.setCodePrestationConsult(dto.getCodePrestationConsult());
+//            if (domaine.getCodePrestationConsult() != null) {
+//                domaine.setPrestationConsult(PrestationFactory.createPrestationByCode(dto.getCodePrestationConsult()));
+//            }
 
             return domaine;
         } else {
@@ -73,8 +73,8 @@ public class MedecinFactory {
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
 
-            dto.setPrestationConsultationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestationConsultation()));
-            dto.setCodePrestationConsultation(domaine.getCodePrestationConsultation());
+//            dto.setPrestationConsultationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestationConsult()));
+            dto.setCodePrestationConsult(domaine.getCodePrestationConsult());
 
             dto.setSpecialiteMedecinDTO(SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine.getSpecialiteMedecin()));
             dto.setCodeSpecialiteMedecin(domaine.getCodeSpecialiteMedecin());

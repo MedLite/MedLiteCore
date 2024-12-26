@@ -76,13 +76,13 @@ public class Medecin {
     @Column(name = "Code_Specialite", updatable = false, insertable = false, nullable = false)
     private Integer codeSpecialiteMedecin;
 
-    @JoinColumn(name = "Code_Prestation_Consultation", referencedColumnName = "Code", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Prestation prestationConsultation;
+//    @JoinColumn(name = "Code_Prestation_Consult", referencedColumnName = "Code", nullable = false)
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @JsonBackReference
+//    private Prestation prestationConsult;
 
-    @Column(name = "Code_Prestation_Consultation", updatable = false, insertable = false, nullable = false)
-    private Integer codePrestationConsultation;
+    @Column(name = "Code_Prestation_Consult")
+    private Integer codePrestationConsult;
 
     public Medecin() {
     }
@@ -175,21 +175,22 @@ public class Medecin {
         this.codeSpecialiteMedecin = codeSpecialiteMedecin;
     }
 
-    public Prestation getPrestationConsultation() {
-        return prestationConsultation;
+//    public Prestation getPrestationConsult() {
+//        return prestationConsult;
+//    }
+//
+//    public void setPrestationConsult(Prestation prestationConsult) {
+//        this.prestationConsult = prestationConsult;
+//    }
+
+    public Integer getCodePrestationConsult() {
+        return codePrestationConsult;
     }
 
-    public void setPrestationConsultation(Prestation prestationConsultation) {
-        this.prestationConsultation = prestationConsultation;
+    public void setCodePrestationConsult(Integer codePrestationConsult) {
+        this.codePrestationConsult = codePrestationConsult;
     }
 
-    public Integer getCodePrestationConsultation() {
-        return codePrestationConsultation;
-    }
-
-    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
-        this.codePrestationConsultation = codePrestationConsultation;
-    }
     
     
 

@@ -4,6 +4,9 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Medecin;
+import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
+import jakarta.persistence.Column;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -23,6 +26,14 @@ public class PrestationConsultationDTO {
     private BigDecimal montant;
 
     private Collection<DetailsPrestationConsultationDTO> detailsPrestationConsultationDTOs;
+
+    private MedecinDTO medecinDTO;
+
+    private Integer codeMedecin;
+
+    private PrestationDTO prestationConsultationDTO;
+
+    private Integer codePrestationConsultation;
 
     public PrestationConsultationDTO() {
     }
@@ -67,6 +78,37 @@ public class PrestationConsultationDTO {
         this.detailsPrestationConsultationDTOs = detailsPrestationConsultationDTOs;
     }
 
-   
+    public MedecinDTO getMedecinDTO() {
+        return medecinDTO;
+    }
+
+    public void setMedecinDTO(MedecinDTO medecinDTO) {
+        this.medecinDTO = medecinDTO;
+    }
+
+    public Integer getCodeMedecin() {
+        return codeMedecin;
+    }
+
+    public void setCodeMedecin(Integer codeMedecin) {
+        this.codeMedecin = codeMedecin;
+    }
+
+    public PrestationDTO getPrestationConsultationDTO() {
+        return prestationConsultationDTO;
+    }
+
+    public void setPrestationConsultationDTO(PrestationDTO prestationConsultationDTO) {
+        this.prestationConsultationDTO = prestationConsultationDTO;
+    }
+
+    public Integer getCodePrestationConsultation() {
+        return codePrestationConsultation;
+    }
+
+    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
+        this.codePrestationConsultation = codePrestationConsultation;
+    }
+    
 
 }
