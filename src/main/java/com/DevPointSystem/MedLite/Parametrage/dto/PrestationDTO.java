@@ -139,7 +139,7 @@ public class PrestationDTO {
     }
 
     public Collection<DetailsPrestationDTO> getDetailsPrestationDTOs() {
-        return detailsPrestationDTOs;
+            return detailsPrestationDTOs;
     }
 
     public void setDetailsPrestationDTOs(Collection<DetailsPrestationDTO> detailsPrestationDTOs) {

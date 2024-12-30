@@ -46,4 +46,38 @@ public class DetailsPrestationPK {
         this.codeTypeIntervenant = codeTypeIntervenant;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.codePrestation;
+        hash = 97 * hash + this.codeTypeIntervenant;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DetailsPrestationPK other = (DetailsPrestationPK) obj;
+        if (this.codePrestation != other.codePrestation) {
+            return false;
+        }
+        return this.codeTypeIntervenant == other.codeTypeIntervenant;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailsPrestationPK{" + "codePrestation=" + codePrestation + ", codeTypeIntervenant=" + codeTypeIntervenant + '}';
+    }
+    
+    
+    
+
 }

@@ -20,18 +20,18 @@ public class DetailsPrestationConsultationFactory {
         if (domaine != null) {
             DetailsPrestationConsultationDTO dto = new DetailsPrestationConsultationDTO();
 
-            dto.setCodePrestConsult(domaine.getDetailsPrestationConsultationPK().getCodePrestConsult());
-            dto.setCodePrestConsult(domaine.getPrestationConsultation().getCode());
+//            dto.setCodePrestConsult(domaine.getDetailsPrestationConsultationPK().getCodePrestConsult());
+//            dto.setCodePrestConsult(domaine.getPrestationConsultation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
             dto.setMontant(domaine.getMontant());
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
 
-            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
-            dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());
-            dto.setCodeSaisieTypeIntervenant(domaine.getTypeIntervenant().getCodeSaisie());
-            dto.setCodeSaisieFKPrestationConsultation(domaine.getPrestationConsultation().getCodeSaisie());
+//            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
+//            dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());
+//            dto.setCodeSaisieTypeIntervenant(domaine.getTypeIntervenant().getCodeSaisie());
+//            dto.setCodeSaisieFKPrestationConsultation(domaine.getPrestationConsultation().getCodeSaisie());
 
             return dto;
         } else {

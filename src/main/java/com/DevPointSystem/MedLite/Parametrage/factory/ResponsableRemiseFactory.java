@@ -29,9 +29,7 @@ public class ResponsableRemiseFactory {
             domaine.setNomAr(dto.getNomAr());
             domaine.setNomLt(dto.getNomLt());
             domaine.setCodeSaisie(dto.getCodeSaisie());
-            domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
+            domaine.setActif(dto.isActif()); 
             domaine.setExercice(dto.getExercice());
             domaine.setMontantAutoriser(dto.getMontantAutoriser());
             domaine.setMontantConsommer(dto.getMontantConsommer());

@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.TypeIntervenant;
 import com.DevPointSystem.MedLite.Parametrage.dto.TypeIntervenantDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.TypeIntervenantFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.TypeIntervenantRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +43,8 @@ public class TypeIntervenantService {
 
     public TypeIntervenantDTO save(TypeIntervenantDTO dto) {
         TypeIntervenant domaine = TypeIntervenantFactory.typeIntervenantDTOToTypeIntervenant(dto, new TypeIntervenant());
-
+       domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = typeIntervenantRepo.save(domaine);
 
         return TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine);

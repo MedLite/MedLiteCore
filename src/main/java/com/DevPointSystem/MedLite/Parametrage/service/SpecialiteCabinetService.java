@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.SpecialiteCabinet;
 import com.DevPointSystem.MedLite.Parametrage.dto.SpecialiteCabinetDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SpecialiteCabinetFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.SpecialiteCabinetRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,8 @@ public class SpecialiteCabinetService {
 //
     public SpecialiteCabinetDTO save(SpecialiteCabinetDTO dto) {
         SpecialiteCabinet domaine = SpecialiteCabinetFactory.specialiteCabinetDTOToSpecialiteCabinet(dto, new SpecialiteCabinet());
+            domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = specialiteSpecialiteCabinetRepo.save(domaine);
         return SpecialiteCabinetFactory.specialiteCabinetToSpecialiteCabinetDTO(domaine);
     }

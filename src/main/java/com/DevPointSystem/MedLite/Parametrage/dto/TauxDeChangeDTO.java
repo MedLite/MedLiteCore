@@ -10,7 +10,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -26,6 +29,9 @@ public class TauxDeChangeDTO {
     private BigDecimal tauxChange;
 
     private String codeSaisie;
+
+    private String userCreate;
+    private Date dateCreate;
 
     public TauxDeChangeDTO() {
     }
@@ -69,5 +75,23 @@ public class TauxDeChangeDTO {
     public void setCodeSaisie(String codeSaisie) {
         this.codeSaisie = codeSaisie;
     }
+
+    public String getUserCreate() {
+        return userCreate;
+    }
+
+    public void setUserCreate(String userCreate) {
+        this.userCreate = userCreate;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+    
+    
 
 }

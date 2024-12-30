@@ -5,8 +5,7 @@
 package com.DevPointSystem.MedLite.Recette.dto;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.TypeRecette;
-import com.DevPointSystem.MedLite.Parametrage.dto.TypeRecetteDTO;
-import com.DevPointSystem.MedLite.Recette.domaine.AlimentationCaisse;
+import com.DevPointSystem.MedLite.Parametrage.dto.TypeRecetteDTO; 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;

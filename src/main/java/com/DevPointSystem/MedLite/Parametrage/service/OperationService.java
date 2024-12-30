@@ -13,8 +13,10 @@ import com.DevPointSystem.MedLite.Parametrage.factory.DetailsOperationFactory;
 import com.DevPointSystem.MedLite.Parametrage.factory.OperationFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.DetailsOperationRepo;
 import com.DevPointSystem.MedLite.Parametrage.repository.OperationRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class OperationService {
+
     private final OperationRepo operationRepo;
 
     private final CompteurService compteurService;
@@ -60,22 +63,25 @@ public class OperationService {
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
         domaine.setCodeSaisie(codeSaisieAC);
         compteurService.incrementeSuffixe(CompteurCodeSaisie);
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = operationRepo.save(domaine);
         return OperationFactory.operationToOperationDTO(domaine);
     }
 
     public OperationDTO updateNewWithFlush(OperationDTO dto) {
-        Operation inBase = operationRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.OperationNotFound");
+        Operation domaine = operationRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.OperationNotFound");
         detailsOperationRepo.deleteByCodeOperation(dto.getCode());
-        inBase = OperationFactory.operationDTOToOperation(dto, inBase);
-        inBase = operationRepo.save(inBase);
-        OperationDTO resultDTO = OperationFactory.operationToOperationDTO(inBase);
+        domaine = OperationFactory.operationDTOToOperation(dto, domaine);
+        domaine = operationRepo.save(domaine);
+        OperationDTO resultDTO = OperationFactory.operationToOperationDTO(domaine);
         return resultDTO;
     }
 
     public void deleteOperation(Integer code) {
         Preconditions.checkArgument(operationRepo.existsById(code), "error.OperationNotFound");
+        detailsOperationRepo.deleteByCodeOperation(code);
         operationRepo.deleteById(code);
     }
 

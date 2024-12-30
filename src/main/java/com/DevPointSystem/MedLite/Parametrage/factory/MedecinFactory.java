@@ -32,9 +32,7 @@ public class MedecinFactory {
             domaine.setCodeSaisie(dto.getCodeSaisie());
 
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
-
+          
             domaine.setCodeSpecialiteMedecin(dto.getCodeSpecialiteMedecin());
             if (domaine.getCodeSpecialiteMedecin() != null) {
                 domaine.setSpecialiteMedecin(SpecialiteMedecinFactory.createSpecialiteMedecinByCode(dto.getCodeSpecialiteMedecin()));

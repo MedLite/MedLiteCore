@@ -4,7 +4,6 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.domaine;
 
-import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaisse;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -70,15 +69,15 @@ public class Prestation {
     @JsonBackReference
     private FamilleFacturation familleFacturation;
 
-    @Column(name = "Code_Famille_Facturation", updatable = false, insertable = false, nullable = false)
+    @Column(name = "Code_Famille_Facturation", updatable = false, insertable = false)
     private Integer codeFamilleFacturation;
 
-    @JoinColumn(name = "Code_Famille_Prestation", referencedColumnName = "Code", nullable = false)
+    @JoinColumn(name = "Code_Famille_Prestation", referencedColumnName = "Code", nullable = false,insertable = true,updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private FamillePrestation famillePrestation;
 
-    @Column(name = "Code_Famille_Prestation", updatable = false, insertable = false, nullable = false)
+    @Column(name = "Code_Famille_Prestation", updatable = false, insertable = false)
     private Integer codeFamillePrestation;
 
     @Column(name = "Montant", columnDefinition = ("decimal(18,3)"), nullable = false)

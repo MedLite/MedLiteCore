@@ -37,7 +37,7 @@ public class CompteurService {
     @Transactional(readOnly = true)
     public Compteur findOne(String id) {
         Compteur compteur = compteurRepo.findByCompteur(id);
-        com.DevPointSystem.MedLite.web.Util.Preconditions.checkBusinessLogique(compteur != null, "error.parametrageManquant", id);
+        com.DevPointSystem.MedLite.web.Util.Preconditions.checkBusinessLogique(compteur != null, "error.CompteurNotFound", id);
         return compteur;
     }
 //

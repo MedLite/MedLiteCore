@@ -9,10 +9,6 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestationPK;
 import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
 import com.DevPointSystem.MedLite.Parametrage.dto.DetailsPrestationDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.PrestationDTO;
-import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaisse;
-import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaissePK;
-import com.DevPointSystem.MedLite.Recette.dto.DetailsAlimentationCaisseDTO;
-import com.DevPointSystem.MedLite.Recette.factory.DetailsAlimentationCaisseFactory;
 import com.DevPointSystem.MedLite.web.Util.Preconditions;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,35 +35,33 @@ public class PrestationFactory {
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate()); 
+        
             domaine.setMontant(dto.getMontant());
 
             domaine.setCodeFamilleFacturation(dto.getCodeFamilleFacturation());
             if (domaine.getCodeFamilleFacturation() != null) {
                 domaine.setFamilleFacturation(FamilleFacturationFactory.createFamilleFacturationByCode(dto.getCodeFamilleFacturation()));
-            } 
+            }
             domaine.setCodeFamillePrestation(dto.getCodeFamillePrestation());
             if (domaine.getCodeFamillePrestation() != null) {
                 domaine.setFamillePrestation(FamillePrestationFactory.createFamillePrestationByCode(dto.getCodeFamillePrestation()));
             }
-            
-            if(dto.getDetailsPrestationDTOs().isEmpty()){
-                 throw new IllegalArgumentException("error.DetailsRequired");
-            }  
+
+            if (dto.getDetailsPrestationDTOs() == null || dto.getDetailsPrestationDTOs().isEmpty() ) {
+                throw new IllegalArgumentException("error.DetailsPrestationRequired");
+            }
             Collection<DetailsPrestation> detailsCollections = new ArrayList<>();
             dto.getDetailsPrestationDTOs().forEach(x -> {
                 DetailsPrestation detailsPrestation = new DetailsPrestation();
 
                 DetailsPrestationPK detailsPK = new DetailsPrestationPK();
-                Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant()!= null, "error.TypeIntervenantRequired");
+                Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant() != null, "error.TypeIntervenantRequired");
                 detailsPK.setCodeTypeIntervenant(x.getCodeTypeIntervenant());
 
                 detailsPrestation.setDetailsPrestationPK(detailsPK);
 
                 Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");
-                detailsPrestation.setMontant(x.getMontant());    
-                 
+                detailsPrestation.setMontant(x.getMontant());
 
                 detailsPrestation.setDateCreate(domaine.getDateCreate());
                 detailsPrestation.setUsercreate(domaine.getUserCreate());
@@ -75,13 +69,12 @@ public class PrestationFactory {
                 detailsCollections.add(detailsPrestation);
             });
 
-            if (domaine.getDetailsPrestations()!= null) {
+            if (domaine.getDetailsPrestations() != null) {
                 domaine.getDetailsPrestations().clear();
                 domaine.getDetailsPrestations().addAll(detailsCollections);
             } else {
                 domaine.setDetailsPrestations(detailsCollections);
             }
-            
 
             return domaine;
         } else {
@@ -108,22 +101,21 @@ public class PrestationFactory {
             dto.setFamillePrestationDTO(FamillePrestationFactory.famillePrestationToFamillePrestationDTO(domaine.getFamillePrestation()));
             dto.setCodeFamillePrestation(domaine.getCodeFamillePrestation());
 
-            
-            if (domaine.getDetailsPrestations()!= null) {
+            if (domaine.getDetailsPrestations() != null) {
                 Collection<DetailsPrestationDTO> detailsPrestationDTOs = new ArrayList<>();
                 domaine.getDetailsPrestations().forEach(x -> {
                     DetailsPrestationDTO detailsDTO = new DetailsPrestationDTO();
                     detailsDTO = DetailsPrestationFactory.DetailsPrestationToDetailsPrestationDTOCollectionForUpdate(x);
                     detailsPrestationDTOs.add(detailsDTO);
                 });
-                if (dto.getDetailsPrestationDTOs()!= null) {
+                if (dto.getDetailsPrestationDTOs() != null) {
                     dto.getDetailsPrestationDTOs().clear();
                     dto.getDetailsPrestationDTOs().addAll(detailsPrestationDTOs);
                 } else {
                     dto.setDetailsPrestationDTOs(detailsPrestationDTOs);
                 }
             }
-            
+
             return dto;
         } else {
             return null;

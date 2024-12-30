@@ -8,7 +8,6 @@ import com.DevPointSystem.MedLite.Parametrage.factory.CaisseFactory;
 import com.DevPointSystem.MedLite.Parametrage.factory.DeviseFactory;
 import com.DevPointSystem.MedLite.Parametrage.factory.EtatApprouverFactory;
 import com.DevPointSystem.MedLite.Parametrage.factory.ModeReglementFactory;
-import com.DevPointSystem.MedLite.Parametrage.factory.TypeRecetteFactory;
 import com.DevPointSystem.MedLite.Recette.domaine.AlimentationCaisse;
 import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaisse;
 import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaissePK;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 import org.springframework.stereotype.Component;
 
 /**
@@ -39,12 +39,10 @@ public class AlimentationCaisseFactory {
             domaine.setCode(dto.getCode());
 
             domaine.setObservation(dto.getObservation());
-            domaine.setCodeSaisie(dto.getCodeSaisie());
-            domaine.setDateCreate(dto.getDateCreate());
+            domaine.setCodeSaisie(dto.getCodeSaisie()); 
             domaine.setMontant(dto.getMontant());
             domaine.setMontantEnDevise(dto.getMontantEnDevise());
-            domaine.setTauxChange(dto.getTauxChange());
-            domaine.setUserCreate(dto.getUserCreate());
+            domaine.setTauxChange(dto.getTauxChange()); 
 
             Preconditions.checkBusinessLogique(dto.getCodeCaisse() != null, "error.CaisseRequired");
             domaine.setCodeCaisse(dto.getCodeCaisse());

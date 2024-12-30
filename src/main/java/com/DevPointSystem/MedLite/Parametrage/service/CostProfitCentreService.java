@@ -30,9 +30,7 @@ public class CostProfitCentreService {
 
     @Autowired
     EntityManager entityManager;
-    private static final String ENTITY_NAME = "Code";   
-  
-
+    private static final String ENTITY_NAME = "Code";
 
     private final CostProfitCentreRepository costprofitcentreRepository;
     private final CompteurService compteurService;
@@ -585,7 +583,6 @@ public class CostProfitCentreService {
 //        CostProfitCentreDTO resultDTO = CostProfitCentreFactory.costProfitCentreToCostProfitCentreDTO(costprofitcentre);
 //        return resultDTO;
 //    }
-
     /**
      * Update a costprofitcentreDTO.
      *
@@ -632,12 +629,10 @@ public class CostProfitCentreService {
 
     @Transactional(
             readOnly = true
-    ) 
+    )
     public Collection<CostProfitCentreDTO> findAll() {
         log.debug("Request to get All CostProfitCentres");
-        List<CostProfitCentre> result = costprofitcentreRepository.findAll(Sort.by(ENTITY_NAME).ascending());   
-        
- 
+        List<CostProfitCentre> result = costprofitcentreRepository.findAll(Sort.by(ENTITY_NAME).ascending());
 
         return CostProfitCentreFactory.listCostProfitCentreToCostProfitCentreDTOs(result);
     }
@@ -725,11 +720,11 @@ public class CostProfitCentreService {
         log.debug("Request to get All CostProfitCentres");
         return costprofitcentreRepository.findAll();
     }
-    
-    
-        public CostProfitCentreDTO save(CostProfitCentreDTO dto) {
+
+    public CostProfitCentreDTO save(CostProfitCentreDTO dto) {
         CostProfitCentre domaine = CostProfitCentreFactory.costProfitCentreDTOToCostProfitCentre(dto, new CostProfitCentre());
-  
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = costprofitcentreRepository.save(domaine);
 
         return CostProfitCentreFactory.costProfitCentreToCostProfitCentreDTO(domaine);

@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.Medecin;
 import com.DevPointSystem.MedLite.Parametrage.dto.MedecinDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.MedecinFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.MedecinRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -60,16 +62,17 @@ public class MedecinService {
         List<Medecin> result = medecinRepo.findByCodeSpecialiteMedecin(codeSpecialite);
         return MedecinFactory.listMedecinToMedecinDTOs(result);
     }
-    
-       @Transactional(readOnly = true)
-    public List<MedecinDTO> findByCodeSpecialiteAndTypeIntervenant(Integer codeSpecialite,Integer codeTypeIntervenant) {
-        List<Medecin> result = medecinRepo.findByCodeSpecialiteMedecinAndCodeTypeIntervenant(codeSpecialite,codeTypeIntervenant);
+
+    @Transactional(readOnly = true)
+    public List<MedecinDTO> findByCodeSpecialiteAndTypeIntervenant(Integer codeSpecialite, Integer codeTypeIntervenant) {
+        List<Medecin> result = medecinRepo.findByCodeSpecialiteMedecinAndCodeTypeIntervenant(codeSpecialite, codeTypeIntervenant);
         return MedecinFactory.listMedecinToMedecinDTOs(result);
     }
 
-
     public MedecinDTO save(MedecinDTO dto) {
         Medecin domaine = MedecinFactory.medecinDTOToMedecin(dto, new Medecin());
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = medecinRepo.save(domaine);
         return MedecinFactory.medecinToMedecinDTO(domaine);
     }

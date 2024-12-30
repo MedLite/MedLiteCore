@@ -9,8 +9,10 @@ import com.DevPointSystem.MedLite.Parametrage.dto.DeviseDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.TauxDeChangeDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.TauxDeChangeFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.TauxDeChangeRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +61,8 @@ public class TauxDeChangeService {
         deviseDTOs.setHasTaux(true);
         deviseDTOs.setTauxChange(dto.getTauxChange());
         deviseService.updateHasTaux(deviseDTOs);
+           domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = tauxDeChangeRepo.save(domaine);
         return TauxDeChangeFactory.tauxDeChangeToTauxDeChangeDTO(domaine);
     }

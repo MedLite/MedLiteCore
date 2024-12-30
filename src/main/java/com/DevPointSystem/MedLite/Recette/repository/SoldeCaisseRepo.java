@@ -3,10 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.DevPointSystem.MedLite.Recette.repository;
-
-import com.DevPointSystem.MedLite.Recette.domaine.AlimentationCaisse;
+ 
 import com.DevPointSystem.MedLite.Recette.domaine.SoldeCaisse;
-import com.DevPointSystem.MedLite.Recette.dto.SoldeCaisseDTO;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

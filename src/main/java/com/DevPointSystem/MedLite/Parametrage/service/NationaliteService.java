@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.Nationalite;
 import com.DevPointSystem.MedLite.Parametrage.dto.NationaliteDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.NationaliteFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.NationaliteRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class NationaliteService {
+
     private final NationaliteRepo nationaliteRepo;
 
     public NationaliteService(NationaliteRepo nationaliteRepo) {
@@ -42,11 +45,13 @@ public class NationaliteService {
 //
     public NationaliteDTO save(NationaliteDTO dto) {
         Nationalite domaine = NationaliteFactory.nationaliteDTOToNationalite(dto, new Nationalite());
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = nationaliteRepo.save(domaine);
         return NationaliteFactory.nationaliteToNationaliteDTO(domaine);
     }
 
-    public Nationalite update(NationaliteDTO dto) { 
+    public Nationalite update(NationaliteDTO dto) {
         Nationalite domaine = nationaliteRepo.findByCode(dto.getCode());
         Preconditions.checkArgument(domaine != null, "error.NationaliteNotFound");
         dto.setCode(domaine.getCode());

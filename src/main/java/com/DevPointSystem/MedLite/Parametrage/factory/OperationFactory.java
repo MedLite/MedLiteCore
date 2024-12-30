@@ -34,8 +34,7 @@ public class OperationFactory {
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate()); 
+    
             domaine.setPrixMoyene(dto.getPrixMoyene());       
             domaine.setCoutRevient(dto.getCoutRevient());
 

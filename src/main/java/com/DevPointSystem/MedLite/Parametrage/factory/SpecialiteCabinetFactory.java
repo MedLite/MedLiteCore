@@ -30,9 +30,7 @@ public class SpecialiteCabinetFactory {
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setCodeSaisie(dto.getCodeSaisie());
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
-
+           
             return domaine;
         } else {
             return null;

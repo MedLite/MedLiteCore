@@ -10,7 +10,9 @@ import com.DevPointSystem.MedLite.Parametrage.dto.DeviseDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.TypeCaisseDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.TypeCaisseFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.TypeCaisseRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +47,7 @@ public class TypeCaisseService {
 //
     public TypeCaisseDTO save(TypeCaisseDTO dto) {
         TypeCaisse domaine = TypeCaisseFactory.typeCaisseDTOToTypeCaisse(dto, new TypeCaisse());
+ 
         domaine = typeCaisseRepo.save(domaine);
         return TypeCaisseFactory.typeCaisseToTypeCaisseDTO(domaine);
     }

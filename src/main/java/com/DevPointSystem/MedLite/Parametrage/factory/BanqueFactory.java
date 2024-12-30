@@ -36,8 +36,7 @@ public class BanqueFactory {
             domaine.setRib(dto.getRib());
 
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
+
 
             return domaine;
         } else {

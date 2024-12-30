@@ -29,9 +29,9 @@ public class DetailsPrestationFactory {
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
 
-            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
-            dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());
-            dto.setCodeSaisieTypeIntervenant(domaine.getTypeIntervenant().getCodeSaisie());
+//            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
+//            dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());
+//            dto.setCodeSaisieTypeIntervenant(domaine.getTypeIntervenant().getCodeSaisie());
             dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
 
             return dto;

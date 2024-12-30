@@ -85,8 +85,8 @@ public class SocService {
     }
 
     public SocDTO update(SocDTO dTO) throws IOException {
-        Soc inBase = societeRepo.findByCode(dTO.getCode());
-        Preconditions.checkArgument(inBase != null, "Societe does not exist");
+        Soc domaine = societeRepo.findByCode(dTO.getCode());
+        Preconditions.checkArgument(domaine != null, "Societe does not exist");
         SocDTO result = save(dTO);
         return result;
     }

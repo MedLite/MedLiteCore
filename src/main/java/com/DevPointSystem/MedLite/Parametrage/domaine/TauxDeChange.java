@@ -14,9 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Date;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
@@ -50,6 +53,13 @@ public class TauxDeChange {
 
     @Column(name = "Taux", columnDefinition = ("decimal(18,3)"), nullable = false)
     private BigDecimal tauxChange;
+    
+        @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
+    private String userCreate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
+    private Date dateCreate;
 
     public TauxDeChange() {
     }
@@ -93,5 +103,22 @@ public class TauxDeChange {
     public void setCodeSaisie(String codeSaisie) {
         this.codeSaisie = codeSaisie;
     }
+
+    public String getUserCreate() {
+        return userCreate;
+    }
+
+    public void setUserCreate(String userCreate) {
+        this.userCreate = userCreate;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+    
 
 }

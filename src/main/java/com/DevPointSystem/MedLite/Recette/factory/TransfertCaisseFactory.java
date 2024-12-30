@@ -145,9 +145,7 @@ public class TransfertCaisseFactory {
             domaine.setCodeSaisie(dto.getCodeSaisie());
             domaine.setMontant(dto.getMontant());
             domaine.setMontantEnDevise(dto.getMontantEnDevise());
-
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
+ 
             domaine.setTauxChange(dto.getTauxChange());
             domaine.setCodeUserApprouver(dto.getCodeUserApprouver());
 

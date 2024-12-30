@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.BlocOperation;
 import com.DevPointSystem.MedLite.Parametrage.dto.BlocOperationDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.BlocOperationFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.BlocOperationRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class BlocOperationService {
-     private final BlocOperationRepo blocOperationRepo;
+
+    private final BlocOperationRepo blocOperationRepo;
 
     public BlocOperationService(BlocOperationRepo blocOperationRepo) {
         this.blocOperationRepo = blocOperationRepo;
@@ -41,7 +44,8 @@ public class BlocOperationService {
 
     public BlocOperationDTO save(BlocOperationDTO dto) {
         BlocOperation domaine = BlocOperationFactory.blocOperationDTOToBlocOperation(dto, new BlocOperation());
-
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = blocOperationRepo.save(domaine);
 
         return BlocOperationFactory.blocOperationToBlocOperationDTO(domaine);

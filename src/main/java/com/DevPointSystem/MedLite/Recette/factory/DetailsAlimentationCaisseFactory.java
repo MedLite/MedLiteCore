@@ -4,7 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Recette.factory;
 
-import com.DevPointSystem.MedLite.Parametrage.factory.TypeRecetteFactory;
+import com.DevPointSystem.MedLite.Parametrage.factory.TypeRecetteFactory; 
 import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaisse;
 import com.DevPointSystem.MedLite.Recette.dto.DetailsAlimentationCaisseDTO;
 import java.util.ArrayList;

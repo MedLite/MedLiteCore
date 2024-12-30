@@ -33,9 +33,7 @@ public class ModeReglementFactory {
 
 
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
-
+       
             return domaine;
         } else {
             return null;

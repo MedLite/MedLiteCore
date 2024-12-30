@@ -6,27 +6,27 @@ package com.DevPointSystem.MedLite.Parametrage.factory;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestationConsultation;
 import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestationConsultationPK;
-import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
 import com.DevPointSystem.MedLite.Parametrage.domaine.PrestationConsultation;
 import com.DevPointSystem.MedLite.Parametrage.dto.DetailsPrestationConsultationDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.PrestationConsultationDTO;
-import com.DevPointSystem.MedLite.Parametrage.dto.PrestationDTO;
-import com.DevPointSystem.MedLite.Parametrage.repository.PrestationRepo;
 import com.DevPointSystem.MedLite.web.Util.Preconditions;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
+ 
 /**
  *
  * @author Administrator
  */
 @Component
 public class PrestationConsultationFactory {
-    
-    
-    
+
+ 
+
     public static PrestationConsultation createPrestationConsultationByCode(int code) {
         PrestationConsultation domaine = new PrestationConsultation();
         domaine.setCode(code);
@@ -35,9 +35,8 @@ public class PrestationConsultationFactory {
 
     public static PrestationConsultation prestationConsultationDTOToPrestationConsultation(PrestationConsultationDTO dto, PrestationConsultation domaine) {
         if (dto != null) {
-            domaine.setCode(dto.getCode());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
+ 
+            domaine.setCode(dto.getCode());  
             domaine.setMontant(dto.getMontant());
 
             domaine.setCodeMedecin(dto.getCodeMedecin());
@@ -58,11 +57,11 @@ public class PrestationConsultationFactory {
                 DetailsPrestationConsultation detailsPrestationConsultation = new DetailsPrestationConsultation();
 
                 DetailsPrestationConsultationPK detailsPK = new DetailsPrestationConsultationPK();
-                Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant() != null, "error.TypeIntervenantRequired"); 
+                Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant() != null, "error.TypeIntervenantRequired");
                 detailsPK.setCodeTypeIntervenant(x.getCodeTypeIntervenant());
                 Preconditions.checkBusinessLogique(x.getCodePrestation() != null, "error.PrestationRequired");
-                detailsPK.setCodePrestationConsultation(x.getCodePrestation()); 
-                detailsPrestationConsultation.setDetailsPrestationConsultationPK(detailsPK); 
+                detailsPK.setCodePrestationConsultation(x.getCodePrestation());
+                detailsPrestationConsultation.setDetailsPrestationConsultationPK(detailsPK);
                 Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");
                 detailsPrestationConsultation.setMontant(x.getMontant());
 
@@ -98,7 +97,6 @@ public class PrestationConsultationFactory {
 
             dto.setCodePrestationConsultation(domaine.getCodePrestationConsultation());
             dto.setPrestationConsultationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestationConsultation()));
-
             dto.setMontant(domaine.getMontant());
 
             if (domaine.getDetailsPrestationConsultations() != null) {

@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.DevPointSystem.MedLite.Parametrage.repository.TypeCostCentreRepository;
+import com.DevPointSystem.MedLite.web.Util.Helper;
+import java.util.Date;
 
 /**
  *
@@ -63,6 +65,8 @@ public class TypeCostCentreService {
     
     public TypeCostCentreDTO save(TypeCostCentreDTO dto) {
         TypeCostCentre domaine = TypeCostCentreFactory.TypeCostCentreDTOTOTypeCostCentre(dto, new TypeCostCentre());
+               domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = typeCostCentreRepository.save(domaine);
         return TypeCostCentreFactory.TypeCostCentreTOTypeCostCentreDTO(domaine);
     }

@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.Societe;
 import com.DevPointSystem.MedLite.Parametrage.dto.SocieteDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SocieteFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.SocieteRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SocieteService {
-       private final SocieteRepo societeRepo;
+
+    private final SocieteRepo societeRepo;
 
     public SocieteService(SocieteRepo societeRepo) {
         this.societeRepo = societeRepo;
@@ -41,7 +44,8 @@ public class SocieteService {
 
     public SocieteDTO save(SocieteDTO dto) {
         Societe domaine = SocieteFactory.societeDTOToSociete(dto, new Societe());
-
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = societeRepo.save(domaine);
 
         return SocieteFactory.societeToSocieteDTO(domaine);

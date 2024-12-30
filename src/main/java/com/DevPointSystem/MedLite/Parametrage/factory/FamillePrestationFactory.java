@@ -29,10 +29,7 @@ public class FamillePrestationFactory {
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());    
-
-
+   
             return domaine;
         } else {
             return null;

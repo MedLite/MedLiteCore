@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.Ville;
 import com.DevPointSystem.MedLite.Parametrage.dto.VilleDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.VilleFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.VilleRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +45,8 @@ public class VilleService {
 //
     public VilleDTO save(VilleDTO dto) {
         Ville domaine = VilleFactory.villeDTOToVille(dto, new Ville());
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = villeRepo.save(domaine);
         return VilleFactory.villeToVilleDTO(domaine);
     }

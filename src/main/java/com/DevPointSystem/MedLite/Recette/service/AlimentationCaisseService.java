@@ -25,6 +25,7 @@ import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -99,6 +100,8 @@ public class AlimentationCaisseService {
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
         domaine.setCodeSaisie(codeSaisieAC);
         compteurService.incrementeSuffixe(CompteurCodeSaisie);
+               domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = alimentationCaisseRepo.save(domaine);
         return AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(domaine);
     }
@@ -116,24 +119,24 @@ public class AlimentationCaisseService {
 
 //    public AlimentationCaisseDTO update(AlimentationCaisseDTO dto) {
 //
-//        AlimentationCaisse inBase = alimentationCaisseRepo.getReferenceById(dto.getCode());
-//        Preconditions.checkArgument(inBase != null, "error.AlimentationCaisseNotFound");
-////        inBase.getDetailsAlimentationCaisses().clear();
+//        AlimentationCaisse domaine = alimentationCaisseRepo.getReferenceById(dto.getCode());
+//        Preconditions.checkArgument(domaine != null, "error.AlimentationCaisseNotFound");
+////        domaine.getDetailsAlimentationCaisses().clear();
 //
-//        detailsAlimentationCaisseRepo.deleteByCodeAlimentationCaisse(inBase.getCode());
-//        alimentationCaisseRepo.deleteById(inBase.getCode());
-//        inBase = AlimentationCaisseFactory.alimentationCaisseDTOToAlimentationCaisse(inBase, dto);
-//        inBase = alimentationCaisseRepo.save(inBase);
-//        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(inBase);
+//        detailsAlimentationCaisseRepo.deleteByCodeAlimentationCaisse(domaine.getCode());
+//        alimentationCaisseRepo.deleteById(domaine.getCode());
+//        domaine = AlimentationCaisseFactory.alimentationCaisseDTOToAlimentationCaisse(domaine, dto);
+//        domaine = alimentationCaisseRepo.save(domaine);
+//        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(domaine);
 //        return resultDTO;
 //    }
     public AlimentationCaisseDTO updateNewWithFlush(AlimentationCaisseDTO dto) {
-        AlimentationCaisse inBase = alimentationCaisseRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.AlimentationCaisseNotFound");
+        AlimentationCaisse domaine = alimentationCaisseRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.AlimentationCaisseNotFound");
         detailsAlimentationCaisseRepo.deleteByCodeAlimentationCaisse(dto.getCode());
-        inBase = AlimentationCaisseFactory.alimentationCaisseDTOToAlimentationCaisse(inBase, dto);
-        inBase = alimentationCaisseRepo.save(inBase);
-        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(inBase);
+        domaine = AlimentationCaisseFactory.alimentationCaisseDTOToAlimentationCaisse(domaine, dto);
+        domaine = alimentationCaisseRepo.save(domaine);
+        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(domaine);
         return resultDTO;
     }
 
@@ -143,70 +146,70 @@ public class AlimentationCaisseService {
     }
 
     public AlimentationCaisseDTO approuveAC(AlimentationCaisseDTO dto) {
-        AlimentationCaisse inBase = alimentationCaisseRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.AlimentationCaisseNotFound");
-        inBase = AlimentationCaisseFactory.ApprouveAlimentationCaisseDTOToAlimentationCaisse(inBase, dto);
+        AlimentationCaisse domaine = alimentationCaisseRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.AlimentationCaisseNotFound");
+        domaine = AlimentationCaisseFactory.ApprouveAlimentationCaisseDTOToAlimentationCaisse(domaine, dto);
 
         MouvementCaisse mvtCaisse = new MouvementCaisse();
         if (dto.getCodeEtatApprouver() == 2) {
 //            mvtCaisse.setCode(dto.getCode());
-            mvtCaisse.setCodeSaisie(inBase.getCodeSaisie());
-            mvtCaisse.setDebit(inBase.getMontant());
-            mvtCaisse.setMntDevise(inBase.getMontantEnDevise());
+            mvtCaisse.setCodeSaisie(domaine.getCodeSaisie());
+            mvtCaisse.setDebit(domaine.getMontant());
+            mvtCaisse.setMntDevise(domaine.getMontantEnDevise());
 
             mvtCaisse.setCredit(BigDecimal.ZERO);
-            mvtCaisse.setDateCreate(inBase.getDateCreate());
-            mvtCaisse.setUserCreate(inBase.getUserCreate());
+            mvtCaisse.setDateCreate(domaine.getDateCreate());
+            mvtCaisse.setUserCreate(domaine.getUserCreate());
             mvtCaisse.setCodeTier("");
-            mvtCaisse.setCodeCaisse(inBase.getCodeCaisse());
+            mvtCaisse.setCodeCaisse(domaine.getCodeCaisse());
             if (mvtCaisse.getCodeCaisse() != null) {
-                mvtCaisse.setCaisse(CaisseFactory.createCaisseByCode(inBase.getCodeCaisse()));
+                mvtCaisse.setCaisse(CaisseFactory.createCaisseByCode(domaine.getCodeCaisse()));
             }
 
 //            mvtCaisse.setCodeCaisseTr(0);
-            mvtCaisse.setCodeDevise(inBase.getCodeDevise());
+            mvtCaisse.setCodeDevise(domaine.getCodeDevise());
             if (mvtCaisse.getCodeDevise() != null) {
-                mvtCaisse.setDevise(DeviseFactory.createDeviseByCode(inBase.getCodeDevise()));
+                mvtCaisse.setDevise(DeviseFactory.createDeviseByCode(domaine.getCodeDevise()));
 
             }
 
-            mvtCaisse.setCodeModeReglement(inBase.getCodeModeReglement());
+            mvtCaisse.setCodeModeReglement(domaine.getCodeModeReglement());
             if (mvtCaisse.getCodeModeReglement() != null) {
-                mvtCaisse.setModeReglement(ModeReglementFactory.createModeReglementByCode(inBase.getCodeModeReglement()));
+                mvtCaisse.setModeReglement(ModeReglementFactory.createModeReglementByCode(domaine.getCodeModeReglement()));
 
             }
             mvtCaisse = mouvementCaisseRepo.save(mvtCaisse);
         }
 
-        inBase = alimentationCaisseRepo.save(inBase);
+        domaine = alimentationCaisseRepo.save(domaine);
 
-        SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisse());
+        SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisse());
         BigDecimal qteOldDebit = soldeCaisseDTOs.getDebit();
-        BigDecimal qteLivree = inBase.getMontant();
+        BigDecimal qteLivree = domaine.getMontant();
         BigDecimal sumQteLivred = qteOldDebit.add(qteLivree);
         soldeCaisseDTOs.setDebit(sumQteLivred);
         soldeCaisseService.updateMontant(soldeCaisseDTOs);
         System.out.println("ok marche");
-        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(inBase);
+        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(domaine);
         return resultDTO;
     }
 
     public AlimentationCaisseDTO CancelapprouveAC(AlimentationCaisseDTO dto) {
-        AlimentationCaisse inBase = alimentationCaisseRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.AlimentationCaisseNotFound");
-        inBase = AlimentationCaisseFactory.CancelAlimentationCaisseDTOToAlimentationCaisse(inBase, dto);
+        AlimentationCaisse domaine = alimentationCaisseRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.AlimentationCaisseNotFound");
+        domaine = AlimentationCaisseFactory.CancelAlimentationCaisseDTOToAlimentationCaisse(domaine, dto);
 
-        SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisse());
+        SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisse());
         BigDecimal mntOld = soldeCaisseDTOs.getDebit();
-        BigDecimal mntNew = inBase.getMontant();
+        BigDecimal mntNew = domaine.getMontant();
         BigDecimal sumMnt = mntOld.subtract(mntNew);
         soldeCaisseDTOs.setDebit(sumMnt);
         soldeCaisseService.updateMontant(soldeCaisseDTOs);
 
         mouvementCaisseRepo.deleteByCodeSaisie(dto.getCodeSaisie());
 
-        inBase = alimentationCaisseRepo.save(inBase);
-        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(inBase);
+        domaine = alimentationCaisseRepo.save(domaine);
+        AlimentationCaisseDTO resultDTO = AlimentationCaisseFactory.alimentationCaisseToAlimentationCaisseDTO(domaine);
         return resultDTO;
     }
 

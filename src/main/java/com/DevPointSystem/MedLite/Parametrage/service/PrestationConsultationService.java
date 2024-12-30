@@ -13,8 +13,10 @@ import com.DevPointSystem.MedLite.Parametrage.factory.DetailsPrestationConsultat
 import com.DevPointSystem.MedLite.Parametrage.factory.PrestationConsultationFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.DetailsPrestationConsultationRepo;
 import com.DevPointSystem.MedLite.Parametrage.repository.PrestationConsultationRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,17 +54,20 @@ public class PrestationConsultationService {
 
     public PrestationConsultationDTO save(PrestationConsultationDTO dto) {
         PrestationConsultation domaine = PrestationConsultationFactory.prestationConsultationDTOToPrestationConsultation(dto, new PrestationConsultation());
+
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = prestationConsultationRepo.save(domaine);
         return PrestationConsultationFactory.prestationConsultationToPrestationConsultationDTO(domaine);
     }
 
     public PrestationConsultationDTO updateNewWithFlush(PrestationConsultationDTO dto) {
-        PrestationConsultation inBase = prestationConsultationRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.PrestationConsultationNotFound");
+        PrestationConsultation domaine = prestationConsultationRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.PrestationConsultationNotFound");
         detailsPrestationConsultationRepo.deleteByCodePrestConsult(dto.getCode());
-        inBase = PrestationConsultationFactory.prestationConsultationDTOToPrestationConsultation(dto, inBase);
-        inBase = prestationConsultationRepo.save(inBase);
-        PrestationConsultationDTO resultDTO = PrestationConsultationFactory.prestationConsultationToPrestationConsultationDTO(inBase);
+        domaine = PrestationConsultationFactory.prestationConsultationDTOToPrestationConsultation(dto, domaine);
+        domaine = prestationConsultationRepo.save(domaine);
+        PrestationConsultationDTO resultDTO = PrestationConsultationFactory.prestationConsultationToPrestationConsultationDTO(domaine);
         return resultDTO;
     }
 

@@ -31,10 +31,7 @@ public class CaisseFactory {
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setCodeSaisie(dto.getCodeSaisie());
 
-            domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
-
+            domaine.setActif(dto.isActif()); 
             domaine.setCodeDevise(dto.getCodeDevise());
             if (domaine.getCodeDevise() != null) {
                 domaine.setDevise(DeviseFactory.createDeviseByCode(dto.getCodeDevise()));

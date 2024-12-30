@@ -18,8 +18,10 @@ import com.DevPointSystem.MedLite.Recette.factory.TransfertCaisseFactory;
 import com.DevPointSystem.MedLite.Recette.repository.TransfertCaisseRepo;
 import com.DevPointSystem.MedLite.Recette.repository.MouvementCaisseRepo;
 import com.DevPointSystem.MedLite.Recette.repository.SoldeCaisseRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -92,7 +94,8 @@ public class TransfertCaisseService {
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
         domaine.setCodeSaisie(codeSaisieAC);
         compteurService.incrementeSuffixe(CompteurCodeSaisie);
-
+       domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = transfertCaisseRepo.save(domaine);
 
         return TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(domaine);
@@ -111,15 +114,15 @@ public class TransfertCaisseService {
 
 //    public TransfertCaisseDTO update(TransfertCaisseDTO dto) {
 //
-//        TransfertCaisse inBase = transfertCaisseRepo.findByCode(dto.getCode());
-//        Preconditions.checkArgument(inBase != null, "error.TransfertCaisseNotFound");
-////        inBase.getDetailsTransfertCaisses().clear();
+//        TransfertCaisse domaine = transfertCaisseRepo.findByCode(dto.getCode());
+//        Preconditions.checkArgument(domaine != null, "error.TransfertCaisseNotFound");
+////        domaine.getDetailsTransfertCaisses().clear();
 //
-//        detailsTransfertCaisseRepo.deleteByCodeTransfertCaisse(inBase.getCode());
-//        transfertCaisseRepo.deleteById(inBase.getCode());
-//        inBase = TransfertCaisseFactory.transfertCaisseDTOToTransfertCaisse(inBase, dto);
-//        inBase = transfertCaisseRepo.save(inBase);
-//        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(inBase);
+//        detailsTransfertCaisseRepo.deleteByCodeTransfertCaisse(domaine.getCode());
+//        transfertCaisseRepo.deleteById(domaine.getCode());
+//        domaine = TransfertCaisseFactory.transfertCaisseDTOToTransfertCaisse(domaine, dto);
+//        domaine = transfertCaisseRepo.save(domaine);
+//        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(domaine);
 //        return resultDTO;
 //    }
     public TransfertCaisseDTO updateNewWithFlush(TransfertCaisseDTO dto) {
@@ -139,11 +142,11 @@ public class TransfertCaisseService {
 
         }
 
-        TransfertCaisse inBase = transfertCaisseRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.TransfertCaisseNotFound");
-        inBase = TransfertCaisseFactory.transfertCaisseDTOToTransfertCaisse(inBase, dto);
-        inBase = transfertCaisseRepo.save(inBase);
-        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(inBase);
+        TransfertCaisse domaine = transfertCaisseRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.TransfertCaisseNotFound");
+        domaine = TransfertCaisseFactory.transfertCaisseDTOToTransfertCaisse(domaine, dto);
+        domaine = transfertCaisseRepo.save(domaine);
+        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(domaine);
         return resultDTO;
     }
 
@@ -165,33 +168,33 @@ public class TransfertCaisseService {
 
         BigDecimal soldeTransfered = DebitCredit.subtract(mnt);
 
-        TransfertCaisse inBase = transfertCaisseRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.TransfertCaisseNotFound");
+        TransfertCaisse domaine = transfertCaisseRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.TransfertCaisseNotFound");
 
         MouvementCaisse mvtCaisse = new MouvementCaisse();
         if (dto.getCodeEtatApprouver() == 2) { 
-            mvtCaisse.setCodeSaisie(inBase.getCodeSaisie());
-            mvtCaisse.setDebit(inBase.getMontant());
-            mvtCaisse.setMntDevise(inBase.getMontantEnDevise());
+            mvtCaisse.setCodeSaisie(domaine.getCodeSaisie());
+            mvtCaisse.setDebit(domaine.getMontant());
+            mvtCaisse.setMntDevise(domaine.getMontantEnDevise());
 
             mvtCaisse.setCredit(BigDecimal.ZERO);
-            mvtCaisse.setDateCreate(inBase.getDateCreate());
-            mvtCaisse.setUserCreate(inBase.getUserCreate());
+            mvtCaisse.setDateCreate(domaine.getDateCreate());
+            mvtCaisse.setUserCreate(domaine.getUserCreate());
             mvtCaisse.setCodeTier("");
-            mvtCaisse.setCodeCaisse(inBase.getCodeCaisse());
+            mvtCaisse.setCodeCaisse(domaine.getCodeCaisse());
             if (mvtCaisse.getCodeCaisse() != null) {
-                mvtCaisse.setCaisse(CaisseFactory.createCaisseByCode(inBase.getCodeCaisse()));
+                mvtCaisse.setCaisse(CaisseFactory.createCaisseByCode(domaine.getCodeCaisse()));
             }
-            mvtCaisse.setCodeCaisseTr(inBase.getCodeCaisseTr());
+            mvtCaisse.setCodeCaisseTr(domaine.getCodeCaisseTr());
 
-            mvtCaisse.setCodeDevise(inBase.getCodeDevise());
+            mvtCaisse.setCodeDevise(domaine.getCodeDevise());
             if (mvtCaisse.getCodeDevise() != null) {
-                mvtCaisse.setDevise(DeviseFactory.createDeviseByCode(inBase.getCodeDevise()));
+                mvtCaisse.setDevise(DeviseFactory.createDeviseByCode(domaine.getCodeDevise()));
             }
 
-            mvtCaisse.setCodeModeReglement(inBase.getCodeModeReglement());
+            mvtCaisse.setCodeModeReglement(domaine.getCodeModeReglement());
             if (mvtCaisse.getCodeModeReglement() != null) {
-                mvtCaisse.setModeReglement(ModeReglementFactory.createModeReglementByCode(inBase.getCodeModeReglement()));
+                mvtCaisse.setModeReglement(ModeReglementFactory.createModeReglementByCode(domaine.getCodeModeReglement()));
             }
             mvtCaisse = mouvementCaisseRepo.save(mvtCaisse);
             if (soldeTransfered.compareTo(BigDecimal.ZERO) < 0) {
@@ -205,39 +208,39 @@ public class TransfertCaisseService {
         if (dto.getCodeEtatApprouver() == 2) {
 //            mvtCaisse.setCode(dto.getCode());
             System.out.println(" mvt caisseTR OK");
-            mvtCaisseTR.setCodeSaisie(inBase.getCodeSaisie());
+            mvtCaisseTR.setCodeSaisie(domaine.getCodeSaisie());
             mvtCaisseTR.setDebit(BigDecimal.ZERO);
-            mvtCaisseTR.setMntDevise(inBase.getMontantEnDevise());
-            mvtCaisseTR.setCredit(inBase.getMontant());
-            mvtCaisseTR.setDateCreate(inBase.getDateCreate());
-            mvtCaisseTR.setUserCreate(inBase.getUserCreate());
+            mvtCaisseTR.setMntDevise(domaine.getMontantEnDevise());
+            mvtCaisseTR.setCredit(domaine.getMontant());
+            mvtCaisseTR.setDateCreate(domaine.getDateCreate());
+            mvtCaisseTR.setUserCreate(domaine.getUserCreate());
             mvtCaisseTR.setCodeTier("");
-            mvtCaisseTR.setCodeCaisse(inBase.getCodeCaisseTr());
+            mvtCaisseTR.setCodeCaisse(domaine.getCodeCaisseTr());
             if (mvtCaisseTR.getCodeCaisse() != null) {
-                mvtCaisseTR.setCaisse(CaisseFactory.createCaisseByCode(inBase.getCodeCaisseTr()));
+                mvtCaisseTR.setCaisse(CaisseFactory.createCaisseByCode(domaine.getCodeCaisseTr()));
             }
-            mvtCaisseTR.setCodeDevise(inBase.getCodeDevise());
+            mvtCaisseTR.setCodeDevise(domaine.getCodeDevise());
             if (mvtCaisseTR.getCodeDevise() != null) {
-                mvtCaisseTR.setDevise(DeviseFactory.createDeviseByCode(inBase.getCodeDevise()));
+                mvtCaisseTR.setDevise(DeviseFactory.createDeviseByCode(domaine.getCodeDevise()));
             }
 
-            mvtCaisseTR.setCodeModeReglement(inBase.getCodeModeReglement());
+            mvtCaisseTR.setCodeModeReglement(domaine.getCodeModeReglement());
             if (mvtCaisseTR.getCodeModeReglement() != null) {
-                mvtCaisseTR.setModeReglement(ModeReglementFactory.createModeReglementByCode(inBase.getCodeModeReglement()));
+                mvtCaisseTR.setModeReglement(ModeReglementFactory.createModeReglementByCode(domaine.getCodeModeReglement()));
             }
             mvtCaisseTR = mouvementCaisseRepo.save(mvtCaisseTR);
             //debit solde caisse 
-            SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisse());
+            SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisse());
             BigDecimal qteOldDebit = soldeCaisseDTOs.getDebit();
-            BigDecimal qteLivree = inBase.getMontant();
+            BigDecimal qteLivree = domaine.getMontant();
             BigDecimal sumQteLivred = qteOldDebit.add(qteLivree);
             soldeCaisseDTOs.setDebit(sumQteLivred);
             soldeCaisseService.updateMontant(soldeCaisseDTOs);
 
             //credit solde caisse tr
-            SoldeCaisseDTO soldeCaisseDTOTR = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisseTr());
+            SoldeCaisseDTO soldeCaisseDTOTR = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisseTr());
             BigDecimal qteOldCreditTR = soldeCaisseDTOTR.getCredit();
-            BigDecimal qteMnTTR = inBase.getMontant();
+            BigDecimal qteMnTTR = domaine.getMontant();
             BigDecimal sumCreditTR = qteOldCreditTR.add(qteMnTTR);
             soldeCaisseDTOTR.setCredit(sumCreditTR);
             soldeCaisseService.updateMontant(soldeCaisseDTOTR);
@@ -248,40 +251,40 @@ public class TransfertCaisseService {
 
         }
 
-        Integer oldEtatApprouve = inBase.getCodeEtatApprouver();
+        Integer oldEtatApprouve = domaine.getCodeEtatApprouver();
         Integer NewEtatApprouve = dto.getCodeEtatApprouver();
         if (oldEtatApprouve == 2 && NewEtatApprouve == 3) {
 
             //annule operation trans caisse
-            SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisse());
+            SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisse());
             BigDecimal mntOld = soldeCaisseDTOs.getDebit();
-            BigDecimal mntNew = inBase.getMontant();
+            BigDecimal mntNew = domaine.getMontant();
             BigDecimal sumMnt = mntOld.subtract(mntNew);
             soldeCaisseDTOs.setDebit(sumMnt);
             soldeCaisseService.updateMontant(soldeCaisseDTOs);
 
             //annule operation trans caisse TR
-            SoldeCaisseDTO soldeCaisseDTOsTR = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisseTr());
+            SoldeCaisseDTO soldeCaisseDTOsTR = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisseTr());
             BigDecimal mntOldTR = soldeCaisseDTOsTR.getCredit();
-            BigDecimal mntNewTR = inBase.getMontant();
+            BigDecimal mntNewTR = domaine.getMontant();
             BigDecimal sumMntTR = mntOldTR.subtract(mntNewTR);
             soldeCaisseDTOsTR.setCredit(sumMntTR);
             soldeCaisseService.updateMontant(soldeCaisseDTOsTR);
             mouvementCaisseRepo.deleteByCodeSaisie(dto.getCodeSaisie());
         }
 
-        inBase = TransfertCaisseFactory.ApprouveTransfertCaisseDTOToTransfertCaisse(inBase, dto);
-        inBase = transfertCaisseRepo.save(inBase);
+        domaine = TransfertCaisseFactory.ApprouveTransfertCaisseDTOToTransfertCaisse(domaine, dto);
+        domaine = transfertCaisseRepo.save(domaine);
 
-        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(inBase);
+        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(domaine);
         return resultDTO;
     }
 
     public TransfertCaisseDTO CancelapprouveAC(TransfertCaisseDTO dto) {
-        TransfertCaisse inBase = transfertCaisseRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.TransfertCaisseNotFound");
+        TransfertCaisse domaine = transfertCaisseRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.TransfertCaisseNotFound");
 
-        Integer oldEtatApprouve = inBase.getCodeEtatApprouver();
+        Integer oldEtatApprouve = domaine.getCodeEtatApprouver();
         Integer NewEtatApprouve = dto.getCodeEtatApprouver();
         System.out.println("etat approuve old CancelapprouveAC " + oldEtatApprouve + " newww approuve  CancelapprouveAC " + NewEtatApprouve);
 //        if (oldEtatApprouve == 3 && NewEtatApprouve == 1 || oldEtatApprouve == 2 && NewEtatApprouve == 1) {  
@@ -289,26 +292,26 @@ public class TransfertCaisseService {
 
             //annule operation trans caisse
             System.out.println("etat update solde ");
-            SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisse());
+            SoldeCaisseDTO soldeCaisseDTOs = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisse());
             BigDecimal mntOld = soldeCaisseDTOs.getDebit();
-            BigDecimal mntNew = inBase.getMontant();
+            BigDecimal mntNew = domaine.getMontant();
             BigDecimal sumMnt = mntOld.subtract(mntNew);
             soldeCaisseDTOs.setDebit(sumMnt);
             soldeCaisseService.updateMontant(soldeCaisseDTOs);
 
             //annule operation trans caisse TR
-            SoldeCaisseDTO soldeCaisseDTOsTR = soldeCaisseService.findByCodeCaisse(inBase.getCodeCaisseTr());
+            SoldeCaisseDTO soldeCaisseDTOsTR = soldeCaisseService.findByCodeCaisse(domaine.getCodeCaisseTr());
             BigDecimal mntOldTR = soldeCaisseDTOsTR.getCredit();
-            BigDecimal mntNewTR = inBase.getMontant();
+            BigDecimal mntNewTR = domaine.getMontant();
             BigDecimal sumMntTR = mntOldTR.subtract(mntNewTR);
             soldeCaisseDTOsTR.setCredit(sumMntTR);
             soldeCaisseService.updateMontant(soldeCaisseDTOsTR);
         }
-        inBase = TransfertCaisseFactory.CancelTransfertCaisseDTOToTransfertCaisse(inBase, dto);
+        domaine = TransfertCaisseFactory.CancelTransfertCaisseDTOToTransfertCaisse(domaine, dto);
         mouvementCaisseRepo.deleteByCodeSaisie(dto.getCodeSaisie());
 
-        inBase = transfertCaisseRepo.save(inBase);
-        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(inBase);
+        domaine = transfertCaisseRepo.save(domaine);
+        TransfertCaisseDTO resultDTO = TransfertCaisseFactory.transfertCaisseToTransfertCaisseDTO(domaine);
         return resultDTO;
     }
 

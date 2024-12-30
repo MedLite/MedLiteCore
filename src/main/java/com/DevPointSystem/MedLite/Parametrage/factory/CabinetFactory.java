@@ -30,8 +30,7 @@ public class CabinetFactory {
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setCodeSaisie(dto.getCodeSaisie());
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());
+        
             
             domaine.setCodeSpecialiteCabinet(dto.getCodeSpecialiteCabinet());
             if (domaine.getCodeSpecialiteCabinet() != null) {

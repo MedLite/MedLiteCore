@@ -141,9 +141,7 @@ public class CostProfitCentreFactory {
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setCodeSaisie(dto.getCodeSaisie());
 
-            domaine.setActif(dto.getActif());
-            domaine.setDateCreate(dto.getDateAction());
-            domaine.setUserCreate(dto.getUserCreate());
+            domaine.setActif(dto.getActif()); 
             domaine.setProfitCentre(dto.getProfitCentre());
             domaine.setDetail(dto.getDetail());
 //            domaine.setNiveau(dto.getNiveau());

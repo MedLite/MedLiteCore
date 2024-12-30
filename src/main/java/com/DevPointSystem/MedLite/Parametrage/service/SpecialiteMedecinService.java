@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.SpecialiteMedecin;
 import com.DevPointSystem.MedLite.Parametrage.dto.SpecialiteMedecinDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SpecialiteMedecinFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.SpecialiteMedecinRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SpecialiteMedecinService {
-      private final SpecialiteMedecinRepo specialiteMedecinRepo;
+
+    private final SpecialiteMedecinRepo specialiteMedecinRepo;
 
     public SpecialiteMedecinService(SpecialiteMedecinRepo specialiteMedecinRepo) {
         this.specialiteMedecinRepo = specialiteMedecinRepo;
@@ -41,7 +44,8 @@ public class SpecialiteMedecinService {
 
     public SpecialiteMedecinDTO save(SpecialiteMedecinDTO dto) {
         SpecialiteMedecin domaine = SpecialiteMedecinFactory.specialiteMedecinDTOToSpecialiteMedecin(dto, new SpecialiteMedecin());
-
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = specialiteMedecinRepo.save(domaine);
 
         return SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine);

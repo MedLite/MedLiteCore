@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.Devise;
 import com.DevPointSystem.MedLite.Parametrage.dto.DeviseDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.DeviseFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.DeviseRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,8 @@ public class DeviseService {
     public DeviseDTO save(DeviseDTO dto) {
         Devise domaine = DeviseFactory.deviseDTOToDevise(dto, new Devise());
         domaine.setHasTaux(false);
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = deviseRepo.save(domaine);
 
         return DeviseFactory.deviseToDeviseDTO(domaine);
@@ -68,6 +72,7 @@ public class DeviseService {
         Preconditions.checkArgument(domaine != null, "error.DeviseNotFound");
         dto.setCode(domaine.getCode());
         DeviseFactory.deviseDTOToDevise(dto, domaine);
+
         return deviseRepo.save(domaine);
     }
 

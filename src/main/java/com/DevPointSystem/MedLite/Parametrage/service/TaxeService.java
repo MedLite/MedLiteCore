@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.Taxe;
 import com.DevPointSystem.MedLite.Parametrage.dto.TaxeDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.TaxeFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.TaxeRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TaxeService {
-    
-      private final TaxeRepo taxeRepo;
+
+    private final TaxeRepo taxeRepo;
 
     public TaxeService(TaxeRepo taxeRepo) {
         this.taxeRepo = taxeRepo;
@@ -36,13 +38,16 @@ public class TaxeService {
     @Transactional(readOnly = true)
     public TaxeDTO findOne(Integer code) {
         Taxe domaine = taxeRepo.findByCode(code);
-        Preconditions.checkArgument(domaine  != null, "error.TaxeNotFound");
+        Preconditions.checkArgument(domaine != null, "error.TaxeNotFound");
         return TaxeFactory.taxeToTaxeDTO(domaine);
     }
 
 //
     public TaxeDTO save(TaxeDTO dto) {
         Taxe domaine = TaxeFactory.taxeDTOToTaxe(dto, new Taxe());
+
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = taxeRepo.save(domaine);
         return TaxeFactory.taxeToTaxeDTO(domaine);
     }
@@ -60,5 +65,5 @@ public class TaxeService {
         Preconditions.checkArgument(taxeRepo.existsById(code), "error.TaxeNotFound");
         taxeRepo.deleteById(code);
     }
-    
+
 }

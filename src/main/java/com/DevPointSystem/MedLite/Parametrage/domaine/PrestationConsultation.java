@@ -51,7 +51,7 @@ public class PrestationConsultation {
     @Column(name = "Montant", columnDefinition = ("decimal(18,3)"), nullable = false)
     private BigDecimal montant;
 
-    @JoinColumn(name = "Code_Medecin", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "Code_Medecin", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private Medecin medecin;
@@ -59,7 +59,7 @@ public class PrestationConsultation {
     @Column(name = "Code_Medecin", insertable = false, updatable = false)
     private Integer codeMedecin;
 
-    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private Prestation prestationConsultation;

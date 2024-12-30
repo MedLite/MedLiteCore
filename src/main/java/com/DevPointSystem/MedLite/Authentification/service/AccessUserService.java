@@ -86,8 +86,8 @@ public class AccessUserService {
     }
 
     public AccessUserDTO update(AccessUserDTO dTO) throws IOException {
-        User inBase = accessUserRepo.getReferenceById(dTO.getId());
-        Preconditions.checkArgument(inBase != null, "UserName does not exist");
+        User domaine = accessUserRepo.getReferenceById(dTO.getId());
+        Preconditions.checkArgument(domaine != null, "UserName does not exist");
         AccessUserDTO result = saves(dTO);
         return result;
     }

@@ -30,8 +30,7 @@ public class TaxeFactory {
             domaine.setCodeSaisie(dto.getCodeSaisie());
 
             domaine.setDesignationAr(dto.getDesignationAr()); 
-            domaine.setDesignationLt(dto.getDesignationLt());    
-            domaine.setUserCreate(Helper.getUserAuthenticated()); 
+            domaine.setDesignationLt(dto.getDesignationLt());     
             return domaine;
         } else {
             return null;

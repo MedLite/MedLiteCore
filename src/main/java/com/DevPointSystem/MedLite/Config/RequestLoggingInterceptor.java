@@ -58,7 +58,6 @@ public class RequestLoggingInterceptor implements ClientHttpRequestInterceptor {
                 String lang = LocaleContextHolder.getLocale().getLanguage();
                 if (request.getHeaders().get("Authorization") == null) {
                     request.getHeaders().add("Authorization", "Bearer " + token);
-                    System.out.println("com.DevPointSystem.Comptabilite.Config.RequestLoggingInterceptor.intercept()" + token);
                 }
                 // request.getHeaders().set("x-auth-token", "989410f6-eb7b-45da-b75b-544d86f489f2");
                 if (request.getHeaders().get("Accept-language") == null) {

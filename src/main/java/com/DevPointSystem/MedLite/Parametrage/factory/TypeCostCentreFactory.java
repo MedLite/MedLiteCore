@@ -32,8 +32,7 @@ public class TypeCostCentreFactory {
 
     public static TypeCostCentre TypeCostCentreDTOTOTypeCostCentre(TypeCostCentreDTO typeCostCentreDTO, TypeCostCentre typeCostCentre) {
         typeCostCentre.setCode(typeCostCentreDTO.getCode());
-        typeCostCentre.setActif(typeCostCentreDTO.getActif());
-        typeCostCentre.setDateCreate(typeCostCentreDTO.getDateCreate()); 
+        typeCostCentre.setActif(typeCostCentreDTO.getActif()); 
         typeCostCentre.setCodeSaisie(typeCostCentreDTO.getCodeSaisie());
 
 
@@ -44,8 +43,7 @@ public class TypeCostCentreFactory {
             typeCostCentre.setDesignationLt(typeCostCentreDTO.getDesignationLt());
             typeCostCentre.setDesignationAr(typeCostCentreDTO.getDesignationAr());
         }
-
-        typeCostCentre.setUserCreate(Helper.getUserAuthenticated());
+ 
 
         return typeCostCentre;
     }

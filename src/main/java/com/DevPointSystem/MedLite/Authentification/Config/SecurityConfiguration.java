@@ -87,7 +87,6 @@ public class SecurityConfiguration {
                     .requestMatchers("/api/auth/login").permitAll()  
                     .requestMatchers("/api/auth/signup").permitAll()
 
-//                    .requestMatchers("/api/**").permitAll()    
                     .requestMatchers("/api/**").authenticated() 
 
             )

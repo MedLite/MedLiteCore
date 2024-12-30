@@ -13,8 +13,10 @@ import com.DevPointSystem.MedLite.Parametrage.factory.DetailsPrestationFactory;
 import com.DevPointSystem.MedLite.Parametrage.factory.PrestationFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.DetailsPrestationRepo;
 import com.DevPointSystem.MedLite.Parametrage.repository.PrestationRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,21 +59,23 @@ public class PrestationService {
     public PrestationDTO save(PrestationDTO dto) {
 
         Prestation domaine = PrestationFactory.prestationDTOToPrestation(dto, new Prestation());
-        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieAC");
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisiePres");
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
         domaine.setCodeSaisie(codeSaisieAC);
         compteurService.incrementeSuffixe(CompteurCodeSaisie);
+        domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = prestationRepo.save(domaine);
         return PrestationFactory.prestationToPrestationDTO(domaine);
     }
 
     public PrestationDTO updateNewWithFlush(PrestationDTO dto) {
-        Prestation inBase = prestationRepo.findByCode(dto.getCode());
-        Preconditions.checkArgument(inBase != null, "error.PrestationNotFound");
+        Prestation domaine = prestationRepo.findByCode(dto.getCode());
+        Preconditions.checkArgument(domaine != null, "error.PrestationNotFound");
         detailsPrestationRepo.deleteByCodePrestation(dto.getCode());
-        inBase = PrestationFactory.prestationDTOToPrestation(dto, inBase);
-        inBase = prestationRepo.save(inBase);
-        PrestationDTO resultDTO = PrestationFactory.prestationToPrestationDTO(inBase);
+        domaine = PrestationFactory.prestationDTOToPrestation(dto, domaine);
+        domaine = prestationRepo.save(domaine);
+        PrestationDTO resultDTO = PrestationFactory.prestationToPrestationDTO(domaine);
         return resultDTO;
     }
 

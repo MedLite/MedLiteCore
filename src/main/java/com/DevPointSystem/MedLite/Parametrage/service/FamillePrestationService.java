@@ -8,7 +8,9 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.FamillePrestation;
 import com.DevPointSystem.MedLite.Parametrage.dto.FamillePrestationDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.FamillePrestationFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.FamillePrestationRepo;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +43,8 @@ public class FamillePrestationService {
 
     public FamillePrestationDTO save(FamillePrestationDTO dto) {
         FamillePrestation domaine = FamillePrestationFactory.famillePrestationDTOToFamillePrestation(dto, new FamillePrestation());
-
+    domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = famillePrestationRepo.save(domaine);
 
         return FamillePrestationFactory.famillePrestationToFamillePrestationDTO(domaine);
