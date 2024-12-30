@@ -61,7 +61,7 @@ public class ResponsableRemiseRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("responsable_remise/delete/{code}")
+    @DeleteMapping("responsable_remise/delete/{Code}")
     public ResponseEntity<ResponsableRemise> deleteResponsableRemise(@PathVariable("Code") Integer code) {
         responsableRemiseService.deleteResponsableRemise(code);
         return new ResponseEntity<>(HttpStatus.OK);

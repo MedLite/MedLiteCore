@@ -52,7 +52,7 @@ public class CaisseRessource {
         return new ResponseEntity<>(caisseService.findAllCaisse(), headers, HttpStatus.OK);
     }
 
-//    @GetMapping("caisse/not_in{code}")
+//    @GetMapping("caisse/not_in{Code}")
 //    public ResponseEntity<List<CaisseDTO>> getAllCaisseNotIn( @RequestParam("Code") Integer code ,@RequestParam("codeDevise") Integer codeDevise   ) {
 //        HttpHeaders headers = new HttpHeaders();
 //        headers.setContentType(MediaType.APPLICATION_JSON); 
@@ -97,7 +97,7 @@ public class CaisseRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("caisse/delete/{code}")
+    @DeleteMapping("caisse/delete/{Code}")
     public ResponseEntity<Caisse> deleteCaisse(@PathVariable("Code") Integer code) {
 
 //         log.info("Returning greetings for locale = {}", locale);

@@ -75,7 +75,7 @@ public class CostProfitCentreResource {
     }
 
  
-    @DeleteMapping("cost_centre/delete/{code}")
+    @DeleteMapping("cost_centre/delete/{Code}")
     public ResponseEntity<Void> deleteCostProfitCentre(@PathVariable Integer code) {
         log.debug("Request to delete CostProfitCentre: {}", code);
         costprofitcentreService.delete(code);

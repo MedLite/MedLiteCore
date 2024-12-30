@@ -61,7 +61,7 @@ public class BlocOperationRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("bloc_operation/delete/{code}")
+    @DeleteMapping("bloc_operation/delete/{Code}")
     public ResponseEntity<BlocOperation> deleteBlocOperation(@PathVariable("Code") Integer code) {
         blocOperationService.deleteBlocOperation(code);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -77,7 +77,7 @@ public class TypeCostCentreResource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("type_cost_centre/delete/{code}")
+    @DeleteMapping("type_cost_centre/delete/{Code}")
     public ResponseEntity<TypeCostCentre> deleteTypeCostCentre(@PathVariable("Code") Integer code) {
         typeCostCentreService.deleteTypeCaisse(code);
         return new ResponseEntity<>(HttpStatus.OK);

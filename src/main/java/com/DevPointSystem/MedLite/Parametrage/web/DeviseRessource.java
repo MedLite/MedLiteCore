@@ -67,7 +67,7 @@ public class DeviseRessource {
         return ResponseEntity.ok().body(result);
     }
     
-    @DeleteMapping("devise/delete/{code}")
+    @DeleteMapping("devise/delete/{Code}")
     public ResponseEntity<Devise> deleteDevise(@PathVariable("Code") Integer code) {
         deviseService.deleteDevise(code);
         return new ResponseEntity<>(HttpStatus.OK);

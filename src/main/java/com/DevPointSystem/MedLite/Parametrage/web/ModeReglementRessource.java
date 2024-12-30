@@ -61,7 +61,7 @@ public class ModeReglementRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("mode_reglement/delete/{code}")
+    @DeleteMapping("mode_reglement/delete/{Code}")
     public ResponseEntity<ModeReglement> deleteModeReglement(@PathVariable("Code") Integer code) {
         modeReglementService.deleteModeReglement(code);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -80,7 +80,7 @@ public class MedecinRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("medecin/delete/{code}")
+    @DeleteMapping("medecin/delete/{Code}")
     public ResponseEntity<Medecin> deleteMedecin(@PathVariable("Code") Integer code) {
         medecinService.deleteMedecin(code);
         return new ResponseEntity<>(HttpStatus.OK);

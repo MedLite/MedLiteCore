@@ -61,7 +61,7 @@ public class TaxeRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("taxe/delete/{code}")
+    @DeleteMapping("taxe/delete/{Code}")
     public ResponseEntity<Taxe> deleteTaxe(@PathVariable("Code") Integer code) {
         taxeService.deleteTaxe(code);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -60,7 +60,7 @@ public class TypeIntervenantRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("type_intervenant/delete/{code}")
+    @DeleteMapping("type_intervenant/delete/{Code}")
     public ResponseEntity<TypeIntervenant> deleteTypeIntervenant(@PathVariable("Code") Integer code) {
         typeIntervenantService.deleteTypeIntervenant(code);
         return new ResponseEntity<>(HttpStatus.OK);

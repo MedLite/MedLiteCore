@@ -61,7 +61,7 @@ public class FamilleOperationRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("familleOperation/delete/{code}")
+    @DeleteMapping("familleOperation/delete/{Code}")
     public ResponseEntity<FamilleOperation> deleteFamilleOperation(@PathVariable("Code") Integer code) {
         familleOperationService.deleteFamilleOperation(code);
         return new ResponseEntity<>(HttpStatus.OK);

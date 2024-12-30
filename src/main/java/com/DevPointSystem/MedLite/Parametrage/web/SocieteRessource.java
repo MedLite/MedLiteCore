@@ -61,7 +61,7 @@ public class SocieteRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("societe/delete/{code}")
+    @DeleteMapping("societe/delete/{Code}")
     public ResponseEntity<Societe> deleteSociete(@PathVariable("Code") Integer code) {
         societeService.deleteSociete(code);
         return new ResponseEntity<>(HttpStatus.OK);

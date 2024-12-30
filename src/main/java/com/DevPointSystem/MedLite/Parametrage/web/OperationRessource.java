@@ -76,7 +76,7 @@ public class OperationRessource {
         return ResponseEntity.ok().body(result);
     }
  
-    @DeleteMapping("operation/delete/{code}")
+    @DeleteMapping("operation/delete/{Code}")
     public ResponseEntity<Operation> deleteOperation(@PathVariable("Code") Integer code) {
         operationService.deleteOperation(code);
         return new ResponseEntity<>(HttpStatus.OK);

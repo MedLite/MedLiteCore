@@ -61,7 +61,7 @@ public class SpecialiteMedecinRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("specialite_medecin/delete/{code}")
+    @DeleteMapping("specialite_medecin/delete/{Code}")
     public ResponseEntity<SpecialiteMedecin> deleteSpecialiteMedecin(@PathVariable("Code") Integer code) {
         specialiteMedecinService.deleteSpecialiteMedecin(code);
         return new ResponseEntity<>(HttpStatus.OK);

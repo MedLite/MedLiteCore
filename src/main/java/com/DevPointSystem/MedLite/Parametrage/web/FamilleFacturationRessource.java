@@ -60,7 +60,7 @@ public class FamilleFacturationRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("famille_facturation/delete/{code}")
+    @DeleteMapping("famille_facturation/delete/{Code}")
     public ResponseEntity<FamilleFacturation> deleteFamilleFacturation(@PathVariable("Code") Integer code) {
         familleFacturationService.deleteFamilleFacturation(code);
         return new ResponseEntity<>(HttpStatus.OK);

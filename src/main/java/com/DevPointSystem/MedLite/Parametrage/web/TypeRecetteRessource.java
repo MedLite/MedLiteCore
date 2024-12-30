@@ -61,7 +61,7 @@ public class TypeRecetteRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("type_recette/delete/{code}")
+    @DeleteMapping("type_recette/delete/{Code}")
     public ResponseEntity<TypeRecette> deleteTypeRecette(@PathVariable("Code") Integer code) {
         typeRecetteService.deleteTypeRecette(code);
         return new ResponseEntity<>(HttpStatus.OK);

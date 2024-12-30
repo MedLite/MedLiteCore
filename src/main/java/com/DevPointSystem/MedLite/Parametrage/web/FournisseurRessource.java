@@ -61,7 +61,7 @@ public class FournisseurRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("fournisseur/delete/{code}")
+    @DeleteMapping("fournisseur/delete/{Code}")
     public ResponseEntity<Fournisseur> deleteFournisseur(@PathVariable("Code") Integer code) {
         fournisseurService.deleteFournisseur(code);
         return new ResponseEntity<>(HttpStatus.OK);

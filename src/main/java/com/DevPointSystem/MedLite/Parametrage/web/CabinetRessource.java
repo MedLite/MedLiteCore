@@ -69,7 +69,7 @@ public class CabinetRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("cabinet/delete/{code}")
+    @DeleteMapping("cabinet/delete/{Code}")
     public ResponseEntity<Cabinet> deleteCabinet(@PathVariable("Code") Integer code) {
         cabinetService.deleteCabinet(code);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -60,7 +60,7 @@ public class BanqueRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("banque/delete/{code}")
+    @DeleteMapping("banque/delete/{Code}")
     public ResponseEntity<Banque> deleteBanque(@PathVariable("Code") Integer code) {
         banqueService.deleteBanque(code);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -68,7 +68,7 @@ public class TauxDeChangeRessource {
         return ResponseEntity.ok().body(result);
     }
 
-//    @DeleteMapping("taux_change/delete/{code}")
+//    @DeleteMapping("taux_change/delete/{Code}")
 //    public ResponseEntity<TauxDeChange> deleteTauxDeChange(@PathVariable("Code") Integer code) {
 //        tauxDeChangeService.deleteTauxDeChange(code);
 //        return new ResponseEntity<>(HttpStatus.OK);

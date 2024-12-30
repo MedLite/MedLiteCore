@@ -60,7 +60,7 @@ public class NationaliteRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("nationalite/delete/{code}")
+    @DeleteMapping("nationalite/delete/{Code}")
     public ResponseEntity<Nationalite> deleteNationalite(@PathVariable("Code") Integer code) {
         nationaliteService.deleteNationalite(code);
         return new ResponseEntity<>(HttpStatus.OK);

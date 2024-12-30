@@ -63,7 +63,7 @@ public class TypeCaisseRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("type_caisse/delete/{code}")
+    @DeleteMapping("type_caisse/delete/{Code}")
     public ResponseEntity<TypeCaisse> deleteTypeCaisse(@PathVariable("Code") Integer code) {
         typeCaisseService.deleteTypeCaisse(code);
         return new ResponseEntity<>(HttpStatus.OK);

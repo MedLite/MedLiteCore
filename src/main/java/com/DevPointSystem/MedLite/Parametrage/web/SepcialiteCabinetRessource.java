@@ -62,7 +62,7 @@ public class SepcialiteCabinetRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("specialite_cabinet/delete/{code}")
+    @DeleteMapping("specialite_cabinet/delete/{Code}")
     public ResponseEntity<SpecialiteCabinet> deleteSpecialiteCabinet(@PathVariable("Code") Integer code) {
         specialiteCabinetService.deleteSpecialiteCabinet(code);
         return new ResponseEntity<>(HttpStatus.OK);

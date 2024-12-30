@@ -106,13 +106,13 @@ public class PrestationRessource {
         return ResponseEntity.ok().body(result);
     }
  
-    @DeleteMapping("prestation/delete/{code}")
+    @DeleteMapping("prestation/delete/{Code}")
     public ResponseEntity<Prestation> deletePrestation(@PathVariable("Code") Integer code) {
         prestationService.deletePrestation(code);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping("alimentation_caisse/edition/{code}")
+//    @GetMapping("alimentation_caisse/edition/{Code}")
 //    public ResponseEntity<byte[]> getReport(@PathVariable Integer code) throws Exception {
 //
 //        Collection<DetailsPrestationDTO> dto = prestationService.findOneWithDetails(code);
@@ -167,7 +167,7 @@ public class PrestationRessource {
 //                .body(res);
 //    }
 //
-//    @GetMapping("alimentation_caisse/excel/{code}")
+//    @GetMapping("alimentation_caisse/excel/{Code}")
 //    public ResponseEntity<byte[]> getReportExcel(@PathVariable Integer code) throws Exception {
 //
 //        Collection<DetailsPrestationDTO> dto = prestationService.findOneWithDetails(code);

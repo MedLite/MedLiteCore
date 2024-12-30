@@ -60,7 +60,7 @@ public class NatureAdmissionRessource {
 //        return ResponseEntity.ok().body(result);
 //    }
 //
-//    @DeleteMapping("nature_admission/delete/{code}")
+//    @DeleteMapping("nature_admission/delete/{Code}")
 //    public ResponseEntity<NatureAdmission> deleteNatureAdmission(@PathVariable("Code") Integer code) {
 //        natureAdmissionService.deleteNatureAdmission(code);
 //        return new ResponseEntity<>(HttpStatus.OK);

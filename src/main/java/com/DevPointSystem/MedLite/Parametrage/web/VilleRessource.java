@@ -60,7 +60,7 @@ public class VilleRessource {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("ville/delete/{code}")
+    @DeleteMapping("ville/delete/{Code}")
     public ResponseEntity<Ville> deleteVille(@PathVariable("Code") Integer code) {
         villeService.deleteVille(code);
         return new ResponseEntity<>(HttpStatus.OK);
