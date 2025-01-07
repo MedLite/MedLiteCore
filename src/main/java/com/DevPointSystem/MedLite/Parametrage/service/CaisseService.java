@@ -5,6 +5,7 @@
 package com.DevPointSystem.MedLite.Parametrage.service;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.Caisse;
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.dto.CaisseDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.CaisseFactory;
 import com.DevPointSystem.MedLite.Parametrage.factory.DeviseFactory;
@@ -38,19 +39,21 @@ public class CaisseService {
         LANGUAGE_SEC = db;
     }
 
+     private final CompteurService compteurService;
     private final CaisseRepo caisseRepo;
     private final SoldeCaisseRepo soldeCaisseRepo;
     private final MouvementCaisseRepo mouvementCaisseRepo;
     private final SoldeCaisseService soldeCaisseService;
     private final static String caisseError = "error.CaisseNotFound";
 
-    public CaisseService(CaisseRepo caisseRepo, SoldeCaisseRepo soldeCaisseRepo, MouvementCaisseRepo mouvementCaisseRepo, SoldeCaisseService soldeCaisseService) {
+    public CaisseService(CompteurService compteurService, CaisseRepo caisseRepo, SoldeCaisseRepo soldeCaisseRepo, MouvementCaisseRepo mouvementCaisseRepo, SoldeCaisseService soldeCaisseService) {
+        this.compteurService = compteurService;
         this.caisseRepo = caisseRepo;
         this.soldeCaisseRepo = soldeCaisseRepo;
         this.mouvementCaisseRepo = mouvementCaisseRepo;
         this.soldeCaisseService = soldeCaisseService;
     }
-
+ 
     @Transactional(readOnly = true)
     public List<CaisseDTO> findAllCaisse() {
         return CaisseFactory.listCaisseToCaisseDTOs(caisseRepo.findAll());
@@ -75,11 +78,6 @@ public class CaisseService {
     public List<Caisse> findByCodeNotInAndCodeDevise(Integer code, Integer codeDevise) {
         return caisseRepo.findByCodeNotAndCodeDevise(code, codeDevise);
     }
-//
-//    @Transactional(readOnly = true)
-//    public List<Caisse> findByCodeTypeCaisse(Integer codeTypeCaisse) {
-//        return caisseRepo.findByCodeTypeCaisse(codeTypeCaisse);
-//    }
 
     @Transactional(readOnly = true)
     public List<CaisseDTO> findByCodeTypeCaisse(Integer codeTypeCaisse) {
@@ -97,8 +95,13 @@ public class CaisseService {
     public CaisseDTO save(CaisseDTO dto) {
         Caisse domaine = CaisseFactory.caisseDTOToCaisse(dto, new Caisse());
 
-            domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieCaisse");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
         
         domaine = caisseRepo.save(domaine);
 

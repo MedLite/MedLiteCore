@@ -5,6 +5,7 @@
 package com.DevPointSystem.MedLite.Parametrage.service;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.Cabinet;
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.dto.CabinetDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.CabinetFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.CabinetRepo;
@@ -24,10 +25,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class CabinetService {
 
     private final CabinetRepo cabinetRepo;
+     private final CompteurService compteurService;
 
-    public CabinetService(CabinetRepo cabinetRepo) {
+    public CabinetService(CabinetRepo cabinetRepo, CompteurService compteurService) {
         this.cabinetRepo = cabinetRepo;
+        this.compteurService = compteurService;
     }
+
+
+ 
 
     @Transactional(readOnly = true)
     public List<CabinetDTO> findAllCabinet() {
@@ -54,6 +60,12 @@ public class CabinetService {
         Cabinet domaine = CabinetFactory.cabinetDTOToCabinet(dto, new Cabinet());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+        
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieCabinet");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+        
         domaine = cabinetRepo.save(domaine);
         return CabinetFactory.cabinetToCabinetDTO(domaine);
     }

@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.SpecialiteCabinet;
 import com.DevPointSystem.MedLite.Parametrage.dto.SpecialiteCabinetDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SpecialiteCabinetFactory;
@@ -22,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SpecialiteCabinetService {
-    private final SpecialiteCabinetRepo specialiteSpecialiteCabinetRepo;
 
-    public SpecialiteCabinetService(SpecialiteCabinetRepo specialiteSpecialiteCabinetRepo) {
+    private final SpecialiteCabinetRepo specialiteSpecialiteCabinetRepo;
+    private final CompteurService compteurService;
+
+    public SpecialiteCabinetService(SpecialiteCabinetRepo specialiteSpecialiteCabinetRepo, CompteurService compteurService) {
         this.specialiteSpecialiteCabinetRepo = specialiteSpecialiteCabinetRepo;
+        this.compteurService = compteurService;
     }
 
     @Transactional(readOnly = true)
@@ -44,8 +48,14 @@ public class SpecialiteCabinetService {
 //
     public SpecialiteCabinetDTO save(SpecialiteCabinetDTO dto) {
         SpecialiteCabinet domaine = SpecialiteCabinetFactory.specialiteCabinetDTOToSpecialiteCabinet(dto, new SpecialiteCabinet());
-            domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setDateCreate(new Date());
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieSpCabinet");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+
         domaine = specialiteSpecialiteCabinetRepo.save(domaine);
         return SpecialiteCabinetFactory.specialiteCabinetToSpecialiteCabinetDTO(domaine);
     }

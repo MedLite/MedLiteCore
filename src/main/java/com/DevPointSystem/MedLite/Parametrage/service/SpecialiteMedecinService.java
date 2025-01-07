@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.SpecialiteMedecin;
 import com.DevPointSystem.MedLite.Parametrage.dto.SpecialiteMedecinDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SpecialiteMedecinFactory;
@@ -24,9 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class SpecialiteMedecinService {
 
     private final SpecialiteMedecinRepo specialiteMedecinRepo;
+    private final CompteurService compteurService;
 
-    public SpecialiteMedecinService(SpecialiteMedecinRepo specialiteMedecinRepo) {
+    public SpecialiteMedecinService(SpecialiteMedecinRepo specialiteMedecinRepo, CompteurService compteurService) {
         this.specialiteMedecinRepo = specialiteMedecinRepo;
+        this.compteurService = compteurService;
     }
 
     @Transactional(readOnly = true)
@@ -46,6 +49,11 @@ public class SpecialiteMedecinService {
         SpecialiteMedecin domaine = SpecialiteMedecinFactory.specialiteMedecinDTOToSpecialiteMedecin(dto, new SpecialiteMedecin());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieSpMdecin");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+
         domaine = specialiteMedecinRepo.save(domaine);
 
         return SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine);

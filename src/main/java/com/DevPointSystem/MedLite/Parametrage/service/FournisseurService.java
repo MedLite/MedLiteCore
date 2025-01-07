@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.Fournisseur;
 import com.DevPointSystem.MedLite.Parametrage.dto.FournisseurDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.FournisseurFactory;
@@ -22,13 +23,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class FournisseurService {
-
+     private final CompteurService compteurService;
     private final FournisseurRepo fournisseurRepo;
 
-    public FournisseurService(FournisseurRepo fournisseurRepo) {
+    public FournisseurService(CompteurService compteurService, FournisseurRepo fournisseurRepo) {
+        this.compteurService = compteurService;
         this.fournisseurRepo = fournisseurRepo;
     }
 
+   
+    
+    
     @Transactional(readOnly = true)
     public List<FournisseurDTO> findAllFournisseur() {
         return FournisseurFactory.listFournisseurToFournisseurDTOs(fournisseurRepo.findAll());
@@ -47,6 +52,14 @@ public class FournisseurService {
         Fournisseur domaine = FournisseurFactory.fournisseurDTOToFournisseur(dto, new Fournisseur());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+        
+          Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieFrs");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+        
+        
+        
         domaine = fournisseurRepo.save(domaine);
         return FournisseurFactory.fournisseurToFournisseurDTO(domaine);
     }
