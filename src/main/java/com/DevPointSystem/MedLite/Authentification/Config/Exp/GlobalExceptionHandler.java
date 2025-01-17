@@ -12,9 +12,11 @@ package com.DevPointSystem.MedLite.Authentification.Config.Exp;
 // */import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javassist.NotFoundException;
 import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +37,8 @@ public class GlobalExceptionHandler {
         String errorMessage = String.format("Required parameter '%s' is missing.", parameterName);
         return sendErrorResponse(HttpStatus.BAD_REQUEST, errorMessage); // Use helper method
     }
+    
+   
 
  
     

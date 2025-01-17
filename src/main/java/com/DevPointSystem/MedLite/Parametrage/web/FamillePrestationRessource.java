@@ -38,30 +38,30 @@ public class FamillePrestationRessource {
         this.famillePrestationService = famillePrestationService;
     }
 
-    @GetMapping("fammille_prestation/{code}")
+    @GetMapping("famille_prestation/{code}")
     public ResponseEntity<FamillePrestationDTO> getFamillePrestationByCode(@PathVariable Integer code) {
         FamillePrestationDTO dto = famillePrestationService.findOne(code);
         return ResponseEntity.ok().body(dto);
     }
 
-    @GetMapping("fammille_prestation/all")
+    @GetMapping("famille_prestation/all")
     public ResponseEntity<List<FamillePrestationDTO>> getAllFamillePrestation() {
         return ResponseEntity.ok().body(famillePrestationService.findAllFamillePrestation());
     }
 
-    @PostMapping("fammille_prestation")
+    @PostMapping("famille_prestation")
     public ResponseEntity<FamillePrestationDTO> postFamillePrestation(@Valid @RequestBody FamillePrestationDTO ddeTransfertDTO, BindingResult bindingResult) throws URISyntaxException, MethodArgumentNotValidException {
         FamillePrestationDTO result = famillePrestationService.save(ddeTransfertDTO);
         return ResponseEntity.created(new URI("/api/parametrage/" + result.getCode())).body(result);
     }
 
-    @PutMapping("fammille_prestation/update")
+    @PutMapping("famille_prestation/update")
     public ResponseEntity<FamillePrestation> updateFamillePrestation(@RequestBody @Valid FamillePrestationDTO dto) throws URISyntaxException {
         FamillePrestation result = famillePrestationService.update(dto);
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("fammille_prestation/delete/{Code}")
+    @DeleteMapping("famille_prestation/delete/{Code}")
     public ResponseEntity<FamillePrestation> deleteFamillePrestation(@PathVariable("Code") Integer code) {
         famillePrestationService.deleteFamillePrestation(code);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -4,10 +4,13 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.Medecin;
+import com.DevPointSystem.MedLite.Parametrage.domaine.PrestationConsultation;
 import com.DevPointSystem.MedLite.Parametrage.dto.MedecinDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.MedecinFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.MedecinRepo;
+import com.DevPointSystem.MedLite.Parametrage.repository.PrestationConsultationRepo;
 import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
@@ -32,11 +35,18 @@ public class MedecinService {
     }
 
     private final MedecinRepo medecinRepo;
+    private final CompteurService compteurService;
+    private final PrestationConsultationRepo prestationConsultationRepo;
+
     private final static String medecinError = "error.MedecinNotFound";
 
-    public MedecinService(MedecinRepo medecinRepo) {
+    public MedecinService(MedecinRepo medecinRepo, CompteurService compteurService, PrestationConsultationRepo prestationConsultationRepo) {
         this.medecinRepo = medecinRepo;
+        this.compteurService = compteurService;
+        this.prestationConsultationRepo = prestationConsultationRepo;
     }
+
+    
 
     @Transactional(readOnly = true)
     public List<MedecinDTO> findAllMedecin() {
@@ -73,6 +83,12 @@ public class MedecinService {
         Medecin domaine = MedecinFactory.medecinDTOToMedecin(dto, new Medecin());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieMedecin");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+
         domaine = medecinRepo.save(domaine);
         return MedecinFactory.medecinToMedecinDTO(domaine);
     }
@@ -88,6 +104,9 @@ public class MedecinService {
 
     public void deleteMedecin(Integer code) {
         Preconditions.checkArgument(medecinRepo.existsById(code), medecinError);
+        
+        List<PrestationConsultation> presCons = prestationConsultationRepo.findByCodeMedecin(code);
+        Preconditions.checkArgument(presCons.isEmpty(), "error.MedecinUsedInPrestationCOnsultation");
         medecinRepo.deleteById(code);
     }
 }

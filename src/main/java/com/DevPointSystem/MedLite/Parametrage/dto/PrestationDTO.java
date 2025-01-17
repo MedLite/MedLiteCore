@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
+import jakarta.persistence.Column;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -35,7 +36,19 @@ public class PrestationDTO {
 
     private Integer codeFamillePrestation;
 
-    private BigDecimal montant;
+    private BigDecimal montantOPD;
+
+    private BigDecimal montantER;
+
+    private BigDecimal montantIP;
+
+    
+        private BigDecimal prixPrestation;
+        
+        
+    private boolean opd;
+    private boolean er;
+    private boolean ip;
 
     private Collection<DetailsPrestationDTO> detailsPrestationDTOs;
 
@@ -130,20 +143,72 @@ public class PrestationDTO {
         this.codeFamillePrestation = codeFamillePrestation;
     }
 
-    public BigDecimal getMontant() {
-        return montant;
+    public BigDecimal getMontantOPD() {
+        return montantOPD;
     }
 
-    public void setMontant(BigDecimal montant) {
-        this.montant = montant;
+    public void setMontantOPD(BigDecimal montantOPD) {
+        this.montantOPD = montantOPD;
+    }
+
+    public BigDecimal getMontantER() {
+        return montantER;
+    }
+
+    public void setMontantER(BigDecimal montantER) {
+        this.montantER = montantER;
+    }
+
+    public BigDecimal getMontantIP() {
+        return montantIP;
+    }
+
+    public void setMontantIP(BigDecimal montantIP) {
+        this.montantIP = montantIP;
     }
 
     public Collection<DetailsPrestationDTO> getDetailsPrestationDTOs() {
-            return detailsPrestationDTOs;
+        return detailsPrestationDTOs;
     }
 
     public void setDetailsPrestationDTOs(Collection<DetailsPrestationDTO> detailsPrestationDTOs) {
         this.detailsPrestationDTOs = detailsPrestationDTOs;
     }
+
+    public boolean isOpd() {
+        return opd;
+    }
+
+    public void setOpd(boolean opd) {
+        this.opd = opd;
+    }
+
+    public boolean isEr() {
+        return er;
+    }
+
+    public void setEr(boolean er) {
+        this.er = er;
+    }
+
+    public boolean isIp() {
+        return ip;
+    }
+
+    public void setIp(boolean ip) {
+        this.ip = ip;
+    }
+
+    public BigDecimal getPrixPrestation() {
+        return prixPrestation;
+    }
+
+    public void setPrixPrestation(BigDecimal prixPrestation) {
+        this.prixPrestation = prixPrestation;
+    }
+    
+    
+    
+    
 
 }

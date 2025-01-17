@@ -64,6 +64,15 @@ public class PriceListService {
         return PriceListFactory.priceListToPriceListDTO(domaine);
     }
 
+    
+      @Transactional(readOnly = true)
+    public PriceListDTO findIsCash(Boolean isCash) {
+        PriceList domaine = priceListRepo.findByCash(isCash);
+        Preconditions.checkArgument(domaine.getCode() != null, "error.PriceListNotFound"); 
+        return PriceListFactory.priceListToPriceListDTO(domaine);
+    }
+    
+    
     public PriceListDTO save(PriceListDTO dto) {
         PriceList domaine = PriceListFactory.priceListDTOToPriceList(dto, new PriceList());
         Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisiePL");

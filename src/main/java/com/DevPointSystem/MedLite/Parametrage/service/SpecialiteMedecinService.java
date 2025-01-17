@@ -5,9 +5,11 @@
 package com.DevPointSystem.MedLite.Parametrage.service;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
+import com.DevPointSystem.MedLite.Parametrage.domaine.Medecin;
 import com.DevPointSystem.MedLite.Parametrage.domaine.SpecialiteMedecin;
 import com.DevPointSystem.MedLite.Parametrage.dto.SpecialiteMedecinDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SpecialiteMedecinFactory;
+import com.DevPointSystem.MedLite.Parametrage.repository.MedecinRepo;
 import com.DevPointSystem.MedLite.Parametrage.repository.SpecialiteMedecinRepo;
 import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
@@ -26,10 +28,12 @@ public class SpecialiteMedecinService {
 
     private final SpecialiteMedecinRepo specialiteMedecinRepo;
     private final CompteurService compteurService;
+    private final MedecinRepo medecinRepo;
 
-    public SpecialiteMedecinService(SpecialiteMedecinRepo specialiteMedecinRepo, CompteurService compteurService) {
+    public SpecialiteMedecinService(SpecialiteMedecinRepo specialiteMedecinRepo, CompteurService compteurService, MedecinRepo medecinRepo) {
         this.specialiteMedecinRepo = specialiteMedecinRepo;
         this.compteurService = compteurService;
+        this.medecinRepo = medecinRepo;
     }
 
     @Transactional(readOnly = true)
@@ -53,6 +57,7 @@ public class SpecialiteMedecinService {
         Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieSpMdecin");
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
         domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
 
         domaine = specialiteMedecinRepo.save(domaine);
 
@@ -69,6 +74,8 @@ public class SpecialiteMedecinService {
 
     public void deleteSpecialiteMedecin(Integer code) {
         Preconditions.checkArgument(specialiteMedecinRepo.existsById(code), "error.SpecialiteMedecinNotFound");
+        List<Medecin> md = medecinRepo.findByCodeSpecialiteMedecin(code);
+        Preconditions.checkArgument(md.isEmpty(), "error.SpecialiteMedecinUsed");
         specialiteMedecinRepo.deleteById(code);
     }
 }

@@ -41,6 +41,16 @@ public class DetailsPrestation {
 
     @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
     private String usercreate;
+    
+        @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private NatureAdmission natureAdmission;
+
+    @Column(name = "Code_Nature_Admission", insertable = false, updatable = false)
+    private Integer codeNatureAdmission;
+    
+    
 
     @JoinColumn(name = "Code_Type_Intervenant", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -49,6 +59,8 @@ public class DetailsPrestation {
 
     @Column(name = "Code_Type_Intervenant", insertable = false, updatable = false)
     private Integer codeTypeIntervenant;
+
+
 
     @Basic(optional = false)
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
@@ -115,6 +127,22 @@ public class DetailsPrestation {
 
     public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
         this.codeTypeIntervenant = codeTypeIntervenant;
+    }
+
+    public NatureAdmission getNatureAdmission() {
+        return natureAdmission;
+    }
+
+    public void setNatureAdmission(NatureAdmission natureAdmission) {
+        this.natureAdmission = natureAdmission;
+    }
+
+    public Integer getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(Integer codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
     }
     
     

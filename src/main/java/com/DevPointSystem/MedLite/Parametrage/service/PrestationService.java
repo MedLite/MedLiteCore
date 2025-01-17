@@ -18,6 +18,8 @@ import com.google.common.base.Preconditions;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class PrestationService {
+        private final Logger log = LoggerFactory.getLogger(PrestationService.class);
 
     private final PrestationRepo prestationRepo;
 
@@ -56,8 +59,7 @@ public class PrestationService {
         return PrestationFactory.prestationToPrestationDTO(domaine);
     }
 
-    public PrestationDTO save(PrestationDTO dto) {
-
+    public PrestationDTO save(PrestationDTO dto) { 
         Prestation domaine = PrestationFactory.prestationDTOToPrestation(dto, new Prestation());
         Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisiePres");
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
@@ -66,9 +68,9 @@ public class PrestationService {
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = prestationRepo.save(domaine);
+       
         return PrestationFactory.prestationToPrestationDTO(domaine);
-    }
-
+    } 
     public PrestationDTO updateNewWithFlush(PrestationDTO dto) {
         Prestation domaine = prestationRepo.findByCode(dto.getCode());
         Preconditions.checkArgument(domaine != null, "error.PrestationNotFound");
@@ -87,6 +89,13 @@ public class PrestationService {
     @Transactional(readOnly = true)
     public Collection<DetailsPrestationDTO> findOneWithDetails(Integer code) {
         Collection<DetailsPrestation> domaine = detailsPrestationRepo.findByDetailsPrestationPK_codePrestation(code);
+        return DetailsPrestationFactory.detailsPrestationTodetailsPrestationDTOCollections(domaine);
+    }
+    
+    
+     @Transactional(readOnly = true)
+    public Collection<DetailsPrestationDTO> findOneWithDetailsCodePrestationAndCodeNatureAdmission(Integer code,Integer codeNatureAdmission) {
+        Collection<DetailsPrestation> domaine = detailsPrestationRepo.findByDetailsPrestationPK_codePrestationAndcodeNatureAdmission(code,codeNatureAdmission);
         return DetailsPrestationFactory.detailsPrestationTodetailsPrestationDTOCollections(domaine);
     }
 }

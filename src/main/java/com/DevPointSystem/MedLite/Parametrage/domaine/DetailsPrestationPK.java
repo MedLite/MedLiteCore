@@ -24,6 +24,11 @@ public class DetailsPrestationPK {
 
     @Basic(optional = false)
     @NotNull
+    @Column(name = "Code_Nature_Admission", nullable = false)
+    private int codeNatureAdmission;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "Code_Type_Intervenant", nullable = false)
     private int codeTypeIntervenant;
 
@@ -38,6 +43,14 @@ public class DetailsPrestationPK {
         this.codePrestation = codePrestation;
     }
 
+    public int getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(int codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
+
     public int getCodeTypeIntervenant() {
         return codeTypeIntervenant;
     }
@@ -49,8 +62,9 @@ public class DetailsPrestationPK {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + this.codePrestation;
-        hash = 97 * hash + this.codeTypeIntervenant;
+        hash = 89 * hash + this.codePrestation;
+        hash = 89 * hash + this.codeNatureAdmission;
+        hash = 89 * hash + this.codeTypeIntervenant;
         return hash;
     }
 
@@ -69,15 +83,18 @@ public class DetailsPrestationPK {
         if (this.codePrestation != other.codePrestation) {
             return false;
         }
+        if (this.codeNatureAdmission != other.codeNatureAdmission) {
+            return false;
+        }
         return this.codeTypeIntervenant == other.codeTypeIntervenant;
     }
 
     @Override
     public String toString() {
-        return "DetailsPrestationPK{" + "codePrestation=" + codePrestation + ", codeTypeIntervenant=" + codeTypeIntervenant + '}';
+        return "DetailsPrestationPK{" + "codePrestation=" + codePrestation + ", codeNatureAdmission=" + codeNatureAdmission + ", codeTypeIntervenant=" + codeTypeIntervenant + '}';
     }
-    
-    
-    
 
+   
+    
+    
 }

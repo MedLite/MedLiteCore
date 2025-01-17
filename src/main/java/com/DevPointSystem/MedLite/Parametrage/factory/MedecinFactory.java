@@ -70,8 +70,7 @@ public class MedecinFactory {
 
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
-
-//            dto.setPrestationConsultationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestationConsult()));
+ 
             dto.setCodePrestationConsult(domaine.getCodePrestationConsult());
 
             dto.setSpecialiteMedecinDTO(SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine.getSpecialiteMedecin()));

@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.TypeIntervenant;
 import com.DevPointSystem.MedLite.Parametrage.dto.TypeIntervenantDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.TypeIntervenantFactory;
@@ -22,10 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class TypeIntervenantService {
-   private final TypeIntervenantRepo typeIntervenantRepo;
 
-    public TypeIntervenantService(TypeIntervenantRepo typeIntervenantRepo) {
+    private final TypeIntervenantRepo typeIntervenantRepo;
+
+    private final CompteurService compteurService;
+
+    public TypeIntervenantService(TypeIntervenantRepo typeIntervenantRepo, CompteurService compteurService) {
         this.typeIntervenantRepo = typeIntervenantRepo;
+        this.compteurService = compteurService;
     }
 
     @Transactional(readOnly = true)
@@ -40,11 +45,25 @@ public class TypeIntervenantService {
         Preconditions.checkArgument(domaine != null, "error.TypeIntervenantNotFound");
         return TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine);
     }
+    
+    
+    
+    @Transactional(readOnly = true)
+    public List<TypeIntervenantDTO> findIsNotActif(Boolean code) {
+        List<TypeIntervenant> domaine = typeIntervenantRepo.findByIsClinique(code);
+        Preconditions.checkArgument(domaine != null, "error.TypeIntervenantNotFound");
+        return TypeIntervenantFactory.listTypeIntervenantToTypeIntervenantDTOs(domaine);
+    }
 
     public TypeIntervenantDTO save(TypeIntervenantDTO dto) {
         TypeIntervenant domaine = TypeIntervenantFactory.typeIntervenantDTOToTypeIntervenant(dto, new TypeIntervenant());
-       domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieTypInterv");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+
         domaine = typeIntervenantRepo.save(domaine);
 
         return TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine);
@@ -60,6 +79,9 @@ public class TypeIntervenantService {
 
     public void deleteTypeIntervenant(Integer code) {
         Preconditions.checkArgument(typeIntervenantRepo.existsById(code), "error.TypeIntervenantNotFound");
+        TypeIntervenant domaine = typeIntervenantRepo.findByCode(code);
+        Preconditions.checkArgument(domaine.isIsClinique() != Boolean.TRUE, "error.TypeIntervenantIsClinique");
+
         typeIntervenantRepo.deleteById(code);
-    }  
+    }
 }

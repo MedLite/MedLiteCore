@@ -4,47 +4,25 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.web;
 
-import com.DevPointSystem.MedLite.Authentification.dto.AccessUserDTO;
 import com.DevPointSystem.MedLite.Authentification.service.AccessUserService;
+import com.DevPointSystem.MedLite.Authentification.web.Response.ErrorResponse;
 import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
 import com.DevPointSystem.MedLite.Parametrage.dto.DetailsPrestationDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.PrestationDTO;
-import com.DevPointSystem.MedLite.Parametrage.dto.SocDTO;
-import com.DevPointSystem.MedLite.Parametrage.dto.paramDTO;
+import com.DevPointSystem.MedLite.Parametrage.factory.PrestationFactory;
+import com.DevPointSystem.MedLite.Parametrage.service.DetailsPrestationService;
 import com.DevPointSystem.MedLite.Parametrage.service.ParamService;
 import com.DevPointSystem.MedLite.Parametrage.service.PrestationService;
-import com.DevPointSystem.MedLite.Parametrage.service.SocService; 
-import com.google.common.base.Preconditions;
+import com.DevPointSystem.MedLite.Parametrage.service.SocService;
 import jakarta.validation.Valid;
-import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfReportConfiguration;
-import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
-import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
-import org.springframework.http.HttpHeaders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,18 +42,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/parametrage/")
 public class PrestationRessource {
-    
-     private final PrestationService prestationService;
+
+    private final Logger log = LoggerFactory.getLogger(PrestationRessource.class);
+
+    private final PrestationService prestationService;
     private final ParamService paramService;
     private final SocService societeService;
 
     private final AccessUserService accessUserService;
+    private final DetailsPrestationService detailsPrestationService;
 
-    public PrestationRessource(PrestationService prestationService, ParamService paramService, SocService societeService, AccessUserService accessUserService) {
+    public PrestationRessource(PrestationService prestationService, ParamService paramService, SocService societeService, AccessUserService accessUserService, DetailsPrestationService detailsPrestationService) {
         this.prestationService = prestationService;
         this.paramService = paramService;
         this.societeService = societeService;
         this.accessUserService = accessUserService;
+        this.detailsPrestationService = detailsPrestationService;
     }
 
     @GetMapping("prestation/{code}")
@@ -84,28 +66,50 @@ public class PrestationRessource {
         return ResponseEntity.ok().body(dTO);
     }
 
+    @GetMapping("details_prestation/{code}")
+    public ResponseEntity<Collection<DetailsPrestationDTO>> getDetailsPrestationByCode(@PathVariable Integer code) {
+        Collection<DetailsPrestationDTO> dTO = detailsPrestationService.findOne(code);
+        return ResponseEntity.ok().body(dTO);
+    }
+    
+    
+    
+    @GetMapping("details_prestation/By")
+    public ResponseEntity<Collection<DetailsPrestationDTO>> getDetailsPrestationByCodeAndCodeNaureAdmission(@RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
+        Collection<DetailsPrestationDTO> dTO = prestationService.findOneWithDetailsCodePrestationAndCodeNatureAdmission(codePrestation , codeNatureAdmission);
+        return ResponseEntity.ok().body(dTO);
+    }
+
     @GetMapping("prestation/all")
     public ResponseEntity<List<PrestationDTO>> getAllPrestation() {
         return ResponseEntity.ok().body(prestationService.findAllPrestation());
     }
- 
+
     @PostMapping("prestation")
     public ResponseEntity<PrestationDTO> postPrestation(@Valid @RequestBody PrestationDTO dTO, BindingResult bindingResult) throws URISyntaxException, MethodArgumentNotValidException {
         PrestationDTO result = prestationService.save(dTO);
         return ResponseEntity.created(new URI("/api/parametrage/" + result.getCode())).body(result);
     }
-
-//    @PutMapping("alimentation_caisse/update")
-//    public ResponseEntity<PrestationDTO> updatePrestation(@Valid @RequestBody PrestationDTO dto, BindingResult bindingResult) throws MethodArgumentNotValidException {
-//        PrestationDTO result = prestationService.update(dto);
-//        return ResponseEntity.ok().body(result);
+//    @PostMapping("prestation")
+//    public ResponseEntity<PrestationDTO> postPrestation(@RequestBody PrestationDTO prestationDTO) {
+//        try {
+//            PrestationDTO savedPrestationDTO = prestationService.save(prestationDTO);
+//            return ResponseEntity.ok(savedPrestationDTO);
+//        } catch (IllegalArgumentException | IllegalStateException e) {
+////            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage())); // Custom Error Response
+//            throw new IllegalArgumentException("error.Erorr");
+//        } catch (Exception e) {
+//            log.error("Error saving prestation", e);
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
 //    }
+
     @PutMapping("prestation/update")
     public ResponseEntity<PrestationDTO> updatePrestation(@Valid @RequestBody PrestationDTO dTO, BindingResult bindingResult) throws MethodArgumentNotValidException {
         PrestationDTO result = prestationService.updateNewWithFlush(dTO);
         return ResponseEntity.ok().body(result);
     }
- 
+
     @DeleteMapping("prestation/delete/{Code}")
     public ResponseEntity<Prestation> deletePrestation(@PathVariable("Code") Integer code) {
         prestationService.deletePrestation(code);
@@ -236,5 +240,4 @@ public class PrestationRessource {
 //                .contentType(excelMediaType)
 //                .body(excelData);
 //    }
-
 }

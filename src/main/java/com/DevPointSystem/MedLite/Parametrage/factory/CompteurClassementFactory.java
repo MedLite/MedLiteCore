@@ -20,12 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CompteurClassementFactory {
-    static String LANGUAGE_SEC;
-
-    @Value("${lang.secondary}")
-    public void setLanguage(String db) {
-        LANGUAGE_SEC = db;
-    }
+    
 
     public static CompteurClassement createCompteurByCode(int code) {
         CompteurClassement domaine = new CompteurClassement();

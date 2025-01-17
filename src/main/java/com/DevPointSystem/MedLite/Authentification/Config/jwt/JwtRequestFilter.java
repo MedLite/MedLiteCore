@@ -61,7 +61,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwtToken = null;
 
-        if (requestUri.equals("/api/auth/login")  || requestUri.equals("/api/auth/signup")) {
+        if (requestUri.equals("/api/auth/login")  || requestUri.equals("/api/auth/signup") || requestUri.equals("/actuator")) {
             chain.doFilter(request, response);
             System.out.println("com.DevPointS" + requestUri);
             return; // Stop processing the request

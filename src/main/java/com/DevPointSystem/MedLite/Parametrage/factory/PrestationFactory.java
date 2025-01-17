@@ -9,9 +9,14 @@ import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPrestationPK;
 import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
 import com.DevPointSystem.MedLite.Parametrage.dto.DetailsPrestationDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.PrestationDTO;
+import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaisse;
+import com.DevPointSystem.MedLite.Recette.domaine.DetailsAlimentationCaissePK;
+import com.DevPointSystem.MedLite.web.Util.Helper;
 import com.DevPointSystem.MedLite.web.Util.Preconditions;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -30,13 +35,20 @@ public class PrestationFactory {
 
     public static Prestation prestationDTOToPrestation(PrestationDTO dto, Prestation domaine) {
         if (dto != null) {
-            domaine.setCode(dto.getCode());
+//            domaine.setCode(dto.getCode());
             domaine.setCodeSaisie(dto.getCodeSaisie());
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
-        
-            domaine.setMontant(dto.getMontant());
+
+            domaine.setMontantER(dto.getMontantER());
+            domaine.setMontantIP(dto.getMontantER());
+            domaine.setMontantOPD(dto.getMontantOPD());
+            domaine.setPrixPrestation(dto.getPrixPrestation());
+
+            domaine.setOpd(dto.isOpd());
+            domaine.setEr(dto.isEr());
+            domaine.setIp(dto.isIp());
 
             domaine.setCodeFamilleFacturation(dto.getCodeFamilleFacturation());
             if (domaine.getCodeFamilleFacturation() != null) {
@@ -47,26 +59,30 @@ public class PrestationFactory {
                 domaine.setFamillePrestation(FamillePrestationFactory.createFamillePrestationByCode(dto.getCodeFamillePrestation()));
             }
 
-            if (dto.getDetailsPrestationDTOs() == null || dto.getDetailsPrestationDTOs().isEmpty() ) {
+            if (dto.getDetailsPrestationDTOs() == null || dto.getDetailsPrestationDTOs().isEmpty()) {
                 throw new IllegalArgumentException("error.DetailsPrestationRequired");
             }
+
             Collection<DetailsPrestation> detailsCollections = new ArrayList<>();
             dto.getDetailsPrestationDTOs().forEach(x -> {
                 DetailsPrestation detailsPrestation = new DetailsPrestation();
 
                 DetailsPrestationPK detailsPK = new DetailsPrestationPK();
+                Preconditions.checkBusinessLogique(x.getCodeNatureAdmission() != null, "error.NatureAdmissionRequired");
+                detailsPK.setCodeNatureAdmission(x.getCodeNatureAdmission());
                 Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant() != null, "error.TypeIntervenantRequired");
-                detailsPK.setCodeTypeIntervenant(x.getCodeTypeIntervenant());
 
+                detailsPK.setCodeTypeIntervenant(x.getCodeTypeIntervenant());
                 detailsPrestation.setDetailsPrestationPK(detailsPK);
 
                 Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");
                 detailsPrestation.setMontant(x.getMontant());
 
-                detailsPrestation.setDateCreate(domaine.getDateCreate());
-                detailsPrestation.setUsercreate(domaine.getUserCreate());
+                detailsPrestation.setDateCreate(new Date());
+                detailsPrestation.setUsercreate(Helper.getUserAuthenticated());
                 detailsPrestation.setPrestation(domaine);
                 detailsCollections.add(detailsPrestation);
+
             });
 
             if (domaine.getDetailsPrestations() != null) {
@@ -94,7 +110,14 @@ public class PrestationFactory {
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUserCreate(domaine.getUserCreate());
 
-            dto.setMontant(domaine.getMontant());
+            dto.setMontantOPD(domaine.getMontantOPD());
+            dto.setMontantER(domaine.getMontantER());
+            dto.setMontantIP(domaine.getMontantIP());
+            dto.setPrixPrestation(domaine.getPrixPrestation());
+
+            dto.setOpd(domaine.isOpd());
+            dto.setEr(domaine.isEr());
+            dto.setIp(domaine.isIp());
 
             dto.setFamilleFacturationDTO(FamilleFacturationFactory.familleFacturationToFamilleFacturationDTO(domaine.getFamilleFacturation()));
             dto.setCodeFamilleFacturation(domaine.getCodeFamilleFacturation());

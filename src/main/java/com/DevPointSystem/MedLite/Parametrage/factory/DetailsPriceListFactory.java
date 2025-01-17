@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DetailsPriceListFactory {
-     public static DetailsPriceListDTO DetailsPriceListToDetailsPriceListDTOCollectionForUpdate(DetailsPriceList domaine) {
+
+    public static DetailsPriceListDTO DetailsPriceListToDetailsPriceListDTOCollectionForUpdate(DetailsPriceList domaine) {
         if (domaine != null) {
             DetailsPriceListDTO dto = new DetailsPriceListDTO();
 
@@ -25,7 +26,9 @@ public class DetailsPriceListFactory {
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
             dto.setMontant(domaine.getMontant());   
-               
+            dto.setMontantPere(domaine.getMontantPere());
+            dto.setRemMaj(domaine.getRemMaj());
+
 
             dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
             dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
@@ -35,14 +38,11 @@ public class DetailsPriceListFactory {
 
             dto.setDesignationArNatureAdmission(domaine.getNatureAdmission().getDesignationAr());
             dto.setDesignationLtNatureAdmission(domaine.getNatureAdmission().getDesignationLt());
-            
+
             dto.setDesignationArPrestation(domaine.getPrestation().getDesignationAr());
-            dto.setDesignationLtPrestation(domaine.getPrestation().getDesignationLt());           
+            dto.setDesignationLtPrestation(domaine.getPrestation().getDesignationLt());
             dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
 
-          
-            
-            
             dto.setCodeSaisiePriceList(domaine.getPriceList().getCodeSaisie());
 
             return dto;
@@ -62,14 +62,16 @@ public class DetailsPriceListFactory {
 
     public static DetailsPriceListDTO DetailsPriceListToDetailsPriceListDTOCollection(DetailsPriceList domaine) {
         if (domaine != null) {
-             DetailsPriceListDTO dto = new DetailsPriceListDTO();
+            DetailsPriceListDTO dto = new DetailsPriceListDTO();
 
             dto.setCodePriceList(domaine.getDetailsPriceListPK().getCodePriceList());
             dto.setCodePriceList(domaine.getPriceList().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
-      
-       dto.setMontant(domaine.getMontant());      
+
+            dto.setMontant(domaine.getMontant());
+            dto.setMontantPere(domaine.getMontantPere());
+            dto.setRemMaj(domaine.getRemMaj());
 
             dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
             dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));

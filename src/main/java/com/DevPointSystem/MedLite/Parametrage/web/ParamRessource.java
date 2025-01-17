@@ -4,7 +4,6 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.web;
 
- 
 import com.DevPointSystem.MedLite.Parametrage.dto.paramDTO;
 import com.DevPointSystem.MedLite.Parametrage.service.ParamService;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +25,11 @@ public class ParamRessource {
     public ParamRessource(ParamService paramService) {
         this.paramService = paramService;
     }
- 
-        @GetMapping("param/codeParam")
+
+    @GetMapping("param/code")
     public ResponseEntity<paramDTO> getParamByCodeParam(@RequestParam String codeParam) {
-        paramDTO dTOs = paramService.findParamByCodeParamS(codeParam);      
-        
-       
- 
+        paramDTO dTOs = paramService.findParamByCodeParamS(codeParam);
+
         return ResponseEntity.ok().body(dTOs);
     }
 }

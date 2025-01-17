@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.TimeZone;
-import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
-
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver; 
+ 
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableJpaAuditing
@@ -34,13 +32,15 @@ public class MedLiteCoreApplication {
     public static String jwtSecret = "";
     
     public static void main(String[] args) throws UnknownHostException {
-
+//ConfigurableApplicationContext context = SpringApplication.run(MedLiteCoreApplication.class, args);
         SpringApplication app = new SpringApplication(MedLiteCoreApplication.class);
         ConfigurableApplicationContext ctx = app.run(args);
         Environment env = ctx.getEnvironment();
-        Boolean kafkaProfileStauts = Arrays.stream(env.getActiveProfiles()).anyMatch("kafka"::equals);
-        String consumersStauts = "Consumer(s): \n";
+//        Boolean kafkaProfileStauts = Arrays.stream(env.getActiveProfiles()).anyMatch("kafka"::equals);
+//        String consumersStauts = "Consumer(s): \n";
 
+        
+        
         String protocol = "http";
 
         if (env.getProperty(
@@ -66,19 +66,19 @@ public class MedLiteCoreApplication {
     }
 
 //    -----------------------------------------
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration crosConfiguration = new CorsConfiguration();
-        crosConfiguration.setAllowCredentials(true);
-        crosConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4020"));
-        crosConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type", "Accept", "Authorization", "Origin, Accept", "X-Requested-With", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
-        crosConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
-        crosConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
-        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", crosConfiguration);
-        return new CorsFilter(urlBasedCorsConfigurationSource);
-
-    }
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        CorsConfiguration crosConfiguration = new CorsConfiguration();
+//        crosConfiguration.setAllowCredentials(true);
+//        crosConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4020"));
+//        crosConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type", "Accept", "Authorization", "Origin, Accept", "X-Requested-With", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+//        crosConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+//        crosConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+//        urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", crosConfiguration);
+//        return new CorsFilter(urlBasedCorsConfigurationSource);
+//
+//    }
 
     @Bean
     public LocaleResolver localeResolver() {

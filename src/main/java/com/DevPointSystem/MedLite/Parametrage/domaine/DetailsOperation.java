@@ -6,6 +6,8 @@ package com.DevPointSystem.MedLite.Parametrage.domaine;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Basic;
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

@@ -4,6 +4,8 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.NatureAdmission;
+import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +27,10 @@ public class DetailsPrestationDTO {
     private Integer codeTypeIntervenant;
     private String designationArTypeIntervenant;
     private String designationLtTypeIntervenant;
+
+    @NotNull
+    private NatureAdmissionDTO natureAdmissionDTO;
+    private Integer codeNatureAdmission;
 
     private BigDecimal montant;
 
@@ -115,7 +121,21 @@ public class DetailsPrestationDTO {
     public void setDesignationLtTypeIntervenant(String designationLtTypeIntervenant) {
         this.designationLtTypeIntervenant = designationLtTypeIntervenant;
     }
-    
-    
+
+    public NatureAdmissionDTO getNatureAdmissionDTO() {
+        return natureAdmissionDTO;
+    }
+
+    public void setNatureAdmissionDTO(NatureAdmissionDTO natureAdmissionDTO) {
+        this.natureAdmissionDTO = natureAdmissionDTO;
+    }
+
+    public Integer getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(Integer codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
 
 }

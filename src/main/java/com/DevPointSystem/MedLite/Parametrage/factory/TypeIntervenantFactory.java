@@ -28,7 +28,11 @@ public class TypeIntervenantFactory {
             domaine.setCodeSaisie(dto.getCodeSaisie());    
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
-            domaine.setActif(dto.isActif());
+            domaine.setActif(dto.isActif());    
+            domaine.setAutoriseFrais(dto.isAutoriseFrais());   
+            domaine.setIsClinique(dto.isIsClinique());
+
+
       
 
             return domaine;
@@ -48,11 +52,12 @@ public class TypeIntervenantFactory {
             dto.setCodeSaisie(domaine.getCodeSaisie());  
             dto.setDesignationAr(domaine.getDesignationAr());
             dto.setDesignationLt(domaine.getDesignationLt()); 
-            dto.setActif(domaine.isActif());
+            dto.setActif(domaine.isActif());     
+            dto.setAutoriseFrais(domaine.isAutoriseFrais()); 
             dto.setDateCreate(domaine.getDateCreate());
-            dto.setUserCreate(domaine.getUserCreate());    
-
-
+            dto.setUserCreate(domaine.getUserCreate());        
+            dto.setIsClinique(domaine.isIsClinique());     
+    
             return dto;
         } else {
             return null;

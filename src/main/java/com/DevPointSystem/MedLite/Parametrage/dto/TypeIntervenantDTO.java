@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Administrator
  */
 public class TypeIntervenantDTO {
+
     private Integer code;
 
     private String codeSaisie;
@@ -23,11 +24,11 @@ public class TypeIntervenantDTO {
     private String userCreate;
 
     private Date dateCreate;
+    private boolean autoriseFrais;
+    private boolean isClinique;
 
     public TypeIntervenantDTO() {
     }
-
-    
 
     public Integer getCode() {
         return code;
@@ -84,4 +85,22 @@ public class TypeIntervenantDTO {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
+
+    public boolean isAutoriseFrais() {
+        return autoriseFrais;
+    }
+
+    public void setAutoriseFrais(boolean autoriseFrais) {
+        this.autoriseFrais = autoriseFrais;
+    }
+
+    public boolean isIsClinique() {
+        return isClinique;
+    }
+
+    public void setIsClinique(boolean isClinique) {
+        this.isClinique = isClinique;
+    }
+    
+
 }

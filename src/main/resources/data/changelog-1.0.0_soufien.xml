@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
-
-       
-    <changeSet id="1" author="soufien" context="prod" runOnChange="true" >
-        <sql>
-            CREATE TABLE [param].[societe](
-            [code] [int] NOT NULL,
-            [logo] [varbinary](max) NULL,
-            [nom_societe] [varchar](100) NOT NULL,
-            PRIMARY KEY CLUSTERED 
-            (
-            [code] ASC
-            )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-            ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-            GO
-
-        </sql>
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1" author="codefarm">
+        <!--          <sql>
+            alter table param.Prestation_AUD add  prixxx decimal(18,3)  default(0)
+        </sql>-->
+        
+        
+<!--        <createTable tableName="test_table">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>-->
     </changeSet>
-     
-    
-    
 </databaseChangeLog>

@@ -45,4 +45,37 @@ public class DetailsOperationPK {
     public void setCodeTypeIntervenant(int codeTypeIntervenant) {
         this.codeTypeIntervenant = codeTypeIntervenant;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 19 * hash + this.codeOperation;
+        hash = 19 * hash + this.codeTypeIntervenant;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DetailsOperationPK other = (DetailsOperationPK) obj;
+        if (this.codeOperation != other.codeOperation) {
+            return false;
+        }
+        return this.codeTypeIntervenant == other.codeTypeIntervenant;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailsOperationPK{" + "codeOperation=" + codeOperation + ", codeTypeIntervenant=" + codeTypeIntervenant + '}';
+    }
+    
+    
 }

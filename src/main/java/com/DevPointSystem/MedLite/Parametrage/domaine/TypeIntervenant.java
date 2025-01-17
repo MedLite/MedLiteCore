@@ -49,6 +49,12 @@ public class TypeIntervenant {
     @Column(name = "Actif", nullable = false)
     private boolean actif;
 
+    @Column(name = "Autorise_Frais", nullable = false, columnDefinition = "bit default (0)")
+    private boolean autoriseFrais;
+
+    @Column(name = "Is_Clinique", nullable = false, columnDefinition = "bit default (0)")
+    private boolean isClinique;
+
     @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
     private String userCreate;
 
@@ -114,4 +120,22 @@ public class TypeIntervenant {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
+
+    public boolean isAutoriseFrais() {
+        return autoriseFrais;
+    }
+
+    public void setAutoriseFrais(boolean autoriseFrais) {
+        this.autoriseFrais = autoriseFrais;
+    }
+
+    public boolean isIsClinique() {
+        return isClinique;
+    }
+
+    public void setIsClinique(boolean isClinique) {
+        this.isClinique = isClinique;
+    }
+    
+
 }

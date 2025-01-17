@@ -28,10 +28,10 @@ public class DetailsPrestationFactory {
             dto.setMontant(domaine.getMontant());
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
-
-//            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
-//            dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());
-//            dto.setCodeSaisieTypeIntervenant(domaine.getTypeIntervenant().getCodeSaisie());
+            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
+            dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
+            dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
+ 
             dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
 
             return dto;
@@ -53,15 +53,16 @@ public class DetailsPrestationFactory {
         if (domaine != null) {
             DetailsPrestationDTO dto = new DetailsPrestationDTO();
 
-            dto.setCodePrestation(domaine.getDetailsPrestationPK().getCodePrestation());
-            dto.setCodePrestation(domaine.getPrestation().getCode());
+//            dto.setCodePrestation(domaine.getDetailsPrestationPK().getCodePrestation());
+//            dto.setCodePrestation(domaine.getPrestation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
-            dto.setMontant(domaine.getMontant()); 
-            dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
-            dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
-
-            dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
+            dto.setMontant(domaine.getMontant());
+//            dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
+//            dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
+//            dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
+//            dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
+//            dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
 
             return dto;
         } else {

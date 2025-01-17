@@ -72,7 +72,7 @@ public class Prestation {
     @Column(name = "Code_Famille_Facturation", updatable = false, insertable = false)
     private Integer codeFamilleFacturation;
 
-    @JoinColumn(name = "Code_Famille_Prestation", referencedColumnName = "Code", nullable = false,insertable = true,updatable = false)
+    @JoinColumn(name = "Code_Famille_Prestation", referencedColumnName = "Code", nullable = false, insertable = true, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private FamillePrestation famillePrestation;
@@ -80,11 +80,27 @@ public class Prestation {
     @Column(name = "Code_Famille_Prestation", updatable = false, insertable = false)
     private Integer codeFamillePrestation;
 
-    @Column(name = "Montant", columnDefinition = ("decimal(18,3)"), nullable = false)
-    private BigDecimal montant;
+    @Column(name = "Montant_OPD", columnDefinition = ("decimal(18,3)"))
+    private BigDecimal montantOPD;
+
+    @Column(name = "Montant_ER", columnDefinition = ("decimal(18,3)"))
+    private BigDecimal montantER;
+
+    @Column(name = "Montant_IP", columnDefinition = ("decimal(18,3)"))
+    private BigDecimal montantIP;
+
+    @Column(name = "Prix_Prestation", columnDefinition = ("decimal(18,3) "))
+    private BigDecimal prixPrestation;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "prestation")
     private Collection<DetailsPrestation> detailsPrestations;
+
+    @Column(name = "OPD", nullable = false, columnDefinition = ("bit default(0)"))
+    private boolean opd;
+    @Column(name = "ER", nullable = false, columnDefinition = ("bit default(0)"))
+    private boolean er;
+    @Column(name = "IP", nullable = false, columnDefinition = ("bit default(0)"))
+    private boolean ip;
 
     public Prestation() {
     }
@@ -177,12 +193,28 @@ public class Prestation {
         this.codeFamillePrestation = codeFamillePrestation;
     }
 
-    public BigDecimal getMontant() {
-        return montant;
+    public BigDecimal getMontantOPD() {
+        return montantOPD;
     }
 
-    public void setMontant(BigDecimal montant) {
-        this.montant = montant;
+    public void setMontantOPD(BigDecimal montantOPD) {
+        this.montantOPD = montantOPD;
+    }
+
+    public BigDecimal getMontantER() {
+        return montantER;
+    }
+
+    public void setMontantER(BigDecimal montantER) {
+        this.montantER = montantER;
+    }
+
+    public BigDecimal getMontantIP() {
+        return montantIP;
+    }
+
+    public void setMontantIP(BigDecimal montantIP) {
+        this.montantIP = montantIP;
     }
 
     public Collection<DetailsPrestation> getDetailsPrestations() {
@@ -191,6 +223,38 @@ public class Prestation {
 
     public void setDetailsPrestations(Collection<DetailsPrestation> detailsPrestations) {
         this.detailsPrestations = detailsPrestations;
+    }
+
+    public boolean isOpd() {
+        return opd;
+    }
+
+    public void setOpd(boolean opd) {
+        this.opd = opd;
+    }
+
+    public boolean isEr() {
+        return er;
+    }
+
+    public void setEr(boolean er) {
+        this.er = er;
+    }
+
+    public boolean isIp() {
+        return ip;
+    }
+
+    public void setIp(boolean ip) {
+        this.ip = ip;
+    }
+
+    public BigDecimal getPrixPrestation() {
+        return prixPrestation;
+    }
+
+    public void setPrixPrestation(BigDecimal prixPrestation) {
+        this.prixPrestation = prixPrestation;
     }
 
 }

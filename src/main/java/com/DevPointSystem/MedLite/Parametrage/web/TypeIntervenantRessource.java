@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/parametrage/")
 public class TypeIntervenantRessource {
-      private final TypeIntervenantService typeIntervenantService;
+
+    private final TypeIntervenantService typeIntervenantService;
 
     public TypeIntervenantRessource(TypeIntervenantService typeIntervenantService) {
         this.typeIntervenantService = typeIntervenantService;
@@ -40,6 +42,12 @@ public class TypeIntervenantRessource {
     @GetMapping("type_intervenant/{code}")
     public ResponseEntity<TypeIntervenantDTO> getTypeIntervenantByCode(@PathVariable Integer code) {
         TypeIntervenantDTO dto = typeIntervenantService.findOne(code);
+        return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping("type_intervenant/IsClinique")
+    public ResponseEntity<List<TypeIntervenantDTO>> getTypeIntervenantNotInClinique(@RequestParam Boolean IsClinique) {
+        List<TypeIntervenantDTO> dto = typeIntervenantService.findIsNotActif(IsClinique);
         return ResponseEntity.ok().body(dto);
     }
 

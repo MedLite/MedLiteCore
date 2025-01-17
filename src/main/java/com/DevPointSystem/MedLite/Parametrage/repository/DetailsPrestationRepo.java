@@ -19,7 +19,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DetailsPrestationRepo extends JpaRepository<DetailsPrestation, DetailsPrestationPK> {
 
-    Collection<DetailsPrestation> findByDetailsPrestationPK_codePrestation(Integer codePrestation);
+    Collection<DetailsPrestation> findByDetailsPrestationPK_codePrestation(Integer codePrestation);  
+    
+    Collection<DetailsPrestation> findByDetailsPrestationPK_codePrestationAndcodeNatureAdmission(Integer codePrestation,Integer codeNatureAdmission);
+
 
     @Modifying
     @Query("delete from DetailsPrestation det where det.detailsPrestationPK.codePrestation=?1 ")

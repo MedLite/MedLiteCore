@@ -5,6 +5,7 @@
 package com.DevPointSystem.MedLite.Parametrage.repository;
  
 import com.DevPointSystem.MedLite.Parametrage.domaine.TypeIntervenant;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TypeIntervenantRepo  extends JpaRepository<TypeIntervenant, Integer> {
 
-    TypeIntervenant findByCode(Integer code);
+    TypeIntervenant findByCode(Integer code);     
+    
+    List<TypeIntervenant> findByIsClinique(Boolean isClinique);    
+  
+     
+
 }
 

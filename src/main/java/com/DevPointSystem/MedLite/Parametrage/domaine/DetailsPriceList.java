@@ -42,9 +42,8 @@ public class DetailsPriceList {
 
     @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
     private String usercreate;
- 
 
-    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false,insertable=false, updatable=false)
+    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private Prestation prestation;
@@ -52,7 +51,7 @@ public class DetailsPriceList {
     @Column(name = "Code_Prestation", insertable = false, updatable = false)
     private Integer codePrestation;
 
-    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false,insertable=false, updatable=false)
+    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private NatureAdmission natureAdmission;
@@ -65,9 +64,14 @@ public class DetailsPriceList {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
 
-  
     @Column(name = "Montant", nullable = false, columnDefinition = ("decimal(18,3)"))
     private BigDecimal montant;
+
+    @Column(name = "Montant_Pere", nullable = false, columnDefinition = ("decimal(18,3) "))
+    private BigDecimal montantPere;
+
+    @Column(name = "RemMaj", nullable = false, columnDefinition = ("varchar(3) "))
+    private String remMaj;
 
     public DetailsPriceList() {
     }
@@ -95,7 +99,7 @@ public class DetailsPriceList {
     public void setUsercreate(String usercreate) {
         this.usercreate = usercreate;
     }
- 
+
     public Prestation getPrestation() {
         return prestation;
     }
@@ -143,13 +147,28 @@ public class DetailsPriceList {
 //    public void setPourcent(BigDecimal pourcent) {
 //        this.pourcent = pourcent;
 //    }
-
     public BigDecimal getMontant() {
         return montant;
     }
 
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
+    }
+
+    public BigDecimal getMontantPere() {
+        return montantPere;
+    }
+
+    public void setMontantPere(BigDecimal montantPere) {
+        this.montantPere = montantPere;
+    }
+
+    public String getRemMaj() {
+        return remMaj;
+    }
+
+    public void setRemMaj(String remMaj) {
+        this.remMaj = remMaj;
     }
     
     

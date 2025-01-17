@@ -34,11 +34,13 @@ public class PriceListFactory {
         if (dto != null) {
 
        
-            domaine.setCode(dto.getCode());
-       
+            domaine.setCode(dto.getCode());  
+            domaine.setCodeSaisie(dto.getCodeSaisie()); 
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setDesignationLt(dto.getDesignationLt());
-            domaine.setActif(dto.isActif());
+            domaine.setActif(dto.isActif()); 
+            domaine.setCash(dto.isCash());
+
 
             domaine.setCodeSociete(dto.getCodeSociete());
             if (domaine.getCodeSociete() != null) {
@@ -60,7 +62,11 @@ public class PriceListFactory {
 
                 detailsPriceList.setDetailsPriceListPK(detailsPK);
                 Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");
-                detailsPriceList.setMontant(x.getMontant());
+                detailsPriceList.setMontant(x.getMontant()); 
+                detailsPriceList.setMontantPere(x.getMontantPere());  
+                detailsPriceList.setRemMaj(x.getRemMaj());
+
+
                 detailsPriceList.setDateCreate(domaine.getDateCreate());
                 detailsPriceList.setUsercreate(domaine.getUserCreate());
                 detailsPriceList.setPriceList(domaine);
@@ -85,12 +91,16 @@ public class PriceListFactory {
 
         if (domaine != null) {
             PriceListDTO dto = new PriceListDTO();
-            dto.setCode(domaine.getCode());
+            dto.setCode(domaine.getCode());    
+            dto.setCodeSaisie(domaine.getCodeSaisie());
+
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUserCreate(domaine.getUserCreate());
             dto.setDesignationAr(domaine.getDesignationAr());
             dto.setDesignationLt(domaine.getDesignationLt());
-            dto.setActif(domaine.isActif());
+            dto.setActif(domaine.isActif());  
+            dto.setCash(domaine.isCash());
+
 
             dto.setCodeSociete(domaine.getCodeSociete());
             dto.setSocieteDTO(SocieteFactory.societeToSocieteDTO(domaine.getSociete()));

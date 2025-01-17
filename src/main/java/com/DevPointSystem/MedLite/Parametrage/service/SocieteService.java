@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.Societe;
 import com.DevPointSystem.MedLite.Parametrage.dto.SocieteDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.SocieteFactory;
@@ -23,9 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SocieteService {
 
+    private final CompteurService compteurService;
     private final SocieteRepo societeRepo;
 
-    public SocieteService(SocieteRepo societeRepo) {
+    public SocieteService(CompteurService compteurService, SocieteRepo societeRepo) {
+        this.compteurService = compteurService;
         this.societeRepo = societeRepo;
     }
 
@@ -46,6 +49,12 @@ public class SocieteService {
         Societe domaine = SocieteFactory.societeDTOToSociete(dto, new Societe());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieSociete");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+
         domaine = societeRepo.save(domaine);
 
         return SocieteFactory.societeToSocieteDTO(domaine);

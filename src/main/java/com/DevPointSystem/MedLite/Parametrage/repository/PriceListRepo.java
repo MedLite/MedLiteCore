@@ -16,5 +16,8 @@ import org.springframework.stereotype.Repository;
 public interface PriceListRepo extends JpaRepository<PriceList, Integer>{
     
     PriceList findByCode(Integer code);
+    
+        PriceList findByCash(Boolean cash);
+
 }
 

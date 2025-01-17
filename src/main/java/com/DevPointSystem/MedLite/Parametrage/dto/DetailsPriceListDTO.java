@@ -32,14 +32,14 @@ public class DetailsPriceListDTO {
     private String designationArNatureAdmission;
     private String designationLtNatureAdmission;
 
-     private BigDecimal montant;
+    private BigDecimal montant;
+    private BigDecimal montantPere;
+    private String remMaj;
 
     private String usercreate;
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
-
- 
 
     public DetailsPriceListDTO() {
     }
@@ -131,7 +131,6 @@ public class DetailsPriceListDTO {
     public void setDesignationLtNatureAdmission(String designationLtNatureAdmission) {
         this.designationLtNatureAdmission = designationLtNatureAdmission;
     }
- 
 
     public String getUsercreate() {
         return usercreate;
@@ -157,6 +156,22 @@ public class DetailsPriceListDTO {
         this.montant = montant;
     }
 
-     
+    public BigDecimal getMontantPere() {
+        return montantPere;
+    }
+
+    public void setMontantPere(BigDecimal montantPere) {
+        this.montantPere = montantPere;
+    }
+
+    public String getRemMaj() {
+        return remMaj;
+    }
+
+    public void setRemMaj(String remMaj) {
+        this.remMaj = remMaj;
+    }
     
+    
+
 }
