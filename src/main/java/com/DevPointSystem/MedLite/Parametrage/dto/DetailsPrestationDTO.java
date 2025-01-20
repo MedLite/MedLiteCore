@@ -32,7 +32,9 @@ public class DetailsPrestationDTO {
     private NatureAdmissionDTO natureAdmissionDTO;
     private Integer codeNatureAdmission;
 
-    private BigDecimal montant;
+    private BigDecimal montant;  
+    private BigDecimal PrixSelonTypeArriver;
+
 
     private String usercreate;
     @NotNull
@@ -137,5 +139,15 @@ public class DetailsPrestationDTO {
     public void setCodeNatureAdmission(Integer codeNatureAdmission) {
         this.codeNatureAdmission = codeNatureAdmission;
     }
+
+    public BigDecimal getPrixSelonTypeArriver() {
+        return PrixSelonTypeArriver;
+    }
+
+    public void setPrixSelonTypeArriver(BigDecimal PrixSelonTypeArriver) {
+        this.PrixSelonTypeArriver = PrixSelonTypeArriver;
+    }
+    
+    
 
 }

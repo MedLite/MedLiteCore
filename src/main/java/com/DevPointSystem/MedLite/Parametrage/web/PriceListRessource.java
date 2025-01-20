@@ -8,6 +8,7 @@ import com.DevPointSystem.MedLite.Authentification.service.AccessUserService;
 import com.DevPointSystem.MedLite.Parametrage.domaine.PriceList;
 import com.DevPointSystem.MedLite.Parametrage.dto.DetailsPriceListDTO;
 import com.DevPointSystem.MedLite.Parametrage.dto.PriceListDTO;
+import com.DevPointSystem.MedLite.Parametrage.service.DetailsPriceListService;
 import com.DevPointSystem.MedLite.Parametrage.service.ParamService;
 import com.DevPointSystem.MedLite.Parametrage.service.PriceListService;
 import com.DevPointSystem.MedLite.Parametrage.service.SocService;
@@ -15,7 +16,9 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -41,13 +44,14 @@ public class PriceListRessource {
     private final PriceListService priceListService;
     private final ParamService paramService;
     private final SocService societeService;
-
+    private final DetailsPriceListService detailsPriceListService;
     private final AccessUserService accessUserService;
 
-    public PriceListRessource(PriceListService priceListService, ParamService paramService, SocService societeService, AccessUserService accessUserService) {
+    public PriceListRessource(PriceListService priceListService, ParamService paramService, SocService societeService, DetailsPriceListService detailsPriceListService, AccessUserService accessUserService) {
         this.priceListService = priceListService;
         this.paramService = paramService;
         this.societeService = societeService;
+        this.detailsPriceListService = detailsPriceListService;
         this.accessUserService = accessUserService;
     }
 
@@ -57,17 +61,17 @@ public class PriceListRessource {
         return ResponseEntity.ok().body(dTO);
     }
 
-    @GetMapping("details_price_list/By")
-    public ResponseEntity<Collection<DetailsPriceListDTO>> getPriceListByPriceListAndPrestation(@RequestParam Integer codePrice, @RequestParam Integer codePrestation) {
-        Collection< DetailsPriceListDTO> dTO = priceListService.findOneWithDetailsWithCodePriceAndCodePrestation(codePrice, codePrestation);
-        return ResponseEntity.ok().body(dTO);
-    }
-
-    @GetMapping("details_price_list/FindBy")
-    public ResponseEntity<Collection<DetailsPriceListDTO>> getPriceListByPriceListAndPrestationAndNatureAdmission(@RequestParam Integer codePrice, @RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
-        Collection< DetailsPriceListDTO> dTO = priceListService.findOneWithDetailsWithCodePriceAndPrestationAndNatureAdmission(codePrice, codePrestation, codeNatureAdmission);
-        return ResponseEntity.ok().body(dTO);
-    }
+//    @GetMapping("details_price_list/By")
+//    public ResponseEntity<Collection<DetailsPriceListDTO>> getPriceListByPriceListAndPrestation(@RequestParam Integer codePrice, @RequestParam Integer codePrestation) {
+//        Collection< DetailsPriceListDTO> dTO = priceListService.findOneWithDetailsWithCodePriceAndCodePrestation(codePrice, codePrestation);
+//        return ResponseEntity.ok().body(dTO);
+//    }
+//
+//    @GetMapping("details_price_list/FindBy")
+//    public ResponseEntity<Collection<DetailsPriceListDTO>> getPriceListByPriceListAndPrestationAndNatureAdmission(@RequestParam Integer codePrice, @RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
+//        Collection< DetailsPriceListDTO> dTO = priceListService.findOneWithDetailsWithCodePriceAndPrestationAndNatureAdmission(codePrice, codePrestation, codeNatureAdmission);
+//        return ResponseEntity.ok().body(dTO);
+//    }
 
     @GetMapping("price_list/all")
     public ResponseEntity<List<PriceListDTO>> getAllPriceList() {
@@ -79,6 +83,32 @@ public class PriceListRessource {
         PriceListDTO result = priceListService.save(dTO);
         return ResponseEntity.created(new URI("/api/parametrage/" + result.getCode())).body(result);
     }
+
+//    @PostMapping("details_price_liste")
+//    public ResponseEntity<DetailsPriceListDTO> postDetailsPriceList(@Valid @RequestBody DetailsPriceListDTO dTO, BindingResult bindingResult) throws URISyntaxException, MethodArgumentNotValidException {
+//        DetailsPriceListDTO result = detailsPriceListService.save(dTO);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
+//    @PostMapping("details_price_list")
+//    public ResponseEntity<?> postDetailsPriceList(
+//            @Valid @RequestBody List<DetailsPriceListDTO> dtoList,
+//            BindingResult bindingResult) throws URISyntaxException {
+//
+//        if (bindingResult.hasErrors()) {
+//            Map<String, String> errors = new HashMap<>();
+//            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+//            return ResponseEntity.badRequest().body(errors);
+//        }
+//
+//        try {
+//            List<DetailsPriceListDTO> result = detailsPriceListService.saveList(dtoList);
+//            return ResponseEntity.ok(result);
+//        } catch (Exception e) {
+//            //Log the exception properly (e.g., using slf4j)
+//            return ResponseEntity.badRequest().body(e.getMessage()); //Return a more informative error to the client
+//        }
+//    }
 
     @PutMapping("price_list/update")
     public ResponseEntity<PriceListDTO> updatePriceList(@Valid @RequestBody PriceListDTO dTO, BindingResult bindingResult) throws MethodArgumentNotValidException {

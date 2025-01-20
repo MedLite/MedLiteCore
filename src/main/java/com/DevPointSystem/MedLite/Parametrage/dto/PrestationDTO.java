@@ -5,9 +5,11 @@
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -42,15 +44,19 @@ public class PrestationDTO {
 
     private BigDecimal montantIP;
 
-    
-        private BigDecimal prixPrestation;
-        
-        
+    private BigDecimal prixPrestation;
+
     private boolean opd;
     private boolean er;
     private boolean ip;
+    
+    private Integer codePriceListCash;
 
     private Collection<DetailsPrestationDTO> detailsPrestationDTOs;
+    
+  
+            private List<DetailsPriceListDTO> detailsPriceLists; 
+        
 
     public PrestationDTO() {
     }
@@ -206,8 +212,24 @@ public class PrestationDTO {
     public void setPrixPrestation(BigDecimal prixPrestation) {
         this.prixPrestation = prixPrestation;
     }
-    
-    
+
+    public Integer getCodePriceListCash() {
+        return codePriceListCash;
+    }
+
+    public void setCodePriceListCash(Integer codePriceListCash) {
+        this.codePriceListCash = codePriceListCash;
+    }
+
+    public List<DetailsPriceListDTO> getDetailsPriceLists() {
+        return detailsPriceLists;
+    }
+
+    public void setDetailsPriceLists(List<DetailsPriceListDTO> detailsPriceLists) {
+        this.detailsPriceLists = detailsPriceLists;
+    }
+
+  
     
     
 

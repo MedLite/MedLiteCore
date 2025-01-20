@@ -33,23 +33,44 @@ public class PrestationFactory {
         return domaine;
     }
 
+    
+    
+    
     public static Prestation prestationDTOToPrestation(PrestationDTO dto, Prestation domaine) {
         if (dto != null) {
-//            domaine.setCode(dto.getCode());
+            domaine.setCode(dto.getCode());
             domaine.setCodeSaisie(dto.getCodeSaisie());
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
-
-            domaine.setMontantER(dto.getMontantER());
-            domaine.setMontantIP(dto.getMontantER());
-            domaine.setMontantOPD(dto.getMontantOPD());
+ 
             domaine.setPrixPrestation(dto.getPrixPrestation());
-
             domaine.setOpd(dto.isOpd());
             domaine.setEr(dto.isEr());
             domaine.setIp(dto.isIp());
-
+//            
+            if (dto.isOpd() == Boolean.TRUE) {
+                if (!dto.getPrixPrestation().equals(dto.getMontantOPD())) {
+                    throw new IllegalArgumentException("error.PriceNotEqualsOPD");
+                } else {
+                    domaine.setMontantOPD(dto.getMontantOPD());
+                }
+            }
+            if (dto.isEr() == Boolean.TRUE) {
+                System.out.println("prix getPrixPrestation   " + dto.getPrixPrestation() + "Prix ER " + dto.getMontantER());
+                if (!dto.getPrixPrestation().equals(dto.getMontantER())) {
+                    throw new IllegalArgumentException("error.PriceNotEqualsER");
+                } else {
+                    domaine.setMontantER(dto.getMontantER());
+                }
+            }
+            if (dto.isIp() == Boolean.TRUE) {
+                if (!dto.getPrixPrestation().equals(dto.getMontantIP())) {
+                    throw new IllegalArgumentException("error.PriceNotEqualsIP");
+                } else {
+                    domaine.setMontantIP(dto.getMontantIP());
+                }
+            }
             domaine.setCodeFamilleFacturation(dto.getCodeFamilleFacturation());
             if (domaine.getCodeFamilleFacturation() != null) {
                 domaine.setFamilleFacturation(FamilleFacturationFactory.createFamilleFacturationByCode(dto.getCodeFamilleFacturation()));
@@ -99,6 +120,54 @@ public class PrestationFactory {
     }
 
     public static PrestationDTO prestationToPrestationDTO(Prestation domaine) {
+
+        if (domaine != null) {
+            PrestationDTO dto = new PrestationDTO();
+            dto.setCode(domaine.getCode());
+            dto.setCodeSaisie(domaine.getCodeSaisie());
+            dto.setDesignationAr(domaine.getDesignationAr());
+            dto.setDesignationLt(domaine.getDesignationLt());
+            dto.setActif(domaine.isActif());
+            dto.setDateCreate(domaine.getDateCreate());
+            dto.setUserCreate(domaine.getUserCreate());
+
+            dto.setMontantOPD(domaine.getMontantOPD());
+            dto.setMontantER(domaine.getMontantER());
+            dto.setMontantIP(domaine.getMontantIP());
+            dto.setPrixPrestation(domaine.getPrixPrestation());
+
+            dto.setOpd(domaine.isOpd());
+
+            dto.setEr(domaine.isEr());
+            dto.setIp(domaine.isIp());
+
+            dto.setFamilleFacturationDTO(FamilleFacturationFactory.familleFacturationToFamilleFacturationDTO(domaine.getFamilleFacturation()));
+            dto.setCodeFamilleFacturation(domaine.getCodeFamilleFacturation());
+            dto.setFamillePrestationDTO(FamillePrestationFactory.famillePrestationToFamillePrestationDTO(domaine.getFamillePrestation()));
+            dto.setCodeFamillePrestation(domaine.getCodeFamillePrestation());
+
+            if (domaine.getDetailsPrestations() != null) {
+                Collection<DetailsPrestationDTO> detailsPrestationDTOs = new ArrayList<>();
+                domaine.getDetailsPrestations().forEach(x -> {
+                    DetailsPrestationDTO detailsDTO = new DetailsPrestationDTO();
+                    detailsDTO = DetailsPrestationFactory.DetailsPrestationToDetailsPrestationDTOCollection(x);
+                    detailsPrestationDTOs.add(detailsDTO);
+                });
+                if (dto.getDetailsPrestationDTOs() != null) {
+                    dto.getDetailsPrestationDTOs().clear();
+                    dto.getDetailsPrestationDTOs().addAll(detailsPrestationDTOs);
+                } else {
+                    dto.setDetailsPrestationDTOs(detailsPrestationDTOs);
+                }
+            }
+
+            return dto;
+        } else {
+            return null;
+        }
+    }
+
+    public static PrestationDTO prestationToPrestationDTOForUpdate(Prestation domaine) {
 
         if (domaine != null) {
             PrestationDTO dto = new PrestationDTO();

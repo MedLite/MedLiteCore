@@ -21,7 +21,7 @@ public interface DetailsPrestationRepo extends JpaRepository<DetailsPrestation, 
 
     Collection<DetailsPrestation> findByDetailsPrestationPK_codePrestation(Integer codePrestation);  
     
-    Collection<DetailsPrestation> findByDetailsPrestationPK_codePrestationAndcodeNatureAdmission(Integer codePrestation,Integer codeNatureAdmission);
+    Collection<DetailsPrestation> findByDetailsPrestationPK_codePrestationAndCodeNatureAdmission(Integer codePrestation,Integer codeNatureAdmission);
 
 
     @Modifying

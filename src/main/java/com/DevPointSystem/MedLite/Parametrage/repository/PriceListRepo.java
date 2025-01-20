@@ -5,6 +5,7 @@
 package com.DevPointSystem.MedLite.Parametrage.repository;
  
 import com.DevPointSystem.MedLite.Parametrage.domaine.PriceList;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +18,7 @@ public interface PriceListRepo extends JpaRepository<PriceList, Integer>{
     
     PriceList findByCode(Integer code);
     
-        PriceList findByCash(Boolean cash);
+         PriceList  findByCash(Boolean cash);
 
 }
 

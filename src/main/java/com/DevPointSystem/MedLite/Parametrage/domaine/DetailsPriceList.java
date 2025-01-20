@@ -5,20 +5,21 @@
 package com.DevPointSystem.MedLite.Parametrage.domaine;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
@@ -32,18 +33,24 @@ import org.hibernate.envers.Audited;
 @AuditTable("Details_Price_List_AUD")
 public class DetailsPriceList {
 
-    @EmbeddedId
-    protected DetailsPriceListPK detailsPriceListPK;
+    @Id
+    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Code")
+    private Integer code;
 
-    @MapsId("codePriceList")
     @JoinColumn(name = "Code_Price_List", referencedColumnName = "Code", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
     private PriceList priceList;
+
+    @Column(name = "Code_Price_List", insertable = false, updatable = false)
+    private Integer codePriceList;
 
     @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
     private String usercreate;
 
-    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private Prestation prestation;
@@ -51,7 +58,15 @@ public class DetailsPriceList {
     @Column(name = "Code_Prestation", insertable = false, updatable = false)
     private Integer codePrestation;
 
-    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "Code_Type_Intervenant", referencedColumnName = "Code", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private TypeIntervenant typeIntervenant;
+
+    @Column(name = "Code_Type_Intervenant", insertable = false, updatable = false)
+    private Integer codeTypeIntervenant;
+
+    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private NatureAdmission natureAdmission;
@@ -76,12 +91,12 @@ public class DetailsPriceList {
     public DetailsPriceList() {
     }
 
-    public DetailsPriceListPK getDetailsPriceListPK() {
-        return detailsPriceListPK;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setDetailsPriceListPK(DetailsPriceListPK detailsPriceListPK) {
-        this.detailsPriceListPK = detailsPriceListPK;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public PriceList getPriceList() {
@@ -90,6 +105,14 @@ public class DetailsPriceList {
 
     public void setPriceList(PriceList priceList) {
         this.priceList = priceList;
+    }
+
+    public Integer getCodePriceList() {
+        return codePriceList;
+    }
+
+    public void setCodePriceList(Integer codePriceList) {
+        this.codePriceList = codePriceList;
     }
 
     public String getUsercreate() {
@@ -169,6 +192,22 @@ public class DetailsPriceList {
 
     public void setRemMaj(String remMaj) {
         this.remMaj = remMaj;
+    }
+
+    public TypeIntervenant getTypeIntervenant() {
+        return typeIntervenant;
+    }
+
+    public void setTypeIntervenant(TypeIntervenant typeIntervenant) {
+        this.typeIntervenant = typeIntervenant;
+    }
+
+    public Integer getCodeTypeIntervenant() {
+        return codeTypeIntervenant;
+    }
+
+    public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
+        this.codeTypeIntervenant = codeTypeIntervenant;
     }
     
     

@@ -25,10 +25,14 @@ public class DetailsPrestationFactory {
             dto.setCodePrestation(domaine.getPrestation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
-            dto.setMontant(domaine.getMontant());
+            dto.setMontant(domaine.getMontant());    
+            dto.setPrixSelonTypeArriver(domaine.getMontant());
+
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
-            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
+            dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());     
+            dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());
+
             dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
             dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
  
@@ -57,7 +61,9 @@ public class DetailsPrestationFactory {
 //            dto.setCodePrestation(domaine.getPrestation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUsercreate());
-            dto.setMontant(domaine.getMontant());
+            dto.setMontant(domaine.getMontant());    
+            dto.setPrixSelonTypeArriver(domaine.getMontant());
+
 //            dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
 //            dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
 //            dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());

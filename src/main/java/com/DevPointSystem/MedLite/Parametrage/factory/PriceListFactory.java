@@ -47,39 +47,39 @@ public class PriceListFactory {
                 domaine.setSociete(SocieteFactory.createSocieteByCode(dto.getCodeSociete()));
             }
 
-            if (dto.getDetailsPriceListsListDTOs() == null || dto.getDetailsPriceListsListDTOs().isEmpty()) {
-                throw new IllegalArgumentException("error.DetailsPriceListRequired");
-            }
-            Collection<DetailsPriceList> detailsCollections = new ArrayList<>();
-            dto.getDetailsPriceListsListDTOs().forEach(x -> {
-                DetailsPriceList detailsPriceList = new DetailsPriceList();
-
-                DetailsPriceListPK detailsPK = new DetailsPriceListPK();
-                Preconditions.checkBusinessLogique(x.getCodeNatureAdmission() != null, "error.NatureAdmissionRequired");
-                detailsPK.setCodeNatureAdmission(x.getCodeNatureAdmission());
-                Preconditions.checkBusinessLogique(x.getCodePrestation() != null, "error.PrestationRequired");
-                detailsPK.setCodePrestation(x.getCodePrestation());
-
-                detailsPriceList.setDetailsPriceListPK(detailsPK);
-                Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");
-                detailsPriceList.setMontant(x.getMontant()); 
-                detailsPriceList.setMontantPere(x.getMontantPere());  
-                detailsPriceList.setRemMaj(x.getRemMaj());
-
-
-                detailsPriceList.setDateCreate(domaine.getDateCreate());
-                detailsPriceList.setUsercreate(domaine.getUserCreate());
-                detailsPriceList.setPriceList(domaine);
-                detailsCollections.add(detailsPriceList); 
-            });
-
-            if (domaine.getDetailsPriceLists() != null) { 
-                domaine.getDetailsPriceLists().clear();
-                domaine.getDetailsPriceLists().addAll(detailsCollections);
-            } else { 
-
-                domaine.setDetailsPriceLists(detailsCollections);
-            }
+//            if (dto.getDetailsPriceListsListDTOs() == null || dto.getDetailsPriceListsListDTOs().isEmpty()) {
+//                throw new IllegalArgumentException("error.DetailsPriceListRequired");
+//            }
+//            Collection<DetailsPriceList> detailsCollections = new ArrayList<>();
+//            dto.getDetailsPriceListsListDTOs().forEach(x -> {
+//                DetailsPriceList detailsPriceList = new DetailsPriceList();
+//
+//                DetailsPriceListPK detailsPK = new DetailsPriceListPK();
+//                Preconditions.checkBusinessLogique(x.getCodeNatureAdmission() != null, "error.NatureAdmissionRequired");
+//                detailsPK.setCodeNatureAdmission(x.getCodeNatureAdmission());
+//                Preconditions.checkBusinessLogique(x.getCodePrestation() != null, "error.PrestationRequired");
+//                detailsPK.setCodePrestation(x.getCodePrestation());
+//
+//                detailsPriceList.setDetailsPriceListPK(detailsPK);
+//                Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");
+//                detailsPriceList.setMontant(x.getMontant()); 
+//                detailsPriceList.setMontantPere(x.getMontantPere());  
+//                detailsPriceList.setRemMaj(x.getRemMaj());
+//
+//
+//                detailsPriceList.setDateCreate(domaine.getDateCreate());
+//                detailsPriceList.setUsercreate(domaine.getUserCreate());
+//                detailsPriceList.setPriceList(domaine);
+//                detailsCollections.add(detailsPriceList); 
+//            });
+//
+//            if (domaine.getDetailsPriceLists() != null) { 
+//                domaine.getDetailsPriceLists().clear();
+//                domaine.getDetailsPriceLists().addAll(detailsCollections);
+//            } else { 
+//
+//                domaine.setDetailsPriceLists(detailsCollections);
+//            }
 
             return domaine;
         } else {
@@ -105,20 +105,20 @@ public class PriceListFactory {
             dto.setCodeSociete(domaine.getCodeSociete());
             dto.setSocieteDTO(SocieteFactory.societeToSocieteDTO(domaine.getSociete()));
 
-            if (domaine.getDetailsPriceLists() != null) {
-                Collection<DetailsPriceListDTO> detailsPriceListDTOs = new ArrayList<>();
-                domaine.getDetailsPriceLists().forEach(x -> {
-                    DetailsPriceListDTO detailsDTO = new DetailsPriceListDTO();
-                    detailsDTO = DetailsPriceListFactory.DetailsPriceListToDetailsPriceListDTOCollection(x);
-                    detailsPriceListDTOs.add(detailsDTO);
-                });
-                if (dto.getDetailsPriceListsListDTOs() != null) {
-                    dto.getDetailsPriceListsListDTOs().clear();
-                    dto.getDetailsPriceListsListDTOs().addAll(detailsPriceListDTOs);
-                } else {
-                    dto.setDetailsPriceListsListDTOs(detailsPriceListDTOs);
-                }
-            }
+//            if (domaine.getDetailsPriceLists() != null) {
+//                Collection<DetailsPriceListDTO> detailsPriceListDTOs = new ArrayList<>();
+//                domaine.getDetailsPriceLists().forEach(x -> {
+//                    DetailsPriceListDTO detailsDTO = new DetailsPriceListDTO();
+//                    detailsDTO = DetailsPriceListFactory.DetailsPriceListToDetailsPriceListDTOCollection(x);
+//                    detailsPriceListDTOs.add(detailsDTO);
+//                });
+//                if (dto.getDetailsPriceListsListDTOs() != null) {
+//                    dto.getDetailsPriceListsListDTOs().clear();
+//                    dto.getDetailsPriceListsListDTOs().addAll(detailsPriceListDTOs);
+//                } else {
+//                    dto.setDetailsPriceListsListDTOs(detailsPriceListDTOs);
+//                }
+//            }
 
             return dto;
         } else {

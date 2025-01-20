@@ -5,6 +5,7 @@
 package com.DevPointSystem.MedLite.Parametrage.repository;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.NatureAdmission;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NatureAdmissionRepo extends JpaRepository<NatureAdmission, Integer> {
 
-    NatureAdmission findByCode(Integer code);
+    NatureAdmission findByCode(Integer code);  
+    List<NatureAdmission> findByCodeIn(List<Integer> code);
+
 }

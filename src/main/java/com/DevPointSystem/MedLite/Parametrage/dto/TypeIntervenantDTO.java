@@ -12,11 +12,20 @@ import java.util.Date;
  */
 public class TypeIntervenantDTO {
 
-    private Integer code;
+    private Integer code;   
+    
+    
+    private Integer codeTypeIntervenant;
+
 
     private String codeSaisie;
 
-    private String designationAr;
+    private String designationAr;  
+    
+    private String designationArTypeIntervenant;  
+    private String designationLTTypeIntervenant;
+
+
 
     private String designationLt;
     private boolean actif;
@@ -101,6 +110,32 @@ public class TypeIntervenantDTO {
     public void setIsClinique(boolean isClinique) {
         this.isClinique = isClinique;
     }
+
+    public String getDesignationArTypeIntervenant() {
+        return designationArTypeIntervenant;
+    }
+
+    public void setDesignationArTypeIntervenant(String designationArTypeIntervenant) {
+        this.designationArTypeIntervenant = designationArTypeIntervenant;
+    }
+
+    public String getDesignationLTTypeIntervenant() {
+        return designationLTTypeIntervenant;
+    }
+
+    public void setDesignationLTTypeIntervenant(String designationLTTypeIntervenant) {
+        this.designationLTTypeIntervenant = designationLTTypeIntervenant;
+    }
+
+    public Integer getCodeTypeIntervenant() {
+        return codeTypeIntervenant;
+    }
+
+    public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
+        this.codeTypeIntervenant = codeTypeIntervenant;
+    }
+    
+    
     
 
 }

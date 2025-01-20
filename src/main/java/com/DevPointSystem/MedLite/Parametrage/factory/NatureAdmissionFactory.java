@@ -21,6 +21,8 @@ public class NatureAdmissionFactory {
         domaine.setCode(code);
         return domaine;
     }
+    
+  
 
     public static NatureAdmission natureAdmissionDTOToNatureAdmission(NatureAdmissionDTO dto, NatureAdmission domaine) {
         if (dto != null) {

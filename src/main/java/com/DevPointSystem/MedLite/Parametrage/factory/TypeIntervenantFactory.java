@@ -24,7 +24,8 @@ public class TypeIntervenantFactory {
 
     public static TypeIntervenant typeIntervenantDTOToTypeIntervenant(TypeIntervenantDTO dto, TypeIntervenant domaine) {
         if (dto != null) {
-            domaine.setCode(dto.getCode());       
+            domaine.setCode(dto.getCode());         
+  
             domaine.setCodeSaisie(dto.getCodeSaisie());    
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
@@ -49,9 +50,12 @@ public class TypeIntervenantFactory {
         if (domaine != null) {
             TypeIntervenantDTO dto = new TypeIntervenantDTO();
             dto.setCode(domaine.getCode());    
+            dto.setCodeTypeIntervenant(domaine.getCode());     
             dto.setCodeSaisie(domaine.getCodeSaisie());  
             dto.setDesignationAr(domaine.getDesignationAr());
-            dto.setDesignationLt(domaine.getDesignationLt()); 
+            dto.setDesignationLt(domaine.getDesignationLt());  
+            dto.setDesignationArTypeIntervenant(domaine.getDesignationAr()); 
+            dto.setDesignationLTTypeIntervenant(domaine.getDesignationLt());  
             dto.setActif(domaine.isActif());     
             dto.setAutoriseFrais(domaine.isAutoriseFrais()); 
             dto.setDateCreate(domaine.getDateCreate());

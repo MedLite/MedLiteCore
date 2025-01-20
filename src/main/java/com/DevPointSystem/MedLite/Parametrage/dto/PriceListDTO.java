@@ -38,7 +38,7 @@ public class PriceListDTO {
 
     private Date dateCreate;
 
-    private Collection<DetailsPriceListDTO> detailsPriceListsListDTOs;
+//    private Collection<DetailsPriceListDTO> detailsPriceListsListDTOs;
 
     private SocieteDTO societeDTO;
 
@@ -105,13 +105,13 @@ public class PriceListDTO {
         this.dateCreate = dateCreate;
     }
 
-    public Collection<DetailsPriceListDTO> getDetailsPriceListsListDTOs() {
-        return detailsPriceListsListDTOs;
-    }
-
-    public void setDetailsPriceListsListDTOs(Collection<DetailsPriceListDTO> detailsPriceListsListDTOs) {
-        this.detailsPriceListsListDTOs = detailsPriceListsListDTOs;
-    }
+//    public Collection<DetailsPriceListDTO> getDetailsPriceListsListDTOs() {
+//        return detailsPriceListsListDTOs;
+//    }
+//
+//    public void setDetailsPriceListsListDTOs(Collection<DetailsPriceListDTO> detailsPriceListsListDTOs) {
+//        this.detailsPriceListsListDTOs = detailsPriceListsListDTOs;
+//    }
 
     public SocieteDTO getSocieteDTO() {
         return societeDTO;

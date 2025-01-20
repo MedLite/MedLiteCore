@@ -5,9 +5,13 @@
 package com.DevPointSystem.MedLite.Parametrage.factory;
 
 import com.DevPointSystem.MedLite.Parametrage.domaine.DetailsPriceList;
+import com.DevPointSystem.MedLite.Parametrage.domaine.PriceList;
 import com.DevPointSystem.MedLite.Parametrage.dto.DetailsPriceListDTO;
+import com.DevPointSystem.MedLite.Parametrage.dto.PriceListDTO;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,18 +21,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class DetailsPriceListFactory {
 
-    public static DetailsPriceListDTO DetailsPriceListToDetailsPriceListDTOCollectionForUpdate(DetailsPriceList domaine) {
+    public static DetailsPriceListDTO DetailsPriceListToDetailsPriceListDTO(DetailsPriceList domaine) {
         if (domaine != null) {
             DetailsPriceListDTO dto = new DetailsPriceListDTO();
-
-            dto.setCodePriceList(domaine.getDetailsPriceListPK().getCodePriceList());
-            dto.setCodePriceList(domaine.getPriceList().getCode());
-            dto.setDateCreate(domaine.getDateCreate());
-            dto.setUsercreate(domaine.getUsercreate());
-            dto.setMontant(domaine.getMontant());   
+            dto.setCode(domaine.getCode());
+            dto.setMontant(domaine.getMontant());
             dto.setMontantPere(domaine.getMontantPere());
             dto.setRemMaj(domaine.getRemMaj());
-
+            dto.setUsercreate(domaine.getUsercreate());
+            dto.setDateCreate(domaine.getDateCreate());
 
             dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
             dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
@@ -36,15 +37,14 @@ public class DetailsPriceListFactory {
             dto.setCodePrestation(domaine.getCodePrestation());
             dto.setPrestationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestation()));
 
-            dto.setDesignationArNatureAdmission(domaine.getNatureAdmission().getDesignationAr());
-            dto.setDesignationLtNatureAdmission(domaine.getNatureAdmission().getDesignationLt());
+            dto.setCodePriceList(domaine.getCodePriceList());
+            dto.setPriceListDTO(PriceListFactory.priceListToPriceListDTO(domaine.getPriceList()));
 
-            dto.setDesignationArPrestation(domaine.getPrestation().getDesignationAr());
-            dto.setDesignationLtPrestation(domaine.getPrestation().getDesignationLt());
-            dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
-
-            dto.setCodeSaisiePriceList(domaine.getPriceList().getCodeSaisie());
-
+            
+             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
+            dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
+            
+            
             return dto;
         } else {
             return null;
@@ -52,39 +52,50 @@ public class DetailsPriceListFactory {
 
     }
 
-    public static Collection<DetailsPriceListDTO> detailsPriceListTodetailsPriceListDTOCollections(Collection<DetailsPriceList> detailsPriceLists) {
-        Collection<DetailsPriceListDTO> detailsPriceListDTOs = new ArrayList<>();
+  
+    
+      public static List<DetailsPriceListDTO> detailsPriceListTodetailsPriceListDTOs(List<DetailsPriceList> detailsPriceLists) {
+        List<DetailsPriceListDTO> detailsPriceListDTOs = new ArrayList<>();
         for (DetailsPriceList detailsPriceList : detailsPriceLists) {
-            detailsPriceListDTOs.add(DetailsPriceListToDetailsPriceListDTOCollectionForUpdate(detailsPriceList));
+            detailsPriceListDTOs.add(DetailsPriceListToDetailsPriceListDTO(detailsPriceList));
         }
         return detailsPriceListDTOs;
     }
 
-    public static DetailsPriceListDTO DetailsPriceListToDetailsPriceListDTOCollection(DetailsPriceList domaine) {
-        if (domaine != null) {
-            DetailsPriceListDTO dto = new DetailsPriceListDTO();
+    public static DetailsPriceList DetailspriceListDTOToDetailsPriceList(DetailsPriceListDTO dto, DetailsPriceList domaine) {
+        if (dto != null) {
 
-            dto.setCodePriceList(domaine.getDetailsPriceListPK().getCodePriceList());
-            dto.setCodePriceList(domaine.getPriceList().getCode());
-            dto.setDateCreate(domaine.getDateCreate());
-            dto.setUsercreate(domaine.getUsercreate());
+            domaine.setCode(dto.getCode());
+            domaine.setMontant(dto.getMontant());
+            domaine.setMontantPere(dto.getMontantPere());
+            domaine.setRemMaj(dto.getRemMaj());
+            domaine.setUsercreate(dto.getUsercreate());
+            domaine.setDateCreate(new Date());
 
-            dto.setMontant(domaine.getMontant());
-            dto.setMontantPere(domaine.getMontantPere());
-            dto.setRemMaj(domaine.getRemMaj());
+            domaine.setCodeNatureAdmission(dto.getCodeNatureAdmission());
+            if (domaine.getCodeNatureAdmission() != null) {
+                domaine.setNatureAdmission(NatureAdmissionFactory.createNatureAdmissionByCode(dto.getCodeNatureAdmission()));
+            }
 
-            dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
-            dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
+            domaine.setCodePrestation(dto.getCodePrestation());
+            if (domaine.getCodePrestation() != null) {
+                domaine.setPrestation(PrestationFactory.createPrestationByCode(dto.getCodePrestation()));
+            }
 
-            dto.setCodePrestation(domaine.getCodePrestation());
-            dto.setPrestationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestation()));
+            domaine.setCodePriceList(dto.getCodePriceList());
+            if (domaine.getCodePriceList() != null) {
+                domaine.setPriceList(PriceListFactory.createPriceListByCode(dto.getCodePriceList()));
+            }
+            
+            domaine.setCodeTypeIntervenant(dto.getCodeTypeIntervenant());
+            if (domaine.getCodeTypeIntervenant() != null) {
+                domaine.setTypeIntervenant(TypeIntervenantFactory.createTypeIntervenantByCode(dto.getCodeTypeIntervenant()));
+            }
 
-            dto.setCodeSaisiePriceList(domaine.getPriceList().getCodeSaisie());
-
-            return dto;
+            return domaine;
         } else {
             return null;
         }
-
     }
+
 }

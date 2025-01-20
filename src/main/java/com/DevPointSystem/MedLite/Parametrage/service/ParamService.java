@@ -10,6 +10,9 @@ import com.DevPointSystem.MedLite.Parametrage.dto.paramDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.paramFactory;
 import com.DevPointSystem.MedLite.Parametrage.repository.ParamRepo;
 import com.DevPointSystem.MedLite.web.Util.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+ 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ParamService {
 
+    
+    private final Logger log = LoggerFactory.getLogger(ParamService.class);
 
 
     private final ParamRepo paramRepo;
@@ -40,6 +45,15 @@ public class ParamService {
         param result = paramRepo.findParamByCodeParam(codeParam); 
         Preconditions.checkBusinessLogique(result != null, "error.ParamNotFound");
         return paramFactory.paramToparamDTO(result);
+    }
+    
+    
+    @Transactional(readOnly = true)
+    public param findOne(String id) {
+        log.debug("Request to get Param : {}", id);
+        param param = paramRepo.findParamByCodeParam(id);
+        Preconditions.checkBusinessLogique(param != null, "error.parametrageManquant",id);
+        return param;
     }
 
 }

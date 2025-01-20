@@ -5,6 +5,7 @@
 package com.DevPointSystem.MedLite.Parametrage.domaine;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,6 +23,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
@@ -55,8 +57,8 @@ public class PriceList {
 
     @Column(name = "Actif", nullable = false)
     private boolean actif;
-    
-        @Column(name = "Cash", nullable = false,columnDefinition = "bit default(0)")
+
+    @Column(name = "Cash", nullable = false, columnDefinition = "bit default(0)")
     private boolean cash;
 
     @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
@@ -66,8 +68,14 @@ public class PriceList {
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
     private Date dateCreate;
 
-    @OneToMany(mappedBy = "priceList", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<DetailsPriceList> detailsPriceLists;
+//    @OneToMany(mappedBy = "priceList", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Collection<DetailsPriceList> detailsPriceLists;
+//        @JsonManagedReference
+//    @OneToMany(mappedBy = "codePriceList", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)//
+//    private List<DetailsPriceList> detailsPriceList;
+    @OneToMany(mappedBy = "codePriceList", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonBackReference("priceListDetails") // Unique name
+    private List<DetailsPriceList> detailsPriceList;
 
     @JoinColumn(name = "Code_Societe", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -136,14 +144,6 @@ public class PriceList {
         this.dateCreate = dateCreate;
     }
 
-    public Collection<DetailsPriceList> getDetailsPriceLists() {
-        return detailsPriceLists;
-    }
-
-    public void setDetailsPriceLists(Collection<DetailsPriceList> detailsPriceLists) {
-        this.detailsPriceLists = detailsPriceLists;
-    }
-
     public Societe getSociete() {
         return societe;
     }
@@ -167,7 +167,13 @@ public class PriceList {
     public void setCash(boolean cash) {
         this.cash = cash;
     }
-    
-    
+
+    public List<DetailsPriceList> getDetailsPriceList() {
+        return detailsPriceList;
+    }
+
+    public void setDetailsPriceList(List<DetailsPriceList> detailsPriceList) {
+        this.detailsPriceList = detailsPriceList;
+    }
 
 }

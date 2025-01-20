@@ -39,6 +39,15 @@ public class NatureAdmissionService {
         Preconditions.checkArgument(domaine != null, "error.NatureAdmissionNotFound");
         return NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine);
     }
+    
+    @Transactional(readOnly = true)
+    public List<NatureAdmissionDTO> findByCodeIn(List<Integer> code) {
+        List<NatureAdmission> domaine = natureAdmissionRepo.findByCodeIn(code);
+        Preconditions.checkArgument(domaine != null, "error.NatureAdmissionNotFound");
+        return NatureAdmissionFactory.listNatureAdmissionToNatureAdmissionDTOs(domaine);
+    }
+    
+    
 
 //    public NatureAdmissionDTO save(NatureAdmissionDTO dto) {
 //        NatureAdmission domaine = NatureAdmissionFactory.natureAdmissionDTOToNatureAdmission(dto, new NatureAdmission());

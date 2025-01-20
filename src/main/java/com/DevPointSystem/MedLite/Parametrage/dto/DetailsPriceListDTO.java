@@ -4,11 +4,22 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.NatureAdmission;
+import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
+import com.DevPointSystem.MedLite.Parametrage.domaine.PriceList;
+import com.DevPointSystem.MedLite.Parametrage.domaine.TypeIntervenant;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -16,48 +27,49 @@ import java.util.Date;
  */
 public class DetailsPriceListDTO {
 
-    private int codePriceList;
-    private String codeSaisiePriceList;
+    private Integer code;
 
-    @NotNull
+    private PriceListDTO priceListDTO;
+
+    private Integer codePriceList;
+
+    private String usercreate;
     private PrestationDTO prestationDTO;
-    private String codeSaisiePrestation;
-    private Integer codePrestation;
-    private String designationArPrestation;
-    private String designationLtPrestation;
 
-    @NotNull
+    private Integer codePrestation;
+
     private NatureAdmissionDTO natureAdmissionDTO;
+
     private Integer codeNatureAdmission;
-    private String designationArNatureAdmission;
-    private String designationLtNatureAdmission;
+    private TypeIntervenantDTO typeIntervenantDTO;
+
+    private Integer codeTypeIntervenant;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreate;
 
     private BigDecimal montant;
     private BigDecimal montantPere;
-    private String remMaj;
 
-    private String usercreate;
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreate;
+    private String remMaj;
 
     public DetailsPriceListDTO() {
     }
 
-    public int getCodePriceList() {
-        return codePriceList;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setCodePriceList(int codePriceList) {
-        this.codePriceList = codePriceList;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
-    public String getCodeSaisiePriceList() {
-        return codeSaisiePriceList;
+    public String getUsercreate() {
+        return usercreate;
     }
 
-    public void setCodeSaisiePriceList(String codeSaisiePriceList) {
-        this.codeSaisiePriceList = codeSaisiePriceList;
+    public void setUsercreate(String usercreate) {
+        this.usercreate = usercreate;
     }
 
     public PrestationDTO getPrestationDTO() {
@@ -68,36 +80,12 @@ public class DetailsPriceListDTO {
         this.prestationDTO = prestationDTO;
     }
 
-    public String getCodeSaisiePrestation() {
-        return codeSaisiePrestation;
-    }
-
-    public void setCodeSaisiePrestation(String codeSaisiePrestation) {
-        this.codeSaisiePrestation = codeSaisiePrestation;
-    }
-
     public Integer getCodePrestation() {
         return codePrestation;
     }
 
     public void setCodePrestation(Integer codePrestation) {
         this.codePrestation = codePrestation;
-    }
-
-    public String getDesignationArPrestation() {
-        return designationArPrestation;
-    }
-
-    public void setDesignationArPrestation(String designationArPrestation) {
-        this.designationArPrestation = designationArPrestation;
-    }
-
-    public String getDesignationLtPrestation() {
-        return designationLtPrestation;
-    }
-
-    public void setDesignationLtPrestation(String designationLtPrestation) {
-        this.designationLtPrestation = designationLtPrestation;
     }
 
     public NatureAdmissionDTO getNatureAdmissionDTO() {
@@ -114,30 +102,6 @@ public class DetailsPriceListDTO {
 
     public void setCodeNatureAdmission(Integer codeNatureAdmission) {
         this.codeNatureAdmission = codeNatureAdmission;
-    }
-
-    public String getDesignationArNatureAdmission() {
-        return designationArNatureAdmission;
-    }
-
-    public void setDesignationArNatureAdmission(String designationArNatureAdmission) {
-        this.designationArNatureAdmission = designationArNatureAdmission;
-    }
-
-    public String getDesignationLtNatureAdmission() {
-        return designationLtNatureAdmission;
-    }
-
-    public void setDesignationLtNatureAdmission(String designationLtNatureAdmission) {
-        this.designationLtNatureAdmission = designationLtNatureAdmission;
-    }
-
-    public String getUsercreate() {
-        return usercreate;
-    }
-
-    public void setUsercreate(String usercreate) {
-        this.usercreate = usercreate;
     }
 
     public Date getDateCreate() {
@@ -171,7 +135,37 @@ public class DetailsPriceListDTO {
     public void setRemMaj(String remMaj) {
         this.remMaj = remMaj;
     }
-    
-    
+
+    public PriceListDTO getPriceListDTO() {
+        return priceListDTO;
+    }
+
+    public void setPriceListDTO(PriceListDTO priceListDTO) {
+        this.priceListDTO = priceListDTO;
+    }
+
+    public Integer getCodePriceList() {
+        return codePriceList;
+    }
+
+    public void setCodePriceList(Integer codePriceList) {
+        this.codePriceList = codePriceList;
+    }
+
+    public TypeIntervenantDTO getTypeIntervenantDTO() {
+        return typeIntervenantDTO;
+    }
+
+    public void setTypeIntervenantDTO(TypeIntervenantDTO typeIntervenantDTO) {
+        this.typeIntervenantDTO = typeIntervenantDTO;
+    }
+
+    public Integer getCodeTypeIntervenant() {
+        return codeTypeIntervenant;
+    }
+
+    public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
+        this.codeTypeIntervenant = codeTypeIntervenant;
+    }
 
 }
