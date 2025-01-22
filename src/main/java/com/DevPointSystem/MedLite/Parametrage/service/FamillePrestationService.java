@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.FamillePrestation;
 import com.DevPointSystem.MedLite.Parametrage.dto.FamillePrestationDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.FamillePrestationFactory;
@@ -22,10 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class FamillePrestationService {
-    private final FamillePrestationRepo famillePrestationRepo;
 
-    public FamillePrestationService(FamillePrestationRepo famillePrestationRepo) {
+    private final FamillePrestationRepo famillePrestationRepo;
+    private final CompteurService compteurService;
+
+    public FamillePrestationService(FamillePrestationRepo famillePrestationRepo, CompteurService compteurService) {
         this.famillePrestationRepo = famillePrestationRepo;
+        this.compteurService = compteurService;
     }
 
     @Transactional(readOnly = true)
@@ -43,8 +47,14 @@ public class FamillePrestationService {
 
     public FamillePrestationDTO save(FamillePrestationDTO dto) {
         FamillePrestation domaine = FamillePrestationFactory.famillePrestationDTOToFamillePrestation(dto, new FamillePrestation());
-    domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieFamillePrestation");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+
         domaine = famillePrestationRepo.save(domaine);
 
         return FamillePrestationFactory.famillePrestationToFamillePrestationDTO(domaine);

@@ -33,9 +33,6 @@ public class PrestationFactory {
         return domaine;
     }
 
-    
-    
-    
     public static Prestation prestationDTOToPrestation(PrestationDTO dto, Prestation domaine) {
         if (dto != null) {
             domaine.setCode(dto.getCode());
@@ -43,7 +40,7 @@ public class PrestationFactory {
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
- 
+
             domaine.setPrixPrestation(dto.getPrixPrestation());
             domaine.setOpd(dto.isOpd());
             domaine.setEr(dto.isEr());
@@ -75,6 +72,12 @@ public class PrestationFactory {
             if (domaine.getCodeFamilleFacturation() != null) {
                 domaine.setFamilleFacturation(FamilleFacturationFactory.createFamilleFacturationByCode(dto.getCodeFamilleFacturation()));
             }
+
+            domaine.setCodeSousFamillePrestation(dto.getCodeSousFamillePrestation());
+            if (domaine.getCodeSousFamillePrestation() != null) {
+                domaine.setSousFamillePrestation(SousFamillePrestationFactory.createSousFamillePrestationByCode(dto.getCodeSousFamillePrestation()));
+            }
+
             domaine.setCodeFamillePrestation(dto.getCodeFamillePrestation());
             if (domaine.getCodeFamillePrestation() != null) {
                 domaine.setFamillePrestation(FamillePrestationFactory.createFamillePrestationByCode(dto.getCodeFamillePrestation()));
@@ -146,6 +149,9 @@ public class PrestationFactory {
             dto.setFamillePrestationDTO(FamillePrestationFactory.famillePrestationToFamillePrestationDTO(domaine.getFamillePrestation()));
             dto.setCodeFamillePrestation(domaine.getCodeFamillePrestation());
 
+            dto.setSousFamillePrestationDTO(SousFamillePrestationFactory.sousFamillePrestationToSousFamillePrestationDTO(domaine.getSousFamillePrestation()));
+            dto.setCodeSousFamillePrestation(domaine.getCodeSousFamillePrestation());
+
             if (domaine.getDetailsPrestations() != null) {
                 Collection<DetailsPrestationDTO> detailsPrestationDTOs = new ArrayList<>();
                 domaine.getDetailsPrestations().forEach(x -> {
@@ -192,7 +198,8 @@ public class PrestationFactory {
             dto.setCodeFamilleFacturation(domaine.getCodeFamilleFacturation());
             dto.setFamillePrestationDTO(FamillePrestationFactory.famillePrestationToFamillePrestationDTO(domaine.getFamillePrestation()));
             dto.setCodeFamillePrestation(domaine.getCodeFamillePrestation());
-
+            dto.setSousFamillePrestationDTO(SousFamillePrestationFactory.sousFamillePrestationToSousFamillePrestationDTO(domaine.getSousFamillePrestation()));
+            dto.setCodeSousFamillePrestation(domaine.getCodeSousFamillePrestation());
             if (domaine.getDetailsPrestations() != null) {
                 Collection<DetailsPrestationDTO> detailsPrestationDTOs = new ArrayList<>();
                 domaine.getDetailsPrestations().forEach(x -> {

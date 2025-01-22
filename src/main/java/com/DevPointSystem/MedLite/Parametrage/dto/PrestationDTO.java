@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.dto;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.SousFamillePrestation;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -38,6 +39,10 @@ public class PrestationDTO {
 
     private Integer codeFamillePrestation;
 
+    private SousFamillePrestationDTO sousFamillePrestationDTO;
+
+    private Integer codeSousFamillePrestation;
+
     private BigDecimal montantOPD;
 
     private BigDecimal montantER;
@@ -49,14 +54,12 @@ public class PrestationDTO {
     private boolean opd;
     private boolean er;
     private boolean ip;
-    
+
     private Integer codePriceListCash;
 
     private Collection<DetailsPrestationDTO> detailsPrestationDTOs;
-    
-  
-            private List<DetailsPriceListDTO> detailsPriceLists; 
-        
+
+    private List<DetailsPriceListDTO> detailsPriceLists;
 
     public PrestationDTO() {
     }
@@ -229,7 +232,21 @@ public class PrestationDTO {
         this.detailsPriceLists = detailsPriceLists;
     }
 
-  
+    public SousFamillePrestationDTO getSousFamillePrestationDTO() {
+        return sousFamillePrestationDTO;
+    }
+
+    public void setSousFamillePrestationDTO(SousFamillePrestationDTO sousFamillePrestationDTO) {
+        this.sousFamillePrestationDTO = sousFamillePrestationDTO;
+    }
+
+    public Integer getCodeSousFamillePrestation() {
+        return codeSousFamillePrestation;
+    }
+
+    public void setCodeSousFamillePrestation(Integer codeSousFamillePrestation) {
+        this.codeSousFamillePrestation = codeSousFamillePrestation;
+    }
     
     
 

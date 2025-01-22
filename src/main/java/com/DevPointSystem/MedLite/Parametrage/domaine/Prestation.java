@@ -72,7 +72,15 @@ public class Prestation {
     @Column(name = "Code_Famille_Facturation", updatable = false, insertable = false)
     private Integer codeFamilleFacturation;
 
-    @JoinColumn(name = "Code_Famille_Prestation", referencedColumnName = "Code", nullable = false, insertable = true, updatable = false)
+    @JoinColumn(name = "Code_Sous_Famille_Prestation", referencedColumnName = "Code", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private SousFamillePrestation sousFamillePrestation;
+
+    @Column(name = "Code_Sous_Famille_Prestation", updatable = false, insertable = false)
+    private Integer codeSousFamillePrestation;
+
+    @JoinColumn(name = "Code_Famille_Prestation", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private FamillePrestation famillePrestation;
@@ -257,4 +265,21 @@ public class Prestation {
         this.prixPrestation = prixPrestation;
     }
 
+    public SousFamillePrestation getSousFamillePrestation() {
+        return sousFamillePrestation;
+    }
+
+    public void setSousFamillePrestation(SousFamillePrestation sousFamillePrestation) {
+        this.sousFamillePrestation = sousFamillePrestation;
+    }
+
+    public Integer getCodeSousFamillePrestation() {
+        return codeSousFamillePrestation;
+    }
+
+    public void setCodeSousFamillePrestation(Integer codeSousFamillePrestation) {
+        this.codeSousFamillePrestation = codeSousFamillePrestation;
+    }
+
+    
 }

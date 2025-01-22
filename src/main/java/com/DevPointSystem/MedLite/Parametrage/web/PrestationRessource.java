@@ -71,12 +71,16 @@ public class PrestationRessource {
         Collection<DetailsPrestationDTO> dTO = detailsPrestationService.findOne(code);
         return ResponseEntity.ok().body(dTO);
     }
-    
-    
-    
+
+//   
+    @GetMapping("prestation/findBy")
+    public ResponseEntity<List<PrestationDTO>> getAllPrestationByActif(@RequestParam Boolean actif) {
+        return ResponseEntity.ok().body(prestationService.findAllPrestationByActif(actif));
+    }
+
     @GetMapping("details_prestation/By")
     public ResponseEntity<Collection<DetailsPrestationDTO>> getDetailsPrestationByCodeAndCodeNaureAdmission(@RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
-        Collection<DetailsPrestationDTO> dTO = prestationService.findOneWithDetailsCodePrestationAndCodeNatureAdmission(codePrestation , codeNatureAdmission);
+        Collection<DetailsPrestationDTO> dTO = prestationService.findOneWithDetailsCodePrestationAndCodeNatureAdmission(codePrestation, codeNatureAdmission);
         return ResponseEntity.ok().body(dTO);
     }
 

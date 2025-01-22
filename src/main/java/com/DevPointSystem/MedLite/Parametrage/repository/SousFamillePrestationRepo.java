@@ -4,8 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.repository;
 
-import com.DevPointSystem.MedLite.Parametrage.domaine.Caisse;
-import com.DevPointSystem.MedLite.Parametrage.domaine.Prestation;
+import com.DevPointSystem.MedLite.Parametrage.domaine.SousFamillePrestation;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,8 +14,10 @@ import org.springframework.stereotype.Repository;
  * @author Administrator
  */
 @Repository
-public interface PrestationRepo  extends JpaRepository<Prestation, Integer>{
-    
-    Prestation findByCode(Integer code);
-    List<Prestation> findByActif (Boolean actif);
+public interface SousFamillePrestationRepo extends JpaRepository<SousFamillePrestation, Integer> {
+
+    SousFamillePrestation findByCode(Integer code);
+
+    List<SousFamillePrestation> findByCodeFamillePrestation(Integer codeFamillePrestation);
+
 }

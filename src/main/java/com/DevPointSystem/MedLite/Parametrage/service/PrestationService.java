@@ -85,13 +85,19 @@ public class PrestationService {
         return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findAll());
 
     }
+    
+     @Transactional(readOnly = true)
+    public List<PrestationDTO> findAllPrestationByActif(Boolean actif) {
+        return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findByActif(actif));
+
+    }
+    
+    
 
     @Transactional(readOnly = true)
     public PrestationDTO findOne(Integer code) {
         Prestation domaine = prestationRepo.findByCode(code);
-        Preconditions.checkArgument(domaine.getCode() != null, "error.PrestationNotFound");
-// 
-
+        Preconditions.checkArgument(domaine.getCode() != null, "error.PrestationNotFound"); 
         return PrestationFactory.prestationToPrestationDTOForUpdate(domaine);
     }
 

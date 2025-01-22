@@ -4,6 +4,7 @@
  */
 package com.DevPointSystem.MedLite.Parametrage.service;
 
+import com.DevPointSystem.MedLite.Parametrage.domaine.Compteur;
 import com.DevPointSystem.MedLite.Parametrage.domaine.FamilleFacturation;
 import com.DevPointSystem.MedLite.Parametrage.dto.FamilleFacturationDTO;
 import com.DevPointSystem.MedLite.Parametrage.factory.FamilleFacturationFactory;
@@ -24,9 +25,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class FamilleFacturationService {
 
     private final FamilleFacturationRepo familleFacturationRepo;
+    private final CompteurService compteurService;
 
-    public FamilleFacturationService(FamilleFacturationRepo familleFacturationRepo) {
+    public FamilleFacturationService(FamilleFacturationRepo familleFacturationRepo, CompteurService compteurService) {
         this.familleFacturationRepo = familleFacturationRepo;
+        this.compteurService = compteurService;
     }
 
     @Transactional(readOnly = true)
@@ -46,6 +49,12 @@ public class FamilleFacturationService {
         FamilleFacturation domaine = FamilleFacturationFactory.familleFacturationDTOToFamilleFacturation(dto, new FamilleFacturation());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
+
+        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieFamilleFacturation");
+        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
+        domaine.setCodeSaisie(codeSaisieAC);
+        compteurService.incrementeSuffixe(CompteurCodeSaisie);
+
         domaine = familleFacturationRepo.save(domaine);
 
         return FamilleFacturationFactory.familleFacturationToFamilleFacturationDTO(domaine);
