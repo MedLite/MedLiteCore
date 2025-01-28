@@ -1,4 +1,4 @@
-package com.DevPointSystem.MedLite;
+package com.FrameWork.MedLite;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
