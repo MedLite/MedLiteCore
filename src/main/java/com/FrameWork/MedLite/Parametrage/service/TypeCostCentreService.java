@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.FrameWork.MedLite.Parametrage.repository.TypeCostCentreRepository;
 import com.FrameWork.MedLite.web.Util.Helper;
 import java.util.Date;
+import org.springframework.data.domain.Sort;
 
 /**
  *
@@ -52,7 +53,7 @@ public class TypeCostCentreService {
     @Transactional(readOnly = true)
     public Collection<TypeCostCentreDTO> findAll() {
         log.debug("Request to get All TypeCostCentre: {}");
-        Collection<TypeCostCentre> typeCostCentres = typeCostCentreRepository.findAll();
+        Collection<TypeCostCentre> typeCostCentres = typeCostCentreRepository.findAll(Sort.by("code").descending());
         return TypeCostCentreFactory.TypeCostCentresTOTypeCostCentreDTOs(typeCostCentres);
     }
 

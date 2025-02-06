@@ -7,6 +7,7 @@ package com.FrameWork.MedLite.Reception.dto;
 import com.FrameWork.MedLite.Parametrage.domaine.Nationalite;
 import com.FrameWork.MedLite.Parametrage.dto.ConventionDTO;
 import com.FrameWork.MedLite.Parametrage.dto.NationaliteDTO;
+import com.FrameWork.MedLite.Parametrage.dto.PriceListDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
@@ -46,11 +47,15 @@ public class PatientDTO {
 
     private Date dateCreate;
 
-    private NationaliteDTO nationaliteDTO;
-
-    private Integer codeNationalite;
+        private PriceListDTO priceListDTO;
+ 
+    private Integer codePriceList;
     
-        private ConventionDTO conventionDTO;
+//    private NationaliteDTO nationaliteDTO;
+//
+//    private Integer codeNationalite;
+    
+//        private ConventionDTO conventionDTO;
 
 
     public PatientDTO() {
@@ -144,24 +149,40 @@ public class PatientDTO {
         this.dateCreate = dateCreate;
     }
 
-    public NationaliteDTO getNationaliteDTO() {
-        return nationaliteDTO;
+//    public NationaliteDTO getNationaliteDTO() {
+//        return nationaliteDTO;
+//    }
+//
+//    public void setNationaliteDTO(NationaliteDTO nationaliteDTO) {
+//        this.nationaliteDTO = nationaliteDTO;
+//    }
+//
+//    public Integer getCodeNationalite() {
+//        return codeNationalite;
+//    }
+//
+//    public void setCodeNationalite(Integer codeNationalite) {
+//        this.codeNationalite = codeNationalite;
+//    }
+//
+//    public void setConventionDTO(ConventionDTO conventionDTO) {
+//        this.conventionDTO = conventionDTO;
+//    }
+
+    public PriceListDTO getPriceListDTO() {
+        return priceListDTO;
     }
 
-    public void setNationaliteDTO(NationaliteDTO nationaliteDTO) {
-        this.nationaliteDTO = nationaliteDTO;
+    public void setPriceListDTO(PriceListDTO priceListDTO) {
+        this.priceListDTO = priceListDTO;
     }
 
-    public Integer getCodeNationalite() {
-        return codeNationalite;
+    public Integer getCodePriceList() {
+        return codePriceList;
     }
 
-    public void setCodeNationalite(Integer codeNationalite) {
-        this.codeNationalite = codeNationalite;
-    }
-
-    public void setConventionDTO(ConventionDTO conventionDTO) {
-        this.conventionDTO = conventionDTO;
+    public void setCodePriceList(Integer codePriceList) {
+        this.codePriceList = codePriceList;
     }
     
     

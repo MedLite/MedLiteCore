@@ -13,6 +13,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ public class FournisseurService {
     
     @Transactional(readOnly = true)
     public List<FournisseurDTO> findAllFournisseur() {
-        return FournisseurFactory.listFournisseurToFournisseurDTOs(fournisseurRepo.findAll());
+        return FournisseurFactory.listFournisseurToFournisseurDTOs(fournisseurRepo.findAll(Sort.by("code").descending()));
 
     }
 

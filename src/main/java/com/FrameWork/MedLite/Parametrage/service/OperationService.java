@@ -15,6 +15,7 @@ import com.FrameWork.MedLite.Parametrage.dto.DetailsPriceListOperationDTO;
 import com.FrameWork.MedLite.Parametrage.dto.OperationDTO;
 import com.FrameWork.MedLite.Parametrage.factory.DetailsOperationFactory;
 import com.FrameWork.MedLite.Parametrage.factory.DetailsPriceListOperationFactory;
+import com.FrameWork.MedLite.Parametrage.factory.NatureAdmissionFactory;
 import com.FrameWork.MedLite.Parametrage.factory.OperationFactory;
 import com.FrameWork.MedLite.Parametrage.factory.PriceListFactory;
 import com.FrameWork.MedLite.Parametrage.factory.PriceListOperationFactory;
@@ -29,6 +30,7 @@ import com.google.common.base.Preconditions;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,13 +66,13 @@ public class OperationService {
    
     @Transactional(readOnly = true)
     public List<OperationDTO> findAllOperation() {
-        return OperationFactory.listOperationToOperationDTOs(operationRepo.findAll());
+        return OperationFactory.listOperationToOperationDTOs(operationRepo.findAll(Sort.by("code").descending()));
 
     }
 
     @Transactional(readOnly = true)
     public List<OperationDTO> findAllOperationByActif(Boolean actif) {
-        return OperationFactory.listOperationToOperationDTOs(operationRepo.findByActif(actif));
+        return OperationFactory.listOperationToOperationDTOs(operationRepo.findByActifOrderByCodeSaisieDesc(actif));
 
     }
 
@@ -116,8 +118,17 @@ public class OperationService {
                     detailsDomaine.setTypeIntervenant(TypeIntervenantFactory.createTypeIntervenantByCode(detailsDto.getCodeTypeIntervenant()));
 
                 }
-                detailsDomaine.setRemMaj("REM");
+                
+                 detailsDomaine.setCodeNatureAdmission(detailsDto.getCodeNatureAdmission());
+                if (detailsDto.getCodeNatureAdmission() != null) {
+                    detailsDomaine.setNatureAdmission(NatureAdmissionFactory.createNatureAdmissionByCode(detailsDto.getCodeNatureAdmission()));
+
+                }
+                
+                
+                detailsDomaine.setRemMaj("REM");  
                 detailsDomaine.setMontantPere(detailsDto.getMontantPere());
+
                 detailsDomaine.setDateCreate(new Date());
                 detailsDomaine.setUsercreate(Helper.getUserAuthenticated());
                 detailsDomaine.setOperation(domaine); // Set the relationship to the saved Prestation

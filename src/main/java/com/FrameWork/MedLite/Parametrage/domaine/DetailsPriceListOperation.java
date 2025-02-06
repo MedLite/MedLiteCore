@@ -65,6 +65,14 @@ public class DetailsPriceListOperation {
 
     @Column(name = "Code_Type_Intervenant", insertable = false, updatable = false)
     private Integer codeTypeIntervenant;
+    
+      @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private NatureAdmission natureAdmission;
+
+    @Column(name = "Code_Nature_Admission", insertable = false, updatable = false)
+    private Integer codeNatureAdmission;
  
 
     @Basic(optional = false)
@@ -180,6 +188,24 @@ public class DetailsPriceListOperation {
     public void setRemMaj(String remMaj) {
         this.remMaj = remMaj;
     }
+
+    public NatureAdmission getNatureAdmission() {
+        return natureAdmission;
+    }
+
+    public void setNatureAdmission(NatureAdmission natureAdmission) {
+        this.natureAdmission = natureAdmission;
+    }
+
+    public Integer getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(Integer codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
+    
+    
 
      
     

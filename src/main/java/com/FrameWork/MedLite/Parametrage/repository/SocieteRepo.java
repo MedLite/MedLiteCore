@@ -5,6 +5,7 @@
 package com.FrameWork.MedLite.Parametrage.repository;
 
 import com.FrameWork.MedLite.Parametrage.domaine.Societe;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +17,8 @@ import org.springframework.stereotype.Repository;
 public interface SocieteRepo extends JpaRepository<Societe, Integer> {
 
     Societe findByCode(Integer code);
+    
+    
+    List<Societe> findByActif(Boolean actif);
 }
  

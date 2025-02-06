@@ -12,6 +12,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class DeviseService {
 
     @Transactional(readOnly = true)
     public List<DeviseDTO> findAllDevise() {
-        return DeviseFactory.listDeviseToDeviseDTOs(deviseRepo.findAll());
+        return DeviseFactory.listDeviseToDeviseDTOs(deviseRepo.findAll(Sort.by("code").descending()));
 
     }
 

@@ -5,11 +5,8 @@
 package com.FrameWork.MedLite.Parametrage.repository;
 
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouverture;
-import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouverturePK;
-import java.util.Collection;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,12 +14,27 @@ import org.springframework.stereotype.Repository;
  * @author Administrator
  */
 @Repository
-public interface DetailsListCouvertureRepo extends JpaRepository<DetailsListCouverture, DetailsListCouverturePK> {
+public interface DetailsListCouvertureRepo extends JpaRepository<DetailsListCouverture, Integer> {
 
-    Collection<DetailsListCouverture> findByDetailsListCouverturePK_codeListCouverture(Integer codeListCouverture);
+    DetailsListCouverture findByCode(Integer code);
 
-    @Modifying
-    @Query("delete from DetailsListCouverture det where det.detailsListCouverturePK.codeListCouverture=?1 ")
+    DetailsListCouverture findByCodePrestation(Integer codePrestation);
+
+    List<DetailsListCouverture> findByCodeListCouverture(Integer codeListCouverture);
+
+    DetailsListCouverture findByCodeNatureAdmission(Integer codeNatureAdmission);
+
+    List<DetailsListCouverture> findByCodeListCouvertureAndCodeNatureAdmission(Integer codeListCouverture, Integer codeNatureAdmission);
+
+    List<DetailsListCouverture> findByCodeListCouvertureAndCodePrestation(Integer codeListCouverture, Integer codePrestation);
+
+    List<DetailsListCouverture> findByCodeListCouvertureAndCodePrestationAndCodeNatureAdmission(Integer codeListCouverture, Integer codePrestation, Integer codeNatureAdmission);
+
+    
+    public void deleteByCodePrestation(Integer codePrestation);   
     public void deleteByCodeListCouverture(Integer codeListCouverture);
+    
+     boolean existsByCodePrestationAndCodeNatureAdmission(int codePrestation, int codeNatureAdmission);
+
 
 }

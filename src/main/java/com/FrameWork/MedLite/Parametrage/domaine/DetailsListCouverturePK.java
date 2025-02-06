@@ -16,18 +16,20 @@ import jakarta.validation.constraints.NotNull;
 @Embeddable
 public class DetailsListCouverturePK {
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Code_List_Couverture", nullable = false)
+     @Column(name = "Code_ListCouverture")
     private int codeListCouverture;
+    @Column(name = "Code_Prestation")
+    private int codePrestation;  
+        @Column(name = "Code_Nature_Admission")
+    private int codeNatureAdmission;  
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Code_Prestation", nullable = false)
-    private int codePrestation;
-
-    public DetailsListCouverturePK() {
+    public DetailsListCouverturePK(int codeListCouverture, int codePrestation, int codeNatureAdmission) {
+        this.codeListCouverture = codeListCouverture;
+        this.codePrestation = codePrestation;
+        this.codeNatureAdmission = codeNatureAdmission;
     }
+
+    
 
     public int getCodeListCouverture() {
         return codeListCouverture;
@@ -45,36 +47,16 @@ public class DetailsListCouverturePK {
         this.codePrestation = codePrestation;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.codeListCouverture;
-        hash = 53 * hash + this.codePrestation;
-        return hash;
+    public int getCodeNatureAdmission() {
+        return codeNatureAdmission;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DetailsListCouverturePK other = (DetailsListCouverturePK) obj;
-        if (this.codeListCouverture != other.codeListCouverture) {
-            return false;
-        }
-        return this.codePrestation == other.codePrestation;
+    public void setCodeNatureAdmission(int codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
     }
 
-    @Override
-    public String toString() {
-        return "DetailsListCouverturePK{" + "codeListCouverture=" + codeListCouverture + ", codePrestation=" + codePrestation + '}';
-    }
+  
+   
     
     
 }

@@ -15,6 +15,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,13 +40,13 @@ public class BlocOperationService {
 
     @Transactional(readOnly = true)
     public List<BlocOperationDTO> findAllBlocOperation() {
-        return BlocOperationFactory.listBlocOperationToBlocOperationDTOs(blocOperationRepo.findAll());
+        return BlocOperationFactory.listBlocOperationToBlocOperationDTOs(blocOperationRepo.findAll(Sort.by("code").descending()));
 
     }
     
     @Transactional(readOnly = true)
     public List<BlocOperationDTO> findAllBlocOperationByActif(Boolean actif) {
-        return BlocOperationFactory.listBlocOperationToBlocOperationDTOs(blocOperationRepo.findByActif(actif));
+        return BlocOperationFactory.listBlocOperationToBlocOperationDTOs(blocOperationRepo.findByActifOrderByCodeSaisieDesc(actif));
 
     }
 

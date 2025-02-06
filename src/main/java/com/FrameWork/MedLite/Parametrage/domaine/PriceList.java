@@ -68,11 +68,7 @@ public class PriceList {
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
     private Date dateCreate;
 
-//    @OneToMany(mappedBy = "priceList", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Collection<DetailsPriceList> detailsPriceLists;
-//        @JsonManagedReference
-//    @OneToMany(mappedBy = "codePriceList", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)//
-//    private List<DetailsPriceList> detailsPriceList;
+ 
     @OneToMany(mappedBy = "codePriceList", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JsonBackReference("priceListDetails") // Unique name
     private List<DetailsPriceList> detailsPriceList;

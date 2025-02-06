@@ -18,5 +18,5 @@ public interface BlocOperationRepo extends JpaRepository<BlocOperation, Integer>
 
     BlocOperation findByCode(Integer code);
     
-    List<BlocOperation> findByActif(Boolean actif);
+    List<BlocOperation> findByActifOrderByCodeSaisieDesc(Boolean actif);
 }

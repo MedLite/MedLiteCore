@@ -5,6 +5,7 @@
 package com.FrameWork.MedLite.Parametrage.repository;
 
 import com.FrameWork.MedLite.Parametrage.domaine.ListCouverture;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ListCouvertureRepo extends JpaRepository<ListCouverture, Integer>{
         ListCouverture findByCode(Integer code);
+        
+        
+    List<ListCouverture> findByActifOrderByCodeSaisieDesc(Boolean actif);
 }
 

@@ -28,11 +28,7 @@ public class SocieteFactory {
             domaine.setCodeSaisie(dto.getCodeSaisie());    
             domaine.setDesignationLt(dto.getDesignationLt());
             domaine.setDesignationAr(dto.getDesignationAr());
-            domaine.setActif(dto.isActif());
-//            domaine.setDateCreate(dto.getDateCreate());
-//            domaine.setUserCreate(dto.getUserCreate());    
-
-
+            domaine.setActif(dto.isActif()); 
             return domaine;
         } else {
             return null;

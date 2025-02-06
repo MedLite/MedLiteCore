@@ -7,7 +7,6 @@ package com.FrameWork.MedLite.Parametrage.domaine;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Basic;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -32,6 +31,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @AuditTable("Details_Operation_AUD")
 public class DetailsOperation {
+
     @EmbeddedId
     protected DetailsOperationPK detailsOperationPK;
 
@@ -50,6 +50,14 @@ public class DetailsOperation {
 
     @Column(name = "Code_Type_Intervenant", insertable = false, updatable = false)
     private Integer codeTypeIntervenant;
+
+    @JoinColumn(name = "Code_Nature_ADmission", referencedColumnName = "Code", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private NatureAdmission natureAdmission;
+
+    @Column(name = "Code_Nature_ADmission", insertable = false, updatable = false)
+    private Integer codeNatureAdmission;
 
     @Basic(optional = false)
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
@@ -117,5 +125,23 @@ public class DetailsOperation {
     public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
         this.codeTypeIntervenant = codeTypeIntervenant;
     }
+
+    public NatureAdmission getNatureAdmission() {
+        return natureAdmission;
+    }
+
+    public void setNatureAdmission(NatureAdmission natureAdmission) {
+        this.natureAdmission = natureAdmission;
+    }
+
+    public Integer getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(Integer codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
     
+    
+
 }

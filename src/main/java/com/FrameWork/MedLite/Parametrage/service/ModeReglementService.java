@@ -12,6 +12,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,7 @@ public class ModeReglementService {
 
     @Transactional(readOnly = true)
     public List<ModeReglementDTO> findAllModeReglement() {
-        return ModeReglementFactory.listModeReglementToModeReglementDTOs(modeReglementRepo.findAll());
+        return ModeReglementFactory.listModeReglementToModeReglementDTOs(modeReglementRepo.findAll(Sort.by("code").descending()));
 
     }
 

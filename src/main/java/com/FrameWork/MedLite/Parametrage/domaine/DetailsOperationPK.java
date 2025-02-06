@@ -24,6 +24,13 @@ public class DetailsOperationPK {
     @NotNull
     @Column(name = "Code_Type_Intervenant", nullable = false)
     private int codeTypeIntervenant;
+    
+        @Basic(optional = false)
+    @NotNull
+    @Column(name = "Code_Nature_Admission", nullable = false)
+    private int codeNatureAdmission;
+        
+        
 
     public DetailsOperationPK() {
     }
@@ -46,11 +53,20 @@ public class DetailsOperationPK {
         this.codeTypeIntervenant = codeTypeIntervenant;
     }
 
+    public int getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(int codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 19 * hash + this.codeOperation;
-        hash = 19 * hash + this.codeTypeIntervenant;
+        int hash = 7;
+        hash = 73 * hash + this.codeOperation;
+        hash = 73 * hash + this.codeTypeIntervenant;
+        hash = 73 * hash + this.codeNatureAdmission;
         return hash;
     }
 
@@ -69,13 +85,17 @@ public class DetailsOperationPK {
         if (this.codeOperation != other.codeOperation) {
             return false;
         }
-        return this.codeTypeIntervenant == other.codeTypeIntervenant;
+        if (this.codeTypeIntervenant != other.codeTypeIntervenant) {
+            return false;
+        }
+        return this.codeNatureAdmission == other.codeNatureAdmission;
     }
 
     @Override
     public String toString() {
-        return "DetailsOperationPK{" + "codeOperation=" + codeOperation + ", codeTypeIntervenant=" + codeTypeIntervenant + '}';
+        return "DetailsOperationPK{" + "codeOperation=" + codeOperation + ", codeTypeIntervenant=" + codeTypeIntervenant + ", codeNatureAdmission=" + codeNatureAdmission + '}';
     }
-    
+
+  
     
 }

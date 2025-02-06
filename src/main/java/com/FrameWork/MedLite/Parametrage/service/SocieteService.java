@@ -37,6 +37,11 @@ public class SocieteService {
         return SocieteFactory.listSocieteToSocieteDTOs(societeRepo.findAll());
 
     }
+      @Transactional(readOnly = true)
+    public List<SocieteDTO> findAllSocieteByActif(Boolean actif) {
+        return SocieteFactory.listSocieteToSocieteDTOs(societeRepo.findByActif(actif));
+
+    }
 
     @Transactional(readOnly = true)
     public SocieteDTO findOne(Integer code) {
@@ -44,6 +49,8 @@ public class SocieteService {
         Preconditions.checkArgument(domaine != null, "error.SocieteNotFound");
         return SocieteFactory.societeToSocieteDTO(domaine);
     }
+    
+   
 
     public SocieteDTO save(SocieteDTO dto) {
         Societe domaine = SocieteFactory.societeDTOToSociete(dto, new Societe());

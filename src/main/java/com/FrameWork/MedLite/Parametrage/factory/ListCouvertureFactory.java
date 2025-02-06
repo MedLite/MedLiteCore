@@ -35,39 +35,11 @@ public class ListCouvertureFactory {
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setActif(dto.isActif());
             domaine.setDateCreate(dto.getDateCreate());
-            domaine.setUserCreate(dto.getUserCreate());  
+            domaine.setUserCreate(dto.getUserCreate());   
+
 
  
-            if(dto.getDetailsListCouvertureDTOs().isEmpty()){
-                 throw new IllegalArgumentException("error.DetailsListCouvertureRequired");
-            }  
-            Collection<DetailsListCouverture> detailsCollections = new ArrayList<>();
-            dto.getDetailsListCouvertureDTOs().forEach(x -> {
-                DetailsListCouverture detailsListCouverture = new DetailsListCouverture();
-
-                DetailsListCouverturePK detailsPK = new DetailsListCouverturePK();
-                Preconditions.checkBusinessLogique(x.getCodePrestation()!= null, "error.PrestationRequired");
-                detailsPK.setCodePrestation(x.getCodePrestation());
-
-                detailsListCouverture.setDetailsListCouverturePK(detailsPK);
-
-                Preconditions.checkBusinessLogique(x.getTauxCouverPec()!= null, "error.MontantRequired");
-                detailsListCouverture.setTauxCouverPec(x.getTauxCouverPec());    
-                 
-
-                detailsListCouverture.setDateCreate(domaine.getDateCreate());
-                detailsListCouverture.setUsercreate(domaine.getUserCreate());
-                detailsListCouverture.setListCouverture(domaine);
-                detailsCollections.add(detailsListCouverture);
-            });
-
-            if (domaine.getDetailsListCouvertures()!= null) {
-                domaine.getDetailsListCouvertures().clear();
-                domaine.getDetailsListCouvertures().addAll(detailsCollections);
-            } else {
-                domaine.setDetailsListCouvertures(detailsCollections);
-            }
-            
+           
 
             return domaine;
         } else {
@@ -87,22 +59,7 @@ public class ListCouvertureFactory {
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUserCreate(domaine.getUserCreate());
   
-            
-            if (domaine.getDetailsListCouvertures()!= null) {
-                Collection<DetailsListCouvertureDTO> detailsListCouvertureDTOs = new ArrayList<>();
-                domaine.getDetailsListCouvertures().forEach(x -> {
-                    DetailsListCouvertureDTO detailsDTO = new DetailsListCouvertureDTO();
-                    detailsDTO = DetailsListCouvertureFactory.DetailsListCouvertureToDetailsListCouvertureDTOCollectionForUpdate(x);
-                    detailsListCouvertureDTOs.add(detailsDTO);
-                });
-                if (dto.getDetailsListCouvertureDTOs()!= null) {
-                    dto.getDetailsListCouvertureDTOs().clear();
-                    dto.getDetailsListCouvertureDTOs().addAll(detailsListCouvertureDTOs);
-                } else {
-                    dto.setDetailsListCouvertureDTOs(detailsListCouvertureDTOs);
-                }
-            }
-            
+ 
             return dto;
         } else {
             return null;

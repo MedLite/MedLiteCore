@@ -10,6 +10,7 @@ import com.FrameWork.MedLite.Parametrage.factory.NatureAdmissionFactory;
 import com.FrameWork.MedLite.Parametrage.repository.NatureAdmissionRepo;
 import com.google.common.base.Preconditions;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,7 @@ public class NatureAdmissionService {
 
     @Transactional(readOnly = true)
     public List<NatureAdmissionDTO> findAllNatureAdmission() {
-        return NatureAdmissionFactory.listNatureAdmissionToNatureAdmissionDTOs(natureAdmissionRepo.findAll());
+        return NatureAdmissionFactory.listNatureAdmissionToNatureAdmissionDTOs(natureAdmissionRepo.findAll(Sort.by("code").descending()));
 
     }
 

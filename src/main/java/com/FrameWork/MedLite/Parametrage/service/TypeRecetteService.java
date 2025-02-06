@@ -12,6 +12,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,7 @@ public class TypeRecetteService {
 
     @Transactional(readOnly = true)
     public List<TypeRecetteDTO> findAllTypeRecette() {
-        return TypeRecetteFactory.listTypeRecetteToTypeRecetteDTOs(typeRecetteRepo.findAll());
+        return TypeRecetteFactory.listTypeRecetteToTypeRecetteDTOs(typeRecetteRepo.findAll(Sort.by("code").descending()));
 
     }
 

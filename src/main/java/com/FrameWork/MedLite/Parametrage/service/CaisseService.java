@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 
 /**
  *
@@ -56,7 +57,7 @@ public class CaisseService {
  
     @Transactional(readOnly = true)
     public List<CaisseDTO> findAllCaisse() {
-        return CaisseFactory.listCaisseToCaisseDTOs(caisseRepo.findAll());
+        return CaisseFactory.listCaisseToCaisseDTOs(caisseRepo.findAll(Sort.by("code").descending()));
 
     }
 

@@ -31,7 +31,7 @@ import org.hibernate.envers.Audited;
 @Table(name = "Caisse", schema = "param")
 @Audited
 @AuditTable("Caisse_AUD")
-public class Caisse implements Serializable {
+public class Caisse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

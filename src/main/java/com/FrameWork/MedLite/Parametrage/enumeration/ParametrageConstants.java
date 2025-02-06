@@ -51,7 +51,7 @@ public enum ParametrageConstants {
     NEW_DICTIONARY("newDictionary"),
     CODE_FAMILLE_ENDO("162"),
 
-    CODE_TYPE_PRESTATION_OPERATION("60"),
+    CODE_NATURE_ADMISSION_INTERNE("60"),
     MODE_REGLEMENT_EMPLOYEE_ADVANCED("modeReglementEmployeeAdvances");
     private String name = "";
 

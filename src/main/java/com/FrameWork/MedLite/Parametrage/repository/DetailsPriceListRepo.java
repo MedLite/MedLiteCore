@@ -24,7 +24,7 @@ public interface DetailsPriceListRepo extends JpaRepository<DetailsPriceList, In
 
     DetailsPriceList findByCodePrestation(Integer codePrestation);
 
-    DetailsPriceList findByCodePriceList(Integer codePriceList);
+    List<DetailsPriceList> findByCodePriceList(Integer codePriceList);
 
     DetailsPriceList findByCodeNatureAdmission(Integer codeNatureAdmission);
 

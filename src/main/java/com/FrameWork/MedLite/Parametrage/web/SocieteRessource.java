@@ -5,6 +5,7 @@
 package com.FrameWork.MedLite.Parametrage.web;
 
 import com.FrameWork.MedLite.Parametrage.domaine.Societe;
+import com.FrameWork.MedLite.Parametrage.dto.PriceListDTO;
 import com.FrameWork.MedLite.Parametrage.dto.SocieteDTO;
 import com.FrameWork.MedLite.Parametrage.service.SocieteService;
 import jakarta.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -31,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/parametrage/")
 public class SocieteRessource {
-    
+
     private final SocieteService societeService;
 
     public SocieteRessource(SocieteService societeService) {
@@ -47,6 +49,11 @@ public class SocieteRessource {
     @GetMapping("societe/all")
     public ResponseEntity<List<SocieteDTO>> getAllSociete() {
         return ResponseEntity.ok().body(societeService.findAllSociete());
+    }
+
+    @GetMapping("societe/findBy")
+    public ResponseEntity<List<SocieteDTO>> getAllSocieteByActif(@RequestParam Boolean actif) {
+        return ResponseEntity.ok().body(societeService.findAllSocieteByActif(actif));
     }
 
     @PostMapping("societe")

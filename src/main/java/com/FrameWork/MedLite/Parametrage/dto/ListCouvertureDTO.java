@@ -6,6 +6,8 @@ package com.FrameWork.MedLite.Parametrage.dto;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 
 /**
  *
@@ -25,9 +27,12 @@ public class ListCouvertureDTO {
     private String userCreate;
 
     private Date dateCreate; 
+ 
+    
+      private List<DetailsListCouvertureDTO> detailsListCouvertureDTOs;
 
-    private Collection<DetailsListCouvertureDTO> detailsListCouvertureDTOs;
-
+      private List<DetailsListCouvertureOperationDTO> detailsListCouvertureOperationDTOs;      
+      
     public ListCouvertureDTO() {
     }
 
@@ -87,12 +92,22 @@ public class ListCouvertureDTO {
         this.dateCreate = dateCreate;
     }
 
-    public Collection<DetailsListCouvertureDTO> getDetailsListCouvertureDTOs() {
+    public List<DetailsListCouvertureDTO> getDetailsListCouvertureDTOs() {
         return detailsListCouvertureDTOs;
     }
 
-    public void setDetailsListCouvertureDTOs(Collection<DetailsListCouvertureDTO> detailsListCouvertureDTOs) {
+    public void setDetailsListCouvertureDTOs(List<DetailsListCouvertureDTO> detailsListCouvertureDTOs) {
         this.detailsListCouvertureDTOs = detailsListCouvertureDTOs;
     }
-    
+
+    public List<DetailsListCouvertureOperationDTO> getDetailsListCouvertureOperationDTOs() {
+        return detailsListCouvertureOperationDTOs;
+    }
+
+    public void setDetailsListCouvertureOperationDTOs(List<DetailsListCouvertureOperationDTO> detailsListCouvertureOperationDTOs) {
+        this.detailsListCouvertureOperationDTOs = detailsListCouvertureOperationDTOs;
+    }
+
+ 
+  
 }

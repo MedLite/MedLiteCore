@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +56,7 @@ public class PriceListOperationService {
 
     @Transactional(readOnly = true)
     public List<PriceListOperationDTO> findAllPriceListOperation() {
-        return PriceListOperationFactory.listPriceListOpeartionToPriceListOpeartionDTOs(priceListOperationRepo.findAll());
+        return PriceListOperationFactory.listPriceListOpeartionToPriceListOpeartionDTOs(priceListOperationRepo.findAll(Sort.by("code").descending()));
 
     }
 

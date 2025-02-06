@@ -13,6 +13,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,7 @@ public class CabinetService {
 
     @Transactional(readOnly = true)
     public List<CabinetDTO> findAllCabinet() {
-        return CabinetFactory.listCabinetToCabinetDTOs(cabinetRepo.findAll());
+        return CabinetFactory.listCabinetToCabinetDTOs(cabinetRepo.findAll(Sort.by("code").descending()));
 
     }
 

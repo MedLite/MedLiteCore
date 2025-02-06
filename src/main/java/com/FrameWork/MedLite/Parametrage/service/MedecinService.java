@@ -16,6 +16,7 @@ import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,7 +51,7 @@ public class MedecinService {
 
     @Transactional(readOnly = true)
     public List<MedecinDTO> findAllMedecin() {
-        return MedecinFactory.listMedecinToMedecinDTOs(medecinRepo.findAll());
+        return MedecinFactory.listMedecinToMedecinDTOs(medecinRepo.findAll(Sort.by("code").descending()));
 
     }
     

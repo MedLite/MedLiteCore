@@ -69,21 +69,7 @@ public class PriceListFactory {
             
             dto.setCodeSociete(domaine.getCodeSociete());
             dto.setSocieteDTO(SocieteFactory.societeToSocieteDTO(domaine.getSociete()));
-
-//            if (domaine.getDetailsPriceLists() != null) {
-//                Collection<DetailsPriceListDTO> detailsPriceListDTOs = new ArrayList<>();
-//                domaine.getDetailsPriceLists().forEach(x -> {
-//                    DetailsPriceListDTO detailsDTO = new DetailsPriceListDTO();
-//                    detailsDTO = DetailsPriceListFactory.DetailsPriceListToDetailsPriceListDTOCollection(x);
-//                    detailsPriceListDTOs.add(detailsDTO);
-//                });
-//                if (dto.getDetailsPriceListsListDTOs() != null) {
-//                    dto.getDetailsPriceListsListDTOs().clear();
-//                    dto.getDetailsPriceListsListDTOs().addAll(detailsPriceListDTOs);
-//                } else {
-//                    dto.setDetailsPriceListsListDTOs(detailsPriceListDTOs);
-//                }
-//            }
+ 
             return dto;
         } else {
             return null;

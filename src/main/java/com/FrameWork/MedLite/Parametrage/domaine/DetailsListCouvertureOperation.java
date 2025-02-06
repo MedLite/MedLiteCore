@@ -7,7 +7,6 @@ package com.FrameWork.MedLite.Parametrage.domaine;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -29,12 +27,11 @@ import org.hibernate.envers.Audited;
  * @author Administrator
  */
 @Entity
-@Table(name = "Details_List_Couverture", schema = "param")
+@Table(name = "Details_List_Couverture_Operation", schema = "param")
 @Audited
-@AuditTable("Details_List_Couverture_AUD")
-public class DetailsListCouverture {
-
-    @Id
+@AuditTable("Details_List_Couverture_Operation_AUD")
+public class DetailsListCouvertureOperation {
+     @Id
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Code")
@@ -51,15 +48,15 @@ public class DetailsListCouverture {
     @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
     private String usercreate;
 
-    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false)
+    @JoinColumn(name = "Code_Operation", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
-    private Prestation prestation;
+    private Operation operation;
 
-    @Column(name = "Code_Prestation", insertable = false, updatable = false)
-    private Integer codePrestation;
+    @Column(name = "Code_Operation", insertable = false, updatable = false)
+    private Integer codeOperation;
 
-    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false)
+     @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private NatureAdmission natureAdmission;
@@ -85,7 +82,7 @@ public class DetailsListCouverture {
     @Column(name = "Taux_Couver_PEC", columnDefinition = ("decimal(18,3)"), nullable = false)
     private BigDecimal tauxCouverPec;
 
-    public DetailsListCouverture() {
+    public DetailsListCouvertureOperation() {
     }
 
     public Integer getCode() {
@@ -120,20 +117,20 @@ public class DetailsListCouverture {
         this.usercreate = usercreate;
     }
 
-    public Prestation getPrestation() {
-        return prestation;
+    public Operation getOperation() {
+        return operation;
     }
 
-    public void setPrestation(Prestation prestation) {
-        this.prestation = prestation;
+    public void setOperation(Operation operation) {
+        this.operation = operation;
     }
 
-    public Integer getCodePrestation() {
-        return codePrestation;
+    public Integer getCodeOperation() {
+        return codeOperation;
     }
 
-    public void setCodePrestation(Integer codePrestation) {
-        this.codePrestation = codePrestation;
+    public void setCodeOperation(Integer codeOperation) {
+        this.codeOperation = codeOperation;
     }
 
     public BigDecimal getMontantPatient() {
@@ -152,8 +149,6 @@ public class DetailsListCouverture {
         this.montantPEC = montantPEC;
     }
 
-   
-
     public BigDecimal getMontantPere() {
         return montantPere;
     }
@@ -161,8 +156,6 @@ public class DetailsListCouverture {
     public void setMontantPere(BigDecimal montantPere) {
         this.montantPere = montantPere;
     }
-
-   
 
     public Date getDateCreate() {
         return dateCreate;
@@ -195,5 +188,9 @@ public class DetailsListCouverture {
     public void setCodeNatureAdmission(Integer codeNatureAdmission) {
         this.codeNatureAdmission = codeNatureAdmission;
     }
+    
+    
 
+    
+ 
 }

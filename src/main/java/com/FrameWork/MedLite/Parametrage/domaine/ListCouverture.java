@@ -23,6 +23,7 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
@@ -64,8 +65,9 @@ public class ListCouverture {
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
     private Date dateCreate;
  
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "listCouverture")
-    private Collection<DetailsListCouverture> detailsListCouvertures;
+       @OneToMany(mappedBy = "codeListCouverture", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonBackReference("listCouvertureDetails") // Unique name
+    private List<DetailsListCouverture> detailsListCouvertures;
 
     public ListCouverture() {
     }
@@ -126,13 +128,15 @@ public class ListCouverture {
         this.dateCreate = dateCreate;
     }
 
-    public Collection<DetailsListCouverture> getDetailsListCouvertures() {
+    public List<DetailsListCouverture> getDetailsListCouvertures() {
         return detailsListCouvertures;
     }
 
-    public void setDetailsListCouvertures(Collection<DetailsListCouverture> detailsListCouvertures) {
+    public void setDetailsListCouvertures(List<DetailsListCouverture> detailsListCouvertures) {
         this.detailsListCouvertures = detailsListCouvertures;
     }
+
+  
     
     
     

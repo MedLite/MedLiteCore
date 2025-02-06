@@ -11,6 +11,7 @@ import com.FrameWork.MedLite.Parametrage.domaine.DetailsPrestationPK;
 import com.FrameWork.MedLite.Parametrage.domaine.Operation;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsOperationDTO;
 import com.FrameWork.MedLite.Parametrage.dto.OperationDTO;
+import com.FrameWork.MedLite.Parametrage.enumeration.ParametrageConstants;
 import com.FrameWork.MedLite.web.Util.Helper;
 import com.FrameWork.MedLite.web.Util.Preconditions;
 import java.util.ArrayList;
@@ -72,9 +73,15 @@ public class OperationFactory {
                 DetailsOperation detailsPrestation = new DetailsOperation();
 
                 DetailsOperationPK detailsPK = new DetailsOperationPK();
-                Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant() != null, "error.TypeIntervenantRequired");
-
+                
+                
+                Preconditions.checkBusinessLogique(x.getCodeTypeIntervenant() != null, "error.TypeIntervenantRequired"); 
                 detailsPK.setCodeTypeIntervenant(x.getCodeTypeIntervenant());
+                
+//                    Preconditions.checkBusinessLogique(x.getCodeNatureAdmission()!= null, "error.NatureAdmissionRequired"); 
+                detailsPK.setCodeNatureAdmission(1);
+                
+                
                 detailsPrestation.setDetailsOperationPK(detailsPK);
 
                 Preconditions.checkBusinessLogique(x.getMontant() != null, "error.MontantRequired");

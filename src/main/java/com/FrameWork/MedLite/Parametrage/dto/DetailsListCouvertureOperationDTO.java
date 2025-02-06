@@ -4,51 +4,56 @@
  */
 package com.FrameWork.MedLite.Parametrage.dto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 /**
  *
  * @author Administrator
  */
-public class DetailsPriceListOperationDTO {
+public class DetailsListCouvertureOperationDTO {
     private Integer code;
 
-    private PriceListDTO priceListDTO;
+    private ListCouvertureDTO listCouvertureDTO;
 
-    private Integer codePriceList;
-
-    private String usercreate;
+    private Integer codeListCouverture;
+ 
     private OperationDTO operationDTO;
 
     private Integer codeOperation;
- 
-    private TypeIntervenantDTO typeIntervenantDTO;
-
-    private Integer codeTypeIntervenant;
     
         private NatureAdmissionDTO natureAdmissionDTO;
 
-    private Integer codeNatureAdmission;
-    
-    
+    private Integer codeNatureAdmission; 
+ 
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreate;
+ 
+    private BigDecimal montantPatient;
+     
+    private BigDecimal montantPEC;
 
-    private BigDecimal montant;
-    private BigDecimal montantPere;   
+    private BigDecimal montantPere;
+ 
+    
     
     private BigDecimal mntApresMaj;
 
     
     private String RemMajValeur;
 
-    private String remMaj;
+  private BigDecimal tauxCouverPec;
 
-    public DetailsPriceListOperationDTO() {
+    private String usercreate;
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreate;
+
+    public DetailsListCouvertureOperationDTO() {
     }
 
     public Integer getCode() {
@@ -59,30 +64,20 @@ public class DetailsPriceListOperationDTO {
         this.code = code;
     }
 
-    public PriceListDTO getPriceListDTO() {
-        return priceListDTO;
+    public ListCouvertureDTO getListCouvertureDTO() {
+        return listCouvertureDTO;
     }
 
-    public void setPriceListDTO(PriceListDTO priceListDTO) {
-        this.priceListDTO = priceListDTO;
+    public void setListCouvertureDTO(ListCouvertureDTO listCouvertureDTO) {
+        this.listCouvertureDTO = listCouvertureDTO;
     }
 
-    public Integer getCodePriceList() {
-        return codePriceList;
+    public Integer getCodeListCouverture() {
+        return codeListCouverture;
     }
 
-    public void setCodePriceList(Integer codePriceList) {
-        this.codePriceList = codePriceList;
-    }
- 
-     
-
-    public String getUsercreate() {
-        return usercreate;
-    }
-
-    public void setUsercreate(String usercreate) {
-        this.usercreate = usercreate;
+    public void setCodeListCouverture(Integer codeListCouverture) {
+        this.codeListCouverture = codeListCouverture;
     }
 
     public OperationDTO getOperationDTO() {
@@ -101,37 +96,27 @@ public class DetailsPriceListOperationDTO {
         this.codeOperation = codeOperation;
     }
 
-    public TypeIntervenantDTO getTypeIntervenantDTO() {
-        return typeIntervenantDTO;
+    
+
+   
+
+    public BigDecimal getMontantPatient() {
+        return montantPatient;
     }
 
-    public void setTypeIntervenantDTO(TypeIntervenantDTO typeIntervenantDTO) {
-        this.typeIntervenantDTO = typeIntervenantDTO;
+    public void setMontantPatient(BigDecimal montantPatient) {
+        this.montantPatient = montantPatient;
     }
 
-    public Integer getCodeTypeIntervenant() {
-        return codeTypeIntervenant;
+    public BigDecimal getMontantPEC() {
+        return montantPEC;
     }
 
-    public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
-        this.codeTypeIntervenant = codeTypeIntervenant;
+    public void setMontantPEC(BigDecimal montantPEC) {
+        this.montantPEC = montantPEC;
     }
 
-    public Date getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(Date dateCreate) {
-        this.dateCreate = dateCreate;
-    }
-
-    public BigDecimal getMontant() {
-        return montant;
-    }
-
-    public void setMontant(BigDecimal montant) {
-        this.montant = montant;
-    }
+   
 
     public BigDecimal getMontantPere() {
         return montantPere;
@@ -139,14 +124,6 @@ public class DetailsPriceListOperationDTO {
 
     public void setMontantPere(BigDecimal montantPere) {
         this.montantPere = montantPere;
-    }
-
-    public String getRemMaj() {
-        return remMaj;
-    }
-
-    public void setRemMaj(String remMaj) {
-        this.remMaj = remMaj;
     }
 
     public BigDecimal getMntApresMaj() {
@@ -165,6 +142,30 @@ public class DetailsPriceListOperationDTO {
         this.RemMajValeur = RemMajValeur;
     }
 
+    public BigDecimal getTauxCouverPec() {
+        return tauxCouverPec;
+    }
+
+    public void setTauxCouverPec(BigDecimal tauxCouverPec) {
+        this.tauxCouverPec = tauxCouverPec;
+    }
+
+    public String getUsercreate() {
+        return usercreate;
+    }
+
+    public void setUsercreate(String usercreate) {
+        this.usercreate = usercreate;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
     public NatureAdmissionDTO getNatureAdmissionDTO() {
         return natureAdmissionDTO;
     }
@@ -180,8 +181,10 @@ public class DetailsPriceListOperationDTO {
     public void setCodeNatureAdmission(Integer codeNatureAdmission) {
         this.codeNatureAdmission = codeNatureAdmission;
     }
+
     
     
     
     
+
 }

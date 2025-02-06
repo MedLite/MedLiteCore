@@ -40,6 +40,12 @@ public class DetailsPriceListDTO {
     private BigDecimal montantPere;
 
     private String remMaj;
+    
+    
+    private BigDecimal mntApresMaj;
+
+    
+    private String RemMajValeur;
 
     public DetailsPriceListDTO() {
     }
@@ -155,5 +161,23 @@ public class DetailsPriceListDTO {
     public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
         this.codeTypeIntervenant = codeTypeIntervenant;
     }
+
+    public BigDecimal getMntApresMaj() {
+        return mntApresMaj;
+    }
+
+    public void setMntApresMaj(BigDecimal mntApresMaj) {
+        this.mntApresMaj = mntApresMaj;
+    }
+
+    public String getRemMajValeur() {
+        return RemMajValeur;
+    }
+
+    public void setRemMajValeur(String RemMajValeur) {
+        this.RemMajValeur = RemMajValeur;
+    }
+    
+    
 
 }

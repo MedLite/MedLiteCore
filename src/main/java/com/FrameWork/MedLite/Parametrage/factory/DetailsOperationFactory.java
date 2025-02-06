@@ -41,6 +41,9 @@ public class DetailsOperationFactory {
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
 
+            dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
+            dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
+
             if (LocaleContextHolder.getLocale().getLanguage().equals(new Locale(LANGUAGE_SEC).getLanguage())) {
                 dto.setDesignationArTypeIntervenant(domaine.getTypeIntervenant().getDesignationAr());
                 dto.setDesignationLtTypeIntervenant(domaine.getTypeIntervenant().getDesignationLt());

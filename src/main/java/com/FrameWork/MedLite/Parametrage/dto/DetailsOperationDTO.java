@@ -4,6 +4,8 @@
  */
 package com.FrameWork.MedLite.Parametrage.dto;
 
+import com.FrameWork.MedLite.Parametrage.domaine.NatureAdmission;
+import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +17,7 @@ import java.util.Date;
  * @author Administrator
  */
 public class DetailsOperationDTO {
+
     private int codeOperation;
     private String codeSaisieOperation;
 
@@ -24,6 +27,9 @@ public class DetailsOperationDTO {
     private Integer codeTypeIntervenant;
     private String designationArTypeIntervenant;
     private String designationLtTypeIntervenant;
+
+    private NatureAdmissionDTO natureAdmissionDTO; 
+    private Integer codeNatureAdmission;
 
     private BigDecimal montant;
     private BigDecimal prixSelonTypeArriver;
@@ -59,7 +65,6 @@ public class DetailsOperationDTO {
     public void setPrixSelonTypeArriver(BigDecimal prixSelonTypeArriver) {
         this.prixSelonTypeArriver = prixSelonTypeArriver;
     }
-    
 
     public TypeIntervenantDTO getTypeIntervenantDTO() {
         return typeIntervenantDTO;
@@ -124,6 +129,23 @@ public class DetailsOperationDTO {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
+
+    public NatureAdmissionDTO getNatureAdmissionDTO() {
+        return natureAdmissionDTO;
+    }
+
+    public void setNatureAdmissionDTO(NatureAdmissionDTO natureAdmissionDTO) {
+        this.natureAdmissionDTO = natureAdmissionDTO;
+    }
+
+    public Integer getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(Integer codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
     
     
+
 }

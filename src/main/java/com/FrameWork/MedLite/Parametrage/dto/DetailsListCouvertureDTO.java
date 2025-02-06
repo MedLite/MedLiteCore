@@ -4,6 +4,7 @@
  */
 package com.FrameWork.MedLite.Parametrage.dto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
@@ -16,15 +17,33 @@ import java.util.Date;
  * @author Administrator
  */
 public class DetailsListCouvertureDTO {
-   private int codeListCouverture;
-    private String codeSaisieListCouverture;
+    private Integer code;
 
-    @NotNull
+    private ListCouvertureDTO listCouvertureDTO;
+
+    private Integer codeListCouverture;
+ 
     private PrestationDTO prestationDTO;
-    private String codeSaisiePrestation;
+
     private Integer codePrestation;
-    private String designationArPrestation;
-    private String designationLtPrestation;
+
+    private NatureAdmissionDTO natureAdmissionDTO;
+
+    private Integer codeNatureAdmission; 
+
+ 
+    private BigDecimal montantPatient;
+     
+    private BigDecimal montantPEC;
+
+    private BigDecimal montantPere;
+ 
+    
+    
+    private BigDecimal mntApresMaj;
+
+    
+    private String RemMajValeur;
 
   private BigDecimal tauxCouverPec;
 
@@ -36,21 +55,31 @@ public class DetailsListCouvertureDTO {
     public DetailsListCouvertureDTO() {
     }
 
-    public int getCodeListCouverture() {
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public ListCouvertureDTO getListCouvertureDTO() {
+        return listCouvertureDTO;
+    }
+
+    public void setListCouvertureDTO(ListCouvertureDTO listCouvertureDTO) {
+        this.listCouvertureDTO = listCouvertureDTO;
+    }
+
+    public Integer getCodeListCouverture() {
         return codeListCouverture;
     }
 
-    public void setCodeListCouverture(int codeListCouverture) {
+    public void setCodeListCouverture(Integer codeListCouverture) {
         this.codeListCouverture = codeListCouverture;
     }
 
-    public String getCodeSaisieListCouverture() {
-        return codeSaisieListCouverture;
-    }
-
-    public void setCodeSaisieListCouverture(String codeSaisieListCouverture) {
-        this.codeSaisieListCouverture = codeSaisieListCouverture;
-    }
+    
 
     public PrestationDTO getPrestationDTO() {
         return prestationDTO;
@@ -58,14 +87,6 @@ public class DetailsListCouvertureDTO {
 
     public void setPrestationDTO(PrestationDTO prestationDTO) {
         this.prestationDTO = prestationDTO;
-    }
-
-    public String getCodeSaisiePrestation() {
-        return codeSaisiePrestation;
-    }
-
-    public void setCodeSaisiePrestation(String codeSaisiePrestation) {
-        this.codeSaisiePrestation = codeSaisiePrestation;
     }
 
     public Integer getCodePrestation() {
@@ -76,22 +97,62 @@ public class DetailsListCouvertureDTO {
         this.codePrestation = codePrestation;
     }
 
+    public NatureAdmissionDTO getNatureAdmissionDTO() {
+        return natureAdmissionDTO;
+    }
+
+    public void setNatureAdmissionDTO(NatureAdmissionDTO natureAdmissionDTO) {
+        this.natureAdmissionDTO = natureAdmissionDTO;
+    }
+
+    public Integer getCodeNatureAdmission() {
+        return codeNatureAdmission;
+    }
+
+    public void setCodeNatureAdmission(Integer codeNatureAdmission) {
+        this.codeNatureAdmission = codeNatureAdmission;
+    }
+
+    public BigDecimal getMontantPatient() {
+        return montantPatient;
+    }
+
+    public void setMontantPatient(BigDecimal montantPatient) {
+        this.montantPatient = montantPatient;
+    }
+
+    public BigDecimal getMontantPEC() {
+        return montantPEC;
+    }
+
+    public void setMontantPEC(BigDecimal montantPEC) {
+        this.montantPEC = montantPEC;
+    }
+
    
-    
-    public String getDesignationArPrestation() {
-        return designationArPrestation;
+
+    public BigDecimal getMontantPere() {
+        return montantPere;
     }
 
-    public void setDesignationArPrestation(String designationArPrestation) {
-        this.designationArPrestation = designationArPrestation;
+    public void setMontantPere(BigDecimal montantPere) {
+        this.montantPere = montantPere;
     }
 
-    public String getDesignationLtPrestation() {
-        return designationLtPrestation;
+    public BigDecimal getMntApresMaj() {
+        return mntApresMaj;
     }
 
-    public void setDesignationLtPrestation(String designationLtPrestation) {
-        this.designationLtPrestation = designationLtPrestation;
+    public void setMntApresMaj(BigDecimal mntApresMaj) {
+        this.mntApresMaj = mntApresMaj;
+    }
+
+    public String getRemMajValeur() {
+        return RemMajValeur;
+    }
+
+    public void setRemMajValeur(String RemMajValeur) {
+        this.RemMajValeur = RemMajValeur;
     }
 
     public BigDecimal getTauxCouverPec() {
@@ -117,6 +178,7 @@ public class DetailsListCouvertureDTO {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
+
     
     
 

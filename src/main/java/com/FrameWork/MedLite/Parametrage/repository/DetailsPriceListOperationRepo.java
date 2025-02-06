@@ -20,12 +20,14 @@ public interface DetailsPriceListOperationRepo extends JpaRepository<DetailsPric
 
     List<DetailsPriceListOperation> findByCodeOperation(Integer codeOperation);
 
-    DetailsPriceListOperation findByCodePriceList(Integer codePriceList);
+    List<DetailsPriceListOperation> findByCodePriceList(Integer codePriceList);
  
     List<DetailsPriceListOperation> findByCodePriceListAndCodeOperation(Integer codePriceList, Integer codeOperation);
  
 
     
-    public void deleteByCodeOperation(Integer codeOperation);
+    public void deleteByCodeOperation(Integer codeOperation);   
+    public void deleteByCodePriceList(Integer codePriceList);
+
 }
 

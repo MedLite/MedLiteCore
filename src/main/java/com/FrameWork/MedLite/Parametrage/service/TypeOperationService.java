@@ -13,6 +13,7 @@ import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class TypeOperationService {
 
     @Transactional(readOnly = true)
     public List<TypeOperationDTO> findAllTypeOperation() {
-        return TypeOperationFactory.listTypeOperationToTypeOperationDTOs(typeOperationRepo.findAll());
+        return TypeOperationFactory.listTypeOperationToTypeOperationDTOs(typeOperationRepo.findAll(Sort.by("code").descending()));
 
     }
     
