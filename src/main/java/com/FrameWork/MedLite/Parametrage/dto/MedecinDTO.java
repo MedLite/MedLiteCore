@@ -39,7 +39,12 @@ public class MedecinDTO {
     
         private PrestationDTO prestationConsultationDTO;
  
-    private Integer codePrestationConsult;
+//    private Integer codePrestationConsult;
+    
+    
+    private boolean autoriseFrais;
+    
+    
     
 
     public MedecinDTO() {
@@ -143,12 +148,14 @@ public class MedecinDTO {
         this.prestationConsultationDTO = prestationConsultationDTO;
     }
 
-    public Integer getCodePrestationConsult() {
-        return codePrestationConsult;
+ 
+
+    public boolean isAutoriseFrais() {
+        return autoriseFrais;
     }
 
-    public void setCodePrestationConsult(Integer codePrestationConsult) {
-        this.codePrestationConsult = codePrestationConsult;
+    public void setAutoriseFrais(boolean autoriseFrais) {
+        this.autoriseFrais = autoriseFrais;
     }
 
    

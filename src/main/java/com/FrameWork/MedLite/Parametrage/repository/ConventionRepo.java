@@ -4,10 +4,22 @@
  */
 package com.FrameWork.MedLite.Parametrage.repository;
 
+import com.FrameWork.MedLite.Parametrage.domaine.Convention;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author Administrator
  */
-public interface ConventionRepo {
+@Repository
+public interface ConventionRepo extends JpaRepository<Convention, Integer>{
+      Convention findByCode(Integer code);
+      
+      
+    List<Convention> findByActif(Boolean actif);  
+    List<Convention> findByCodeSociete(Integer codeSociete);
+
     
 }

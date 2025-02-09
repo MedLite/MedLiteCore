@@ -5,12 +5,12 @@
 package com.FrameWork.MedLite.Parametrage.service;
 
 import com.FrameWork.MedLite.Parametrage.domaine.Compteur;
-import com.FrameWork.MedLite.Parametrage.domaine.Medecin;
-import com.FrameWork.MedLite.Parametrage.domaine.PrestationConsultation;
+import com.FrameWork.MedLite.Parametrage.domaine.Medecin; 
+import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
 import com.FrameWork.MedLite.Parametrage.dto.MedecinDTO;
 import com.FrameWork.MedLite.Parametrage.factory.MedecinFactory;
-import com.FrameWork.MedLite.Parametrage.repository.MedecinRepo;
-import com.FrameWork.MedLite.Parametrage.repository.PrestationConsultationRepo;
+import com.FrameWork.MedLite.Parametrage.repository.MedecinRepo; 
+import com.FrameWork.MedLite.Parametrage.repository.PrestationMedecinConsultationRepo;
 import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.Date;
@@ -36,17 +36,20 @@ public class MedecinService {
     }
 
     private final MedecinRepo medecinRepo;
-    private final CompteurService compteurService;
-    private final PrestationConsultationRepo prestationConsultationRepo;
+    private final CompteurService compteurService; 
+    private final PrestationMedecinConsultationRepo prestationMedecinConsultationRepo;
 
     private final static String medecinError = "error.MedecinNotFound";
 
-    public MedecinService(MedecinRepo medecinRepo, CompteurService compteurService, PrestationConsultationRepo prestationConsultationRepo) {
+    public MedecinService(MedecinRepo medecinRepo, CompteurService compteurService, PrestationMedecinConsultationRepo prestationMedecinConsultationRepo) {
         this.medecinRepo = medecinRepo;
         this.compteurService = compteurService;
-        this.prestationConsultationRepo = prestationConsultationRepo;
+        this.prestationMedecinConsultationRepo = prestationMedecinConsultationRepo;
     }
 
+   
+
+   
     
 
     @Transactional(readOnly = true)
@@ -108,12 +111,13 @@ public class MedecinService {
         MedecinFactory.medecinDTOToMedecin(dto, domaine);
         return medecinRepo.save(domaine);
     }
-
-    public void deleteMedecin(Integer code) {
+    
+      public void deleteMedecin(Integer code) {
         Preconditions.checkArgument(medecinRepo.existsById(code), medecinError);
         
-        List<PrestationConsultation> presCons = prestationConsultationRepo.findByCodeMedecin(code);
-        Preconditions.checkArgument(presCons.isEmpty(), "error.MedecinUsedInPrestationCOnsultation");
+          PrestationMedecinConsultation presCons = prestationMedecinConsultationRepo.findByCodeMedecin(code);
+        Preconditions.checkArgument(presCons.getCodeMedecin() == null, "error.MedecinUsedInPrestationCOnsultation");
         medecinRepo.deleteById(code);
     }
+  
 }

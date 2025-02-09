@@ -45,6 +45,12 @@ public class TypeIntervenantService {
         return TypeIntervenantFactory.listTypeIntervenantToTypeIntervenantDTOs(typeIntervenantRepo.findByActif(actif));
 
     }
+    
+    @Transactional(readOnly = true)
+    public List<TypeIntervenantDTO> findAllTypeIntervenantByActifAndVirtuel(Boolean actif ,Boolean virtuel ) {
+        return TypeIntervenantFactory.listTypeIntervenantToTypeIntervenantDTOs(typeIntervenantRepo.findByActifAndVirtuel(actif,virtuel));
+
+    }
 
     @Transactional(readOnly = true)
     public TypeIntervenantDTO findOne(Integer code) {

@@ -9,6 +9,12 @@ import com.FrameWork.MedLite.Parametrage.dto.ConventionDTO;
 import com.FrameWork.MedLite.Parametrage.dto.NationaliteDTO;
 import com.FrameWork.MedLite.Parametrage.dto.PriceListDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -17,6 +23,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 import org.springframework.core.Conventions;
 
@@ -29,12 +36,20 @@ public class PatientDTO {
 
    private String codeSaisie;
 
-    private String NomCompltAr;
+    private String nomCompltAr;
 
-    private String NomCompltLt;
+    private String nomCompltLt;
+ 
 
-    private Date dateNaissance;
-
+    
+    @Basic(optional = false)
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate dateNaissance;
+    
+    
     private String numTel;
 
     private Integer codeSociete;
@@ -78,28 +93,32 @@ public class PatientDTO {
     }
 
     public String getNomCompltAr() {
-        return NomCompltAr;
+        return nomCompltAr;
     }
 
-    public void setNomCompltAr(String NomCompltAr) {
-        this.NomCompltAr = NomCompltAr;
+    public void setNomCompltAr(String nomCompltAr) {
+        this.nomCompltAr = nomCompltAr;
     }
 
     public String getNomCompltLt() {
-        return NomCompltLt;
+        return nomCompltLt;
     }
 
-    public void setNomCompltLt(String NomCompltLt) {
-        this.NomCompltLt = NomCompltLt;
+    public void setNomCompltLt(String nomCompltLt) {
+        this.nomCompltLt = nomCompltLt;
     }
 
-    public Date getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
+
+     
+
+     
 
     public String getNumTel() {
         return numTel;

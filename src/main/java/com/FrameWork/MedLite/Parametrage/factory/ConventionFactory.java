@@ -22,14 +22,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ConventionFactory {
-    
-           static String LANGUAGE_SEC;
+
+    static String LANGUAGE_SEC;
 
     @Value("${lang.secondary}")
     public void setLanguage(String db) {
         LANGUAGE_SEC = db;
     }
-    
 
     public static Convention createConventionByCode(int code) {
         Convention domaine = new Convention();
@@ -44,8 +43,6 @@ public class ConventionFactory {
             domaine.setDesignationAr(dto.getDesignationAr());
             domaine.setCodeSaisie(dto.getCodeSaisie());
             domaine.setActif(dto.isActif());
-            domaine.setDateCreate(new Date());
-            domaine.setUserCreate(Helper.getUserAuthenticated());
 
             domaine.setDateDeb(dto.getDateDeb());
             domaine.setDateFin(dto.getDateFin());
@@ -79,7 +76,7 @@ public class ConventionFactory {
             ConventionDTO dto = new ConventionDTO();
             dto.setCode(domaine.getCode());
 
-          if (LocaleContextHolder.getLocale().getLanguage().equals(new Locale(LANGUAGE_SEC).getLanguage())) {
+            if (LocaleContextHolder.getLocale().getLanguage().equals(new Locale(LANGUAGE_SEC).getLanguage())) {
                 dto.setDesignationAr(domaine.getDesignationAr());
                 dto.setDesignationLt(domaine.getDesignationLt());
             } else {
@@ -90,20 +87,18 @@ public class ConventionFactory {
             dto.setActif(domaine.isActif());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUserCreate(domaine.getUserCreate());
+            dto.setDateDeb(domaine.getDateDeb());
+            dto.setDateFin(domaine.getDateFin());
 
-            
-              dto.setPriceListDTO(PriceListFactory.priceListToPriceListDTO(domaine.getPriceList()));
+            dto.setPriceListDTO(PriceListFactory.priceListToPriceListDTO(domaine.getPriceList()));
             dto.setCodePriceList(domaine.getCodePriceList());
 
-            
-              dto.setListCouvertureDTO(ListCouvertureFactory.listCouvertureToListCouvertureDTO(domaine.getListCouverture()));
+            dto.setListCouvertureDTO(ListCouvertureFactory.listCouvertureToListCouvertureDTO(domaine.getListCouverture()));
             dto.setCodeListCouverture(domaine.getCodeListCouverture());
 
-            
-              dto.setSocieteDTO(SocieteFactory.societeToSocieteDTO(domaine.getSociete()));
+            dto.setSocieteDTO(SocieteFactory.societeToSocieteDTO(domaine.getSociete()));
             dto.setCodeSociete(domaine.getCodeSociete());
 
-            
             return dto;
         } else {
             return null;

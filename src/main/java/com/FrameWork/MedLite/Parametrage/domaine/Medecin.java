@@ -80,9 +80,11 @@ public class Medecin {
 //    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 //    @JsonBackReference
 //    private Prestation prestationConsult;
-
-    @Column(name = "Code_Prestation_Consult")
-    private Integer codePrestationConsult;
+//    @Column(name = "Code_Prestation_Consult")
+//    private Integer codePrestationConsult;
+    
+    @Column(name = "Autorise_Frais", nullable = false, columnDefinition = "bit default (0)")
+    private boolean autoriseFrais;
 
     public Medecin() {
     }
@@ -182,16 +184,19 @@ public class Medecin {
 //    public void setPrestationConsult(Prestation prestationConsult) {
 //        this.prestationConsult = prestationConsult;
 //    }
-
-    public Integer getCodePrestationConsult() {
-        return codePrestationConsult;
+//    public Integer getCodePrestationConsult() {
+//        return codePrestationConsult;
+//    }
+//
+//    public void setCodePrestationConsult(Integer codePrestationConsult) {
+//        this.codePrestationConsult = codePrestationConsult;
+//    }
+    public boolean isAutoriseFrais() {
+        return autoriseFrais;
     }
 
-    public void setCodePrestationConsult(Integer codePrestationConsult) {
-        this.codePrestationConsult = codePrestationConsult;
+    public void setAutoriseFrais(boolean autoriseFrais) {
+        this.autoriseFrais = autoriseFrais;
     }
-
-    
-    
 
 }

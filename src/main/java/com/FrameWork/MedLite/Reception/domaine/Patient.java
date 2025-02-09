@@ -6,6 +6,8 @@ package com.FrameWork.MedLite.Reception.domaine;
 
 import com.FrameWork.MedLite.Parametrage.domaine.PriceList;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,6 +21,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
@@ -45,15 +48,21 @@ public class Patient {
 
     @Size(max = 200)
     @Column(name = "Nom_Complet_Ar", length = 200, nullable = false, columnDefinition = "nvarchar(max)")
-    private String NomCompltAr;
+    private String nomCompltAr;
 
     @Size(max = 200)
     @Column(name = "Nom_Complet_Lt", length = 200, nullable = false, columnDefinition = "nvarchar(max)")
-    private String NomCompltLt;
+    private String nomCompltLt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "Date_Naissance", columnDefinition = "datetime")
-    private Date dateNaissance;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @Column(name = "Date_Naissance", columnDefinition = "datetime")
+//    private Date dateNaissance;
+//    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Date_Naissance", nullable = false, columnDefinition = ("date"))
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate dateNaissance;
 
     @Size(max = 200)
     @Column(name = "Num_Tel", length = 200, nullable = false, columnDefinition = "nvarchar(20)")
@@ -61,8 +70,6 @@ public class Patient {
 
     @Column(name = "Code_Societe")
     private Integer codeSociete;
-
- 
 
     @Column(name = "Code_Convention")
     private Integer codeConvention;
@@ -81,12 +88,8 @@ public class Patient {
 //    @ManyToOne(optional = false, fetch = FetchType.LAZY)
 //    @JsonBackReference
 //    private Nationalite nationalite;
-
 //    @Column(name = "Code_Nationalite", updatable = false, insertable = false, nullable = false)
 //    private Integer codeNationalite;
-    
-    
-    
     @JoinColumn(name = "Code_Price_List", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
@@ -94,9 +97,6 @@ public class Patient {
 
     @Column(name = "Code_Price_List", updatable = false, insertable = false, nullable = false)
     private Integer codePriceList;
-    
-    
-    
 
     public Patient() {
     }
@@ -118,28 +118,30 @@ public class Patient {
     }
 
     public String getNomCompltAr() {
-        return NomCompltAr;
+        return nomCompltAr;
     }
 
-    public void setNomCompltAr(String NomCompltAr) {
-        this.NomCompltAr = NomCompltAr;
+    public void setNomCompltAr(String nomCompltAr) {
+        this.nomCompltAr = nomCompltAr;
     }
 
     public String getNomCompltLt() {
-        return NomCompltLt;
+        return nomCompltLt;
     }
 
-    public void setNomCompltLt(String NomCompltLt) {
-        this.NomCompltLt = NomCompltLt;
+    public void setNomCompltLt(String nomCompltLt) {
+        this.nomCompltLt = nomCompltLt;
     }
 
-    public Date getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
+
+    
 
     public String getNumTel() {
         return numTel;
@@ -188,8 +190,6 @@ public class Patient {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
-    
-    
 
 //    public Nationalite getNationalite() {
 //        return nationalite;
@@ -214,7 +214,6 @@ public class Patient {
 //    public void setConvention(Convention convention) {
 //        this.convention = convention;
 //    }
-
     public PriceList getPriceList() {
         return priceList;
     }
@@ -230,6 +229,5 @@ public class Patient {
     public void setCodePriceList(Integer codePriceList) {
         this.codePriceList = codePriceList;
     }
-    
 
 }

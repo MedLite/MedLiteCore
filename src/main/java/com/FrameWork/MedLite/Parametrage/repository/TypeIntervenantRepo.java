@@ -21,5 +21,8 @@ public interface TypeIntervenantRepo extends JpaRepository<TypeIntervenant, Inte
     List<TypeIntervenant> findByIsClinique(Boolean isClinique);
 
     List<TypeIntervenant> findByActif(Boolean actif);
+    
+        List<TypeIntervenant> findByActifAndVirtuel(Boolean actif,Boolean virtuel);
+
 
 }

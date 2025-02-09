@@ -48,9 +48,12 @@ public class TypeIntervenant {
 
     @Column(name = "Actif", nullable = false)
     private boolean actif;
+    
+    
+    @Column(name = "Virtuel", nullable = false)
+    private boolean virtuel;
+    
 
-    @Column(name = "Autorise_Frais", nullable = false, columnDefinition = "bit default (0)")
-    private boolean autoriseFrais;
 
     @Column(name = "Is_Clinique", nullable = false, columnDefinition = "bit default (0)")
     private boolean isClinique;
@@ -121,13 +124,7 @@ public class TypeIntervenant {
         this.dateCreate = dateCreate;
     }
 
-    public boolean isAutoriseFrais() {
-        return autoriseFrais;
-    }
-
-    public void setAutoriseFrais(boolean autoriseFrais) {
-        this.autoriseFrais = autoriseFrais;
-    }
+    
 
     public boolean isIsClinique() {
         return isClinique;
@@ -136,6 +133,15 @@ public class TypeIntervenant {
     public void setIsClinique(boolean isClinique) {
         this.isClinique = isClinique;
     }
+
+    public boolean isVirtuel() {
+        return virtuel;
+    }
+
+    public void setVirtuel(boolean virtuel) {
+        this.virtuel = virtuel;
+    }
     
 
+    
 }

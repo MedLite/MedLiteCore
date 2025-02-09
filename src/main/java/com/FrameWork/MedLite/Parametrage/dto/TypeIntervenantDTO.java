@@ -33,9 +33,8 @@ public class TypeIntervenantDTO {
     private String userCreate;
 
     private Date dateCreate;
-    private boolean autoriseFrais;
     private boolean isClinique;
-
+  private boolean virtuel;
     public TypeIntervenantDTO() {
     }
 
@@ -94,15 +93,7 @@ public class TypeIntervenantDTO {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
-
-    public boolean isAutoriseFrais() {
-        return autoriseFrais;
-    }
-
-    public void setAutoriseFrais(boolean autoriseFrais) {
-        this.autoriseFrais = autoriseFrais;
-    }
-
+ 
     public boolean isIsClinique() {
         return isClinique;
     }
@@ -133,6 +124,14 @@ public class TypeIntervenantDTO {
 
     public void setCodeTypeIntervenant(Integer codeTypeIntervenant) {
         this.codeTypeIntervenant = codeTypeIntervenant;
+    }
+
+    public boolean isVirtuel() {
+        return virtuel;
+    }
+
+    public void setVirtuel(boolean virtuel) {
+        this.virtuel = virtuel;
     }
     
     

@@ -56,6 +56,11 @@ public class TypeIntervenantRessource {
     public ResponseEntity<List<TypeIntervenantDTO>> getAllTypeIntervenantByActif(@RequestParam Boolean actif) {
         return ResponseEntity.ok().body(typeIntervenantService.findAllTypeIntervenantByActif(actif));
     }
+    
+       @GetMapping("type_intervenant/findByActifAndVirtuel")
+    public ResponseEntity<List<TypeIntervenantDTO>> getAllTypeIntervenantByActifAndVirtuel(@RequestParam Boolean actif,@RequestParam Boolean virtuel) {
+        return ResponseEntity.ok().body(typeIntervenantService.findAllTypeIntervenantByActifAndVirtuel(actif,virtuel));
+    }
     @GetMapping("type_intervenant/all")
     public ResponseEntity<List<TypeIntervenantDTO>> getAllTypeIntervenant() {
         return ResponseEntity.ok().body(typeIntervenantService.findAllTypeIntervenant());

@@ -31,7 +31,9 @@ public class MedecinFactory {
             domaine.setNomIntervLt(dto.getNomIntervLt());
             domaine.setCodeSaisie(dto.getCodeSaisie());
 
-            domaine.setActif(dto.isActif());
+            domaine.setActif(dto.isActif());  
+            domaine.setAutoriseFrais(dto.isAutoriseFrais());
+
           
             domaine.setCodeSpecialiteMedecin(dto.getCodeSpecialiteMedecin());
             if (domaine.getCodeSpecialiteMedecin() != null) {
@@ -43,11 +45,6 @@ public class MedecinFactory {
                 domaine.setTypeIntervenant(TypeIntervenantFactory.createTypeIntervenantByCode(dto.getCodeTypeIntervenant()));
             }
 
-            domaine.setCodePrestationConsult(dto.getCodePrestationConsult());
-//            if (domaine.getCodePrestationConsult() != null) {
-//                domaine.setPrestationConsult(PrestationFactory.createPrestationByCode(dto.getCodePrestationConsult()));
-//            }
-
             return domaine;
         } else {
             return null;
@@ -58,7 +55,9 @@ public class MedecinFactory {
 
         if (domaine != null) {
             MedecinDTO dto = new MedecinDTO();
-            dto.setCode(domaine.getCode());
+            dto.setCode(domaine.getCode());    
+            dto.setAutoriseFrais(domaine.isAutoriseFrais());
+
 
             dto.setNomIntervAr(domaine.getNomIntervAr());
             dto.setNomIntervLt(domaine.getNomIntervLt());
@@ -71,7 +70,6 @@ public class MedecinFactory {
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
  
-            dto.setCodePrestationConsult(domaine.getCodePrestationConsult());
 
             dto.setSpecialiteMedecinDTO(SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine.getSpecialiteMedecin()));
             dto.setCodeSpecialiteMedecin(domaine.getCodeSpecialiteMedecin());
