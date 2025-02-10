@@ -84,6 +84,14 @@ public class PrestationService {
     }
 
     @Transactional(readOnly = true)
+    public List<PrestationDTO> findByCodeFamilleFacturationConsultation() {
+
+        String codeFamilleConsultation = paramService.findParamByCodeParamS("CodeFamilleFacturationConsultation").getValeur();
+        return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findByCodeFamillePrestation(Integer.parseInt(codeFamilleConsultation)));
+
+    }
+
+    @Transactional(readOnly = true)
     public PrestationDTO findOne(Integer code) {
         Prestation domaine = prestationRepo.findByCode(code);
         Preconditions.checkArgument(domaine.getCode() != null, "error.PrestationNotFound");

@@ -77,6 +77,11 @@ public class PrestationRessource {
     public ResponseEntity<List<PrestationDTO>> getAllPrestationByActif(@RequestParam Boolean actif) {
         return ResponseEntity.ok().body(prestationService.findAllPrestationByActif(actif));
     }
+    
+      @GetMapping("prestation/prestationConsultation")
+    public ResponseEntity<List<PrestationDTO>> getPrestationConsultation() {
+        return ResponseEntity.ok().body(prestationService.findByCodeFamilleFacturationConsultation());
+    }
 
     @GetMapping("details_prestation/By")
     public ResponseEntity<Collection<DetailsPrestationDTO>> getDetailsPrestationByCodeAndCodeNaureAdmission(@RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
