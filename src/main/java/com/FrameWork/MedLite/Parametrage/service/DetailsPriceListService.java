@@ -54,12 +54,23 @@ public class DetailsPriceListService {
 //    }
 //
     @Transactional(readOnly = true)
-    public List<DetailsPriceListDTO> findOneWithCodePriceListAndCodePrestationAndCodeNatureAdmission(Integer codePriceList, Integer codePrestation, Integer codeNatureAdmission) {
-        List<DetailsPriceList> domaine = detailsPriceListRepo.findByCodePriceListAndCodePrestationAndCodeNatureAdmission(codePriceList, codePrestation, codeNatureAdmission);
+    public List<DetailsPriceListDTO>  findOneWithCodePriceListAndCodePrestationAndCodeNatureAdmission(Integer codePriceList, Integer codePrestation, Integer codeNatureAdmission) {
+         List<DetailsPriceList>  domaine = detailsPriceListRepo.findByCodePriceListAndCodePrestationAndCodeNatureAdmission(codePriceList, codePrestation, codeNatureAdmission);
         Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound");
         return DetailsPriceListFactory.detailsPriceListTodetailsPriceListDTOs(domaine);
     }
 
+    
+//        @Transactional(readOnly = true)
+//    public DetailsPriceListDTO  findOneWithCodePriceListAndCodePrestationAndCodeNatureAdmissionGrouped(Integer codePriceList, Integer codePrestation, Integer codeNatureAdmission) {
+//         DetailsPriceList  domaine = detailsPriceListRepo.findByCodePriceListAndCodePrestationAndCodeNatureAdmission(codePriceList, codePrestation, codeNatureAdmission);
+//        Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound");
+//        return DetailsPriceListFactory.DetailsPriceListToDetailsPriceListDTO(domaine);
+//    }
+    
+    
+    
+    
     @Transactional(readOnly = true)
     public List<DetailsPriceListDTO> findOneWithCodePriceList(Integer codePriceList) {
         // Fetch existing DetailsPriceList entries for the given codePriceList

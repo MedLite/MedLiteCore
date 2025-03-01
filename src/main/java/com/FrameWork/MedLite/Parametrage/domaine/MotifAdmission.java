@@ -2,47 +2,63 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.FrameWork.MedLite.Parametrage.dto;
+package com.FrameWork.MedLite.Parametrage.domaine;
 
-import java.util.Collection;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
-import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 
 /**
  *
  * @author Administrator
  */
-public class ListCouvertureDTO {
-
-    private Integer code;
-
+@Entity
+@Table(name = "Motif_Admission", schema = "param")
+@Audited
+@AuditTable("Motif_Admission_AUD")
+public class MotifAdmission {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Code")
+    private Integer code; 
+    
+    @Size(max = 200)
+    @NotNull
+    @Column(name = "Code_Saisie", length = 200)
     private String codeSaisie;
 
+    @Size(max = 200)
+    @Column(name = "Designation_Ar", length = 200, nullable = false, columnDefinition = "nvarchar(200)")
     private String designationAr;
 
+    @Size(max = 200)
+    @Column(name = "Designation_Lt", length = 200, nullable = false, columnDefinition = "nvarchar(200)")
     private String designationLt;
 
+    @Column(name = "Actif", nullable = false)
     private boolean actif;
 
+    @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
     private String userCreate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
     private Date dateCreate;
-
-    private List<DetailsListCouvertureDTO> detailsListCouvertureDTOs;
-
-    private List<DetailsListCouvertureOperationDTO> detailsListCouvertureOperationDTOs;
-
     
-        private Integer codePriceList;
-
-        
-        
-            private Integer codeNatureAdmission;
-
-            
-    public ListCouvertureDTO() {
+  
+    public MotifAdmission() {
     }
+ 
 
     public Integer getCode() {
         return code;
@@ -100,20 +116,6 @@ public class ListCouvertureDTO {
         this.dateCreate = dateCreate;
     }
 
-    public List<DetailsListCouvertureDTO> getDetailsListCouvertureDTOs() {
-        return detailsListCouvertureDTOs;
-    }
-
-    public void setDetailsListCouvertureDTOs(List<DetailsListCouvertureDTO> detailsListCouvertureDTOs) {
-        this.detailsListCouvertureDTOs = detailsListCouvertureDTOs;
-    }
-
-    public List<DetailsListCouvertureOperationDTO> getDetailsListCouvertureOperationDTOs() {
-        return detailsListCouvertureOperationDTOs;
-    }
-
-    public void setDetailsListCouvertureOperationDTOs(List<DetailsListCouvertureOperationDTO> detailsListCouvertureOperationDTOs) {
-        this.detailsListCouvertureOperationDTOs = detailsListCouvertureOperationDTOs;
-    }
-
+  
+    
 }

@@ -8,6 +8,7 @@ import com.FrameWork.MedLite.Parametrage.domaine.Prestation;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -37,16 +38,24 @@ public class MedecinDTO {
 
     private Integer codeSpecialiteMedecin;
     
-        private PrestationDTO prestationConsultationDTO;
+        private PrestationMedecinConsultationDTO prestationConsultationDTO;
  
-//    private Integer codePrestationConsult;
+
+    private List<PrestationMedecinConsultationDTO> prestationMedecinConsultationDTOs;
     
     
     private boolean autoriseFrais;
     
-    
-    
+     private boolean autorisConsultation;
+     
+     
+         private Integer codePrestationConsultation;
+ 
 
+           private boolean opd;
+ 
+    private boolean er;
+    
     public MedecinDTO() {
     }
 
@@ -140,11 +149,11 @@ public class MedecinDTO {
         this.codeSpecialiteMedecin = codeSpecialiteMedecin;
     }
 
-    public PrestationDTO getPrestationConsultationDTO() {
+    public PrestationMedecinConsultationDTO getPrestationConsultationDTO() {
         return prestationConsultationDTO;
     }
 
-    public void setPrestationConsultationDTO(PrestationDTO prestationConsultationDTO) {
+    public void setPrestationConsultationDTO(PrestationMedecinConsultationDTO prestationConsultationDTO) {
         this.prestationConsultationDTO = prestationConsultationDTO;
     }
 
@@ -156,6 +165,46 @@ public class MedecinDTO {
 
     public void setAutoriseFrais(boolean autoriseFrais) {
         this.autoriseFrais = autoriseFrais;
+    }
+
+    public List<PrestationMedecinConsultationDTO> getPrestationMedecinConsultationDTOs() {
+        return prestationMedecinConsultationDTOs;
+    }
+
+    public void setPrestationMedecinConsultationDTOs(List<PrestationMedecinConsultationDTO> prestationMedecinConsultationDTOs) {
+        this.prestationMedecinConsultationDTOs = prestationMedecinConsultationDTOs;
+    }
+
+    public boolean isAutorisConsultation() {
+        return autorisConsultation;
+    }
+
+    public void setAutorisConsultation(boolean autorisConsultation) {
+        this.autorisConsultation = autorisConsultation;
+    }
+
+    public Integer getCodePrestationConsultation() {
+        return codePrestationConsultation;
+    }
+
+    public void setCodePrestationConsultation(Integer codePrestationConsultation) {
+        this.codePrestationConsultation = codePrestationConsultation;
+    }
+
+    public boolean isOpd() {
+        return opd;
+    }
+
+    public void setOpd(boolean opd) {
+        this.opd = opd;
+    }
+
+    public boolean isEr() {
+        return er;
+    }
+
+    public void setEr(boolean er) {
+        this.er = er;
     }
 
    

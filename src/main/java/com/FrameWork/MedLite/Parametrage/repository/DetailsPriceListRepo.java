@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface DetailsPriceListRepo extends JpaRepository<DetailsPriceList, Integer> {
- 
+
     DetailsPriceList findByCode(Integer code);
 
     DetailsPriceList findByCodePrestation(Integer codePrestation);
@@ -35,9 +35,12 @@ public interface DetailsPriceListRepo extends JpaRepository<DetailsPriceList, In
     List<DetailsPriceList> findByCodePriceListAndCodePrestationAndCodeNatureAdmission(Integer codePriceList, Integer codePrestation, Integer codeNatureAdmission);
 
     
-    public void deleteByCodePrestation(Integer codePrestation);   
+        List<DetailsPriceList> findByCodePriceListAndCodeNatureAdmissionAndCodePrestationIn(Integer codePriceList, Integer codeNatureAdmission ,List<Integer> codePrestation);
+ 
+    public void deleteByCodePrestation(Integer codePrestation);
+
     public void deleteByCodePriceList(Integer codePriceList);
-    
-     boolean existsByCodePrestationAndCodeNatureAdmissionAndCodeTypeIntervenant(int codePrestation, int codeNatureAdmission, int codeTypeIntervenant);
+
+    boolean existsByCodePrestationAndCodeNatureAdmissionAndCodeTypeIntervenant(int codePrestation, int codeNatureAdmission, int codeTypeIntervenant);
 
 }

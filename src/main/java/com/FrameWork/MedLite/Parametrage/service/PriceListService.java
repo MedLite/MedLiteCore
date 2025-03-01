@@ -97,6 +97,12 @@ public class PriceListService {
         return PriceListFactory.listPriceListToPriceListDTOs(priceListRepo.findByActifOrderByCodeSaisieDesc(actif));
 
     }
+    
+        @Transactional(readOnly = true)
+    public List<PriceListDTO> findAllPriceListByCodeSociete(Integer codeSociete) {
+        return PriceListFactory.listPriceListToPriceListDTOs(priceListRepo.findByCodeSociete(codeSociete));
+
+    }
 
     @Transactional(readOnly = true)
     public PriceListDTO findOne(Integer code) {
@@ -106,6 +112,9 @@ public class PriceListService {
         return PriceListFactory.priceListToPriceListDTO(domaine);
     }
 
+   
+    
+    
     @Transactional
     public PriceList findPriceListByCode(Integer code) {
         System.out.println("code    " + code);
@@ -117,18 +126,7 @@ public class PriceListService {
         }
         return domaine;
     }
-
-//    public PriceListDTO save(PriceListDTO dto) {
-//        PriceList domaine = PriceListFactory.priceListDTOToPriceList(dto, new PriceList());
-//        Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisiePL");
-//        String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
-//        domaine.setDateCreate(new Date());  // Set in domaine
-//        domaine.setUserCreate(Helper.getUserAuthenticated());
-//        domaine.setCodeSaisie(codeSaisieAC);
-//        compteurService.incrementeSuffixe(CompteurCodeSaisie);
-//        domaine = priceListRepo.save(domaine);
-//        return PriceListFactory.priceListToPriceListDTO(domaine);
-//    }
+ 
     public PriceListDTO savepricelist(PriceListDTO dto) {
         PriceList domaine = PriceListFactory.priceListDTOToPriceList(dto, new PriceList());
         Compteur compteurCodeSaisie = compteurService.findOne("CodeSaisiePL");

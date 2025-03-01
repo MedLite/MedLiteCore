@@ -18,7 +18,11 @@ public interface MedecinRepo extends JpaRepository<Medecin, Integer> {
 
     Medecin findByCode(Integer code);
     
-    List<Medecin> findByActif(Boolean actif);
+    List<Medecin> findByActif(Boolean actif);  
+    List<Medecin> findByAutorisConsultationAndActif(Boolean autorisConsultation,Boolean actif);  
+    List<Medecin> findByAutorisConsultationAndActifAndOpdAndEr(Boolean autorisConsultation,Boolean actif,Boolean opd,Boolean er);
+
+
 
     List<Medecin> findByCodeTypeIntervenant(Integer codeTypeIntervenant);
 

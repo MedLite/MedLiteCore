@@ -83,13 +83,7 @@ public class Patient {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
     private Date dateCreate;
-
-//    @JoinColumn(name = "Code_Nationalite", referencedColumnName = "Code", nullable = false)
-//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-//    @JsonBackReference
-//    private Nationalite nationalite;
-//    @Column(name = "Code_Nationalite", updatable = false, insertable = false, nullable = false)
-//    private Integer codeNationalite;
+ 
     @JoinColumn(name = "Code_Price_List", referencedColumnName = "Code", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference

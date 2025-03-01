@@ -26,19 +26,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class CabinetService {
 
     private final CabinetRepo cabinetRepo;
-     private final CompteurService compteurService;
+    private final CompteurService compteurService;
 
     public CabinetService(CabinetRepo cabinetRepo, CompteurService compteurService) {
         this.cabinetRepo = cabinetRepo;
         this.compteurService = compteurService;
     }
 
-
- 
-
     @Transactional(readOnly = true)
     public List<CabinetDTO> findAllCabinet() {
         return CabinetFactory.listCabinetToCabinetDTOs(cabinetRepo.findAll(Sort.by("code").descending()));
+
+    }
+
+    @Transactional(readOnly = true)
+    public List<CabinetDTO> findAllCabinetByActif(Boolean actif) {
+        return CabinetFactory.listCabinetToCabinetDTOs(cabinetRepo.findByActif(actif));
 
     }
 
@@ -61,12 +64,12 @@ public class CabinetService {
         Cabinet domaine = CabinetFactory.cabinetDTOToCabinet(dto, new Cabinet());
         domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
-        
+
         Compteur CompteurCodeSaisie = compteurService.findOne("CodeSaisieCabinet");
         String codeSaisieAC = CompteurCodeSaisie.getPrefixe() + CompteurCodeSaisie.getSuffixe();
         domaine.setCodeSaisie(codeSaisieAC);
         compteurService.incrementeSuffixe(CompteurCodeSaisie);
-        
+
         domaine = cabinetRepo.save(domaine);
         return CabinetFactory.cabinetToCabinetDTO(domaine);
     }

@@ -18,6 +18,7 @@ public interface ListCouvertureRepo extends JpaRepository<ListCouverture, Intege
         ListCouverture findByCode(Integer code);
         
         
-    List<ListCouverture> findByActifOrderByCodeSaisieDesc(Boolean actif);
+    List<ListCouverture> findByActifOrderByCodeSaisieDesc(Boolean actif);   
+
 }
 

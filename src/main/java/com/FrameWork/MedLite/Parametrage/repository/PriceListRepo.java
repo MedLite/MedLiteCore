@@ -20,6 +20,8 @@ public interface PriceListRepo extends JpaRepository<PriceList, Integer> {
 
     PriceList findByCash(Boolean cash);
     
-    List<PriceList> findByActifOrderByCodeSaisieDesc(Boolean actif);
+    List<PriceList> findByActifOrderByCodeSaisieDesc(Boolean actif); 
+    List<PriceList> findByCodeSociete(Integer codeSociete);
+
 
 }

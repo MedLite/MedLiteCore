@@ -6,7 +6,6 @@ package com.FrameWork.MedLite.Parametrage.web;
 
 import com.FrameWork.MedLite.Parametrage.domaine.Convention;
 import com.FrameWork.MedLite.Parametrage.dto.ConventionDTO;
-import com.FrameWork.MedLite.Parametrage.dto.MedecinDTO;
 import com.FrameWork.MedLite.Parametrage.service.ConventionService;
 import jakarta.validation.Valid;
 import java.net.URI;

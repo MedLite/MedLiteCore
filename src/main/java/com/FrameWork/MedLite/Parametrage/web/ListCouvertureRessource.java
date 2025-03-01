@@ -8,7 +8,7 @@ import com.FrameWork.MedLite.Authentification.service.AccessUserService;
 import com.FrameWork.MedLite.Parametrage.domaine.ListCouverture;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureDTO;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureOperationDTO;
-import com.FrameWork.MedLite.Parametrage.dto.ListCouvertureDTO; 
+import com.FrameWork.MedLite.Parametrage.dto.ListCouvertureDTO;
 import com.FrameWork.MedLite.Parametrage.service.DetailsListCouvertureOperationService;
 import com.FrameWork.MedLite.Parametrage.service.DetailsListCouvertureService;
 import com.FrameWork.MedLite.Parametrage.service.ParamService;
@@ -73,11 +73,6 @@ public class ListCouvertureRessource {
         this.accessUserService = accessUserService;
     }
 
- 
-
-  
-    
-
     @GetMapping("list_couverture/{code}")
     public ResponseEntity<ListCouvertureDTO> getListCouvertureByCode(@PathVariable Integer code) {
         ListCouvertureDTO dTO = listCouvertureService.findOne(code);
@@ -87,6 +82,12 @@ public class ListCouvertureRessource {
     @GetMapping("list_couverture/prestation")
     public ResponseEntity<List<DetailsListCouvertureDTO>> getDetailsListCouvertureByCodeListCouverture(@RequestParam Integer codeListCouverture) {
         List<DetailsListCouvertureDTO> dTO = detailsListCouvertureService.findOneWithCodeListCouverture(codeListCouverture);
+        return ResponseEntity.ok().body(dTO);
+    }
+
+    @GetMapping("list_couverture/prestation/findBy")
+    public ResponseEntity<List<DetailsListCouvertureDTO>> getDetailsListCouvertureByCodeListCouvertureByCodePrestaion(@RequestParam Integer codeListCouverture, @RequestParam Integer codePrestation) {
+        List<DetailsListCouvertureDTO> dTO = detailsListCouvertureService.findOneWithCodeListCouvertureAndCodePrestation(codeListCouverture, codePrestation);
         return ResponseEntity.ok().body(dTO);
     }
 
@@ -101,6 +102,7 @@ public class ListCouvertureRessource {
         return ResponseEntity.ok().body(listCouvertureService.findAllListCouverture());
     }
 
+ 
     @PostMapping("list_couvertures")
     public ResponseEntity<ListCouvertureDTO> saveListCouverture(@RequestBody ListCouvertureDTO dTO) {
         try {

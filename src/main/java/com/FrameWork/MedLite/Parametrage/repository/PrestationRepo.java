@@ -15,11 +15,15 @@ import org.springframework.stereotype.Repository;
  * @author Administrator
  */
 @Repository
-public interface PrestationRepo  extends JpaRepository<Prestation, Integer>{
+public interface PrestationRepo extends JpaRepository<Prestation, Integer> {
+
+    Prestation findByCode(Integer code);   
     
-    Prestation findByCode(Integer code);
-    List<Prestation> findByActif (Boolean actif);
-    
-        List<Prestation> findByCodeFamillePrestation (Integer codeFamillePrestation);
+    List<Prestation> findByCodeIn(List<Integer> code);
+
+
+    List<Prestation> findByActif(Boolean actif);
+
+    List<Prestation> findByCodeFamilleFacturation(Integer codeFamilleFacturation);
 
 }

@@ -8,6 +8,7 @@ import com.FrameWork.MedLite.Parametrage.domaine.Compteur;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsPrestation;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsPriceList;
 import com.FrameWork.MedLite.Parametrage.domaine.Prestation;
+import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
 import com.FrameWork.MedLite.Parametrage.domaine.PriceList;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsPrestationDTO;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsPriceListDTO;
@@ -21,6 +22,7 @@ import com.FrameWork.MedLite.Parametrage.factory.TypeIntervenantFactory;
 import com.FrameWork.MedLite.Parametrage.repository.DetailsPrestationRepo;
 import com.FrameWork.MedLite.Parametrage.repository.DetailsPriceListRepo;
 import com.FrameWork.MedLite.Parametrage.repository.NatureAdmissionRepo;
+import com.FrameWork.MedLite.Parametrage.repository.PrestationMedecinConsultationRepo;
 import com.FrameWork.MedLite.Parametrage.repository.PrestationRepo;
 import com.FrameWork.MedLite.Parametrage.repository.PriceListRepo;
 import com.FrameWork.MedLite.web.Util.Helper;
@@ -28,6 +30,7 @@ import com.google.common.base.Preconditions;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Sort;
@@ -57,8 +60,9 @@ public class PrestationService {
     private final DetailsPriceListService detailsPriceListService;
     private final PriceListService priceListService;
     private final DetailsPriceListRepo detailsPriceListRepo;
+    private final PrestationMedecinConsultationRepo prestationMedecinConsultationRepo;
 
-    public PrestationService(PrestationRepo prestationRepo, CompteurService compteurService, ParamService paramService, NatureAdmissionService natureAdmissionService, NatureAdmissionRepo natureAdmissionRepo, DetailsPrestationRepo detailsPrestationRepo, PriceListRepo priceListRepo, DetailsPriceListService detailsPriceListService, PriceListService priceListService, DetailsPriceListRepo detailsPriceListRepo) {
+    public PrestationService(PrestationRepo prestationRepo, CompteurService compteurService, ParamService paramService, NatureAdmissionService natureAdmissionService, NatureAdmissionRepo natureAdmissionRepo, DetailsPrestationRepo detailsPrestationRepo, PriceListRepo priceListRepo, DetailsPriceListService detailsPriceListService, PriceListService priceListService, DetailsPriceListRepo detailsPriceListRepo, PrestationMedecinConsultationRepo prestationMedecinConsultationRepo) {
         this.prestationRepo = prestationRepo;
         this.compteurService = compteurService;
         this.paramService = paramService;
@@ -69,6 +73,7 @@ public class PrestationService {
         this.detailsPriceListService = detailsPriceListService;
         this.priceListService = priceListService;
         this.detailsPriceListRepo = detailsPriceListRepo;
+        this.prestationMedecinConsultationRepo = prestationMedecinConsultationRepo;
     }
 
     @Transactional(readOnly = true)
@@ -84,10 +89,29 @@ public class PrestationService {
     }
 
     @Transactional(readOnly = true)
-    public List<PrestationDTO> findByCodeFamilleFacturationConsultation() {
+    public List<PrestationDTO> findAllPrestationByCodeIn(List<Integer> code) {
+        return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findByCodeIn(code));
 
-        String codeFamilleConsultation = paramService.findParamByCodeParamS("CodeFamilleFacturationConsultation").getValeur();
-        return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findByCodeFamillePrestation(Integer.parseInt(codeFamilleConsultation)));
+    }
+
+    @Transactional(readOnly = true)
+    public List<PrestationDTO> findByCodeFamilleFacturationConsultation(Integer CodeNatureAdmission) {
+        String codeFamilleConsultation = paramService.findParamByCodeParamS("CodeFamilleFacturationConsultation").getValeur();  
+        String codePLCash = paramService.findParamByCodeParamS("PriceListCash").getValeur();
+
+
+        List<Prestation> pres = prestationRepo.findByCodeFamilleFacturation(Integer.parseInt(codeFamilleConsultation));
+        List<Integer> prestationCodes = pres.stream().map(Prestation::getCode).collect(Collectors.toList());
+
+        // Fetch DetailsPriceList entries only for those prestations
+        List<DetailsPriceList> dpl = detailsPriceListRepo.findByCodePriceListAndCodeNatureAdmissionAndCodePrestationIn(Integer.parseInt(codePLCash),CodeNatureAdmission,prestationCodes);
+
+        // Filter prestations to keep only those with entries in DetailsPriceList
+        List<Prestation> filteredPres = pres.stream()
+                .filter(p -> dpl.stream().anyMatch(d -> d.getCodePrestation().equals(p.getCode())))
+                .collect(Collectors.toList());
+
+        return PrestationFactory.listPrestationToPrestationDTOs(filteredPres);
 
     }
 
@@ -188,6 +212,10 @@ public class PrestationService {
 
     public void deletePrestation(Integer code) {
         Preconditions.checkArgument(prestationRepo.existsById(code), "error.PrestationNotFound");
+
+        List<PrestationMedecinConsultation> presConsMed = prestationMedecinConsultationRepo.findByCodePrestation(code);
+        Preconditions.checkArgument(presConsMed.isEmpty(), "error.PrestationInConsultation");
+
         detailsPriceListRepo.deleteByCodePrestation(code);
         prestationRepo.deleteById(code);
     }

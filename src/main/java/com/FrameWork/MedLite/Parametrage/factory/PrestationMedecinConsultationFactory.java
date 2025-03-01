@@ -7,6 +7,7 @@ package com.FrameWork.MedLite.Parametrage.factory;
 import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
 import com.FrameWork.MedLite.Parametrage.dto.PrestationMedecinConsultationDTO;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -78,5 +79,13 @@ public class PrestationMedecinConsultationFactory {
             list.add(medecinToPrestationMedecinConsultationDTO(medecin));
         }
         return list;
+    }
+    
+    public static Collection<PrestationMedecinConsultationDTO> collectionPrestationMedecinConsultationToPrestationMedecinConsultationDTOs(Collection<PrestationMedecinConsultation> medecins) {
+        Collection<PrestationMedecinConsultationDTO> collection = new ArrayList<>();
+        for (PrestationMedecinConsultation medecin : medecins) {
+            collection.add(medecinToPrestationMedecinConsultationDTO(medecin));
+        }
+        return collection;
     }
 }

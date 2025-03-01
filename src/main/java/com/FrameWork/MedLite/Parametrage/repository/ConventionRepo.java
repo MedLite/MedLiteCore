@@ -15,7 +15,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ConventionRepo extends JpaRepository<Convention, Integer>{
-      Convention findByCode(Integer code);
+      Convention findByCode(Integer code);   
+      Convention findByCodeListCouverture(Integer codeListCouverture);
+
       
       
     List<Convention> findByActif(Boolean actif);  

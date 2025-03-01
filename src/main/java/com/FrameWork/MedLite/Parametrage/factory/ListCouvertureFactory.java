@@ -4,14 +4,9 @@
  */
 package com.FrameWork.MedLite.Parametrage.factory;
 
-import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouverture;
-import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouverturePK;
 import com.FrameWork.MedLite.Parametrage.domaine.ListCouverture;
-import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureDTO;
 import com.FrameWork.MedLite.Parametrage.dto.ListCouvertureDTO;
-import com.FrameWork.MedLite.web.Util.Preconditions;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import org.springframework.stereotype.Component;
 

@@ -118,9 +118,20 @@ public class PriceListRessource {
         return ResponseEntity.ok().body(dTO);
     }
 
+    @GetMapping("details_price_list/findBy")
+    public ResponseEntity<List<DetailsPriceListDTO>> getAllDetailsPriceListByCodePriceListAndCodePrestationAndCodeNatureAdmission(@RequestParam Integer codePriceList, @RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
+        return ResponseEntity.ok().body(detailsPriceListService.findOneWithCodePriceListAndCodePrestationAndCodeNatureAdmission(codePriceList, codePrestation, codeNatureAdmission));
+    }
+
     @GetMapping("price_list/operation")
     public ResponseEntity<List<DetailsPriceListOperationDTO>> getDetailsPriceListOperationByCodePriceList(@RequestParam Integer codePriceList) {
         List<DetailsPriceListOperationDTO> dTO = detailsPriceListOperationService.findOneWithCodePriceListOperation(codePriceList);
+        return ResponseEntity.ok().body(dTO);
+    }
+
+    @GetMapping("price_list/societe")
+    public ResponseEntity<List<PriceListDTO>> getPriceListByCodeSociete(@RequestParam Integer codeSociete) {
+        List<PriceListDTO> dTO = priceListService.findAllPriceListByCodeSociete(codeSociete);
         return ResponseEntity.ok().body(dTO);
     }
 
@@ -145,6 +156,7 @@ public class PriceListRessource {
         return ResponseEntity.ok().body(priceListService.findAllPriceListByActif(actif));
     }
 
+//        return this.http.get(`${environment.API_Parametrage}details_price_list/FindBy?codePrice=`+ codePriceList + `&codePrestation=`+codePrestation+ `&codeNatureAdmission=`+codeNatureAdmission);
     @PutMapping("price_list/update")
     public ResponseEntity<PriceListDTO> updatePriceList(@Valid @RequestBody PriceListDTO dTO, BindingResult bindingResult) throws MethodArgumentNotValidException {
         PriceListDTO result = priceListService.updateNew(dTO);
@@ -162,11 +174,11 @@ public class PriceListRessource {
         log.debug("Request to Export excelDetailPriceList : {}");
         List<EditionPriceListParTypeIntervenant> detailsParTypeIntervenants = priceListService.findDetailsForEditionByCodePriceList(codePriceList);
 
-       PriceListDTO plData = priceListService.findOne(codePriceList);
-        
+        PriceListDTO plData = priceListService.findOne(codePriceList);
+
         Locale loc = LocaleContextHolder.getLocale();
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet(messages.getMessage("parametrage.ExcelDetailleeParDegree" , null, loc));
+        XSSFSheet sheet = workbook.createSheet(messages.getMessage("parametrage.ExcelDetailleeParDegree", null, loc));
         sheet.getPrintSetup().setLandscape(true);
         // Styles
         XSSFCellStyle headerStyle = createHeaderStyle(workbook);
@@ -213,7 +225,7 @@ public class PriceListRessource {
 
         // Centered sheet name (spanning multiple columns)
         headerCell = headerRow1.createCell(0);
-        headerCell.setCellValue(messages.getMessage(plData.getDesignationAr()  , null, loc));
+        headerCell.setCellValue(messages.getMessage(plData.getDesignationAr(), null, loc));
         headerCell.setCellStyle(headerStyle);
         sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 7)); // Merge cells for sheet name
 
@@ -306,8 +318,6 @@ public class PriceListRessource {
         ByteArrayResource resource = new ByteArrayResource(excelBytes);
 
         //Set correct content type and filename
-        
-        
         String filename = "Price List" + plData.getDesignationAr() + ".xlsx";
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")

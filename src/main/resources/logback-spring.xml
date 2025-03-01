@@ -3,7 +3,8 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
     <springProfile name="dev">
-        <logger name="org.apache" level="WARN"/>
+           <logger name="com.FrameWork.MedLite.MedLiteCoreApplication" level="INFO"/>
+<!--        <logger name="org.apache" level="WARN"/>
         <logger name="com.FrameWork.MedLite" level="DEBUG"/>
         <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
         <logger name="org.bson" level="WARN"/>
@@ -20,7 +21,7 @@
         <logger name="org.hibernate.stat" level="OFF"/> 
         <logger name="org.springframework.orm.jpa" level="OFF"/>
         <logger name="org.springframework.transaction" level="OFF"/>
-        <logger name="org.springframework.batch.core" level="OFF"/>
+        <logger name="org.springframework.batch.core" level="OFF"/>-->
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>

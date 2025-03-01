@@ -75,16 +75,17 @@ public class Medecin {
 
     @Column(name = "Code_Specialite", updatable = false, insertable = false, nullable = false)
     private Integer codeSpecialiteMedecin;
-
-//    @JoinColumn(name = "Code_Prestation_Consult", referencedColumnName = "Code", nullable = false)
-//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-//    @JsonBackReference
-//    private Prestation prestationConsult;
-//    @Column(name = "Code_Prestation_Consult")
-//    private Integer codePrestationConsult;
-    
     @Column(name = "Autorise_Frais", nullable = false, columnDefinition = "bit default (0)")
     private boolean autoriseFrais;
+
+    @Column(name = "Autoris_Consultation", nullable = false, columnDefinition = "bit default (0)")
+    private boolean autorisConsultation;
+
+    @Column(name = "OPD", nullable = false, columnDefinition = "bit default (0)")
+    private boolean opd;
+
+    @Column(name = "ER", nullable = false, columnDefinition = "bit default (0)")
+    private boolean er;
 
     public Medecin() {
     }
@@ -199,4 +200,29 @@ public class Medecin {
         this.autoriseFrais = autoriseFrais;
     }
 
+    public boolean isAutorisConsultation() {
+        return autorisConsultation;
+    }
+
+    public void setAutorisConsultation(boolean autorisConsultation) {
+        this.autorisConsultation = autorisConsultation;
+    }
+
+    public boolean isOpd() {
+        return opd;
+    }
+
+    public void setOpd(boolean opd) {
+        this.opd = opd;
+    }
+
+    public boolean isEr() {
+        return er;
+    }
+
+    public void setEr(boolean er) {
+        this.er = er;
+    }
+
+    
 }

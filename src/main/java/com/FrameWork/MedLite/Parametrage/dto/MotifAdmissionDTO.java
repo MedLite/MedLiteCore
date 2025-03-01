@@ -4,18 +4,14 @@
  */
 package com.FrameWork.MedLite.Parametrage.dto;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 
 /**
  *
  * @author Administrator
  */
-public class ListCouvertureDTO {
-
-    private Integer code;
+public class MotifAdmissionDTO {
+     private Integer code;
 
     private String codeSaisie;
 
@@ -29,20 +25,10 @@ public class ListCouvertureDTO {
 
     private Date dateCreate;
 
-    private List<DetailsListCouvertureDTO> detailsListCouvertureDTOs;
-
-    private List<DetailsListCouvertureOperationDTO> detailsListCouvertureOperationDTOs;
-
-    
-        private Integer codePriceList;
-
-        
-        
-            private Integer codeNatureAdmission;
-
-            
-    public ListCouvertureDTO() {
+    public MotifAdmissionDTO() {
     }
+
+ 
 
     public Integer getCode() {
         return code;
@@ -100,20 +86,6 @@ public class ListCouvertureDTO {
         this.dateCreate = dateCreate;
     }
 
-    public List<DetailsListCouvertureDTO> getDetailsListCouvertureDTOs() {
-        return detailsListCouvertureDTOs;
-    }
-
-    public void setDetailsListCouvertureDTOs(List<DetailsListCouvertureDTO> detailsListCouvertureDTOs) {
-        this.detailsListCouvertureDTOs = detailsListCouvertureDTOs;
-    }
-
-    public List<DetailsListCouvertureOperationDTO> getDetailsListCouvertureOperationDTOs() {
-        return detailsListCouvertureOperationDTOs;
-    }
-
-    public void setDetailsListCouvertureOperationDTOs(List<DetailsListCouvertureOperationDTO> detailsListCouvertureOperationDTOs) {
-        this.detailsListCouvertureOperationDTOs = detailsListCouvertureOperationDTOs;
-    }
-
+  
+    
 }

@@ -5,11 +5,13 @@
 package com.FrameWork.MedLite.Parametrage.service;
 
 import com.FrameWork.MedLite.Parametrage.domaine.Compteur;
+import com.FrameWork.MedLite.Parametrage.domaine.Convention;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouverture;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouvertureOperation;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsListCouverturePK;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsOperation;
 import com.FrameWork.MedLite.Parametrage.domaine.DetailsPrestation;
+import com.FrameWork.MedLite.Parametrage.domaine.DetailsPriceList;
 import com.FrameWork.MedLite.Parametrage.domaine.ListCouverture;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureDTO;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureOperationDTO;
@@ -20,10 +22,12 @@ import com.FrameWork.MedLite.Parametrage.factory.ListCouvertureFactory;
 import com.FrameWork.MedLite.Parametrage.factory.NatureAdmissionFactory;
 import com.FrameWork.MedLite.Parametrage.factory.OperationFactory;
 import com.FrameWork.MedLite.Parametrage.factory.PrestationFactory;
+import com.FrameWork.MedLite.Parametrage.repository.ConventionRepo;
 import com.FrameWork.MedLite.Parametrage.repository.DetailsListCouvertureOperationRepo;
 import com.FrameWork.MedLite.Parametrage.repository.DetailsListCouvertureRepo;
 import com.FrameWork.MedLite.Parametrage.repository.DetailsOperationRepo;
 import com.FrameWork.MedLite.Parametrage.repository.DetailsPrestationRepo;
+import com.FrameWork.MedLite.Parametrage.repository.DetailsPriceListRepo;
 import com.FrameWork.MedLite.Parametrage.repository.ListCouvertureRepo;
 import com.FrameWork.MedLite.web.Util.Helper;
 import com.FrameWork.MedLite.web.errors.IllegalBusinessLogiqueException;
@@ -66,12 +70,15 @@ public class ListCouvertureService {
     private final DetailsListCouvertureOperationService detailsListCouvertureOperationService;
 
     private final ParamService paramService;
+    private final DetailsPriceListRepo detailsPriceListRepo;
+        private final ConventionRepo conventionRepo;
+
 
     private static final List<String> VALID_VALEURS = Arrays.stream(EnumTypeUpdatePrice.values())
             .map(EnumTypeUpdatePrice::name)
             .collect(Collectors.toList());
 
-    public ListCouvertureService(ListCouvertureRepo listCouvertureRepo, DetailsListCouvertureRepo detailsListCouvertureRepo, DetailsListCouvertureOperationRepo detailsListCouvertureOperationRepo, DetailsPrestationRepo detailsPrestationRepo, DetailsOperationRepo detailsOperationRepo, CompteurService compteurService, DetailsListCouvertureService detailsListCouvertureService, DetailsListCouvertureOperationService detailsListCouvertureOperationService, ParamService paramService) {
+    public ListCouvertureService(ListCouvertureRepo listCouvertureRepo, DetailsListCouvertureRepo detailsListCouvertureRepo, DetailsListCouvertureOperationRepo detailsListCouvertureOperationRepo, DetailsPrestationRepo detailsPrestationRepo, DetailsOperationRepo detailsOperationRepo, CompteurService compteurService, DetailsListCouvertureService detailsListCouvertureService, DetailsListCouvertureOperationService detailsListCouvertureOperationService, ParamService paramService, DetailsPriceListRepo detailsPriceListRepo, ConventionRepo conventionRepo) {
         this.listCouvertureRepo = listCouvertureRepo;
         this.detailsListCouvertureRepo = detailsListCouvertureRepo;
         this.detailsListCouvertureOperationRepo = detailsListCouvertureOperationRepo;
@@ -81,8 +88,12 @@ public class ListCouvertureService {
         this.detailsListCouvertureService = detailsListCouvertureService;
         this.detailsListCouvertureOperationService = detailsListCouvertureOperationService;
         this.paramService = paramService;
+        this.detailsPriceListRepo = detailsPriceListRepo;
+        this.conventionRepo = conventionRepo;
     }
 
+   
+   
     @Transactional(readOnly = true)
     public List<ListCouvertureDTO> findAllListCouverture() {
         return ListCouvertureFactory.listListCouvertureToListCouvertureDTOs(listCouvertureRepo.findAll(Sort.by("code").descending()));
@@ -95,6 +106,10 @@ public class ListCouvertureService {
 
     }
 
+ 
+
+    
+    
     @Transactional(readOnly = true)
     public ListCouvertureDTO findOne(Integer code) {
         ListCouverture domaine = listCouvertureRepo.findByCode(code);
@@ -202,6 +217,25 @@ public class ListCouvertureService {
         newDetailsListCouvertureEntry.setPrestation(PrestationFactory.createPrestationByCode(dtoDetails.getCodePrestation()));
         newDetailsListCouvertureEntry.setCodeNatureAdmission(dp.getCodeNatureAdmission());
         newDetailsListCouvertureEntry.setNatureAdmission(NatureAdmissionFactory.createNatureAdmissionByCode(dp.getCodeNatureAdmission()));
+        
+//        DetailsPriceList priceListEntry = detailsPriceListRepo.findByCodePrestationAndCodeNatureAdmissionAndCodeTypeIntervenant(
+//            dtoDetails.getCodePrestation(), dp.getCodeNatureAdmission(), dp.getCodeTypeIntervenant()
+//    ); //
+//         
+//        
+//           if (priceListEntry != null) {
+//        newDetailsListCouvertureEntry.setMontantPEC(priceListEntry.get());
+//        newDetailsListCouvertureEntry.setMontantPatient(priceListEntry.getMontantPatient());
+//    } else {
+//        log.warn("No DetailsPriceList found for codePrestation: {}, codeNatureAdmission: {}, codeTypeIntervenant: {}", 
+//                 dtoDetails.getCodePrestation(), dp.getCodeNatureAdmission(), dp.getCodeTypeIntervenant());
+//        // Handle missing entry
+//        newDetailsListCouvertureEntry.setMontantPEC(BigDecimal.ZERO);
+//        newDetailsListCouvertureEntry.setMontantPatient(BigDecimal.ZERO);
+//    }
+//           
+           
+         
         newDetailsListCouvertureEntry.setMontantPere(dtoDetails.getMontantPere());
         newDetailsListCouvertureEntry.setTauxCouverPec(dtoDetails.getTauxCouverPec());
         newDetailsListCouvertureEntry.setMontantPatient(dtoDetails.getMontantPatient());
@@ -385,7 +419,11 @@ public class ListCouvertureService {
 
     public void deleteListCouverture(Integer code) {
         Preconditions.checkArgument(listCouvertureRepo.existsById(code), "error.ListCouvertureNotFound");
-//        ListCouverture domaine = listCouvertureRepo.findByCode(code);
+//        Convention domaine = conventionRepo.findByCodeListCouverture(code); 
+        
+           Convention domaine = conventionRepo.findByCodeListCouverture(code);
+//    Preconditions.checkArgument(domaine !=null, "error.ConventionNotFoundForListCouverture");
+      Preconditions.checkArgument(domaine == null, "error.ListCouvertureUsedInConvention");
         detailsListCouvertureService.deleteByCodeListCouverture(code);
         detailsListCouvertureOperationService.deleteByCodeListCouverture(code);
 

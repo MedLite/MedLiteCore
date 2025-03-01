@@ -56,6 +56,12 @@ public class CabinetRessource {
     public ResponseEntity<List<CabinetDTO>> getAllCabinet() { 
         return ResponseEntity.ok().body(cabinetService.findAllCabinet());
     }
+        
+    @GetMapping("cabinet/findBy")
+    public ResponseEntity<List<CabinetDTO>> getAllPlanningCabinetByActif(@RequestParam Boolean actif) {
+        return ResponseEntity.ok().body(cabinetService.findAllCabinetByActif(actif));
+    }
+
 
     @PostMapping("cabinet")
     public ResponseEntity<CabinetDTO> postCabinet(@Valid @RequestBody CabinetDTO ddeTransfertDTO, BindingResult bindingResult) throws URISyntaxException, MethodArgumentNotValidException {

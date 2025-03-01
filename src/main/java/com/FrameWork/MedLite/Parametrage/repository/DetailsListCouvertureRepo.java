@@ -28,7 +28,7 @@ public interface DetailsListCouvertureRepo extends JpaRepository<DetailsListCouv
 
     List<DetailsListCouverture> findByCodeListCouvertureAndCodePrestation(Integer codeListCouverture, Integer codePrestation);
 
-    List<DetailsListCouverture> findByCodeListCouvertureAndCodePrestationAndCodeNatureAdmission(Integer codeListCouverture, Integer codePrestation, Integer codeNatureAdmission);
+     DetailsListCouverture  findByCodeListCouvertureAndCodePrestationAndCodeNatureAdmission(Integer codeListCouverture, Integer codePrestation, Integer codeNatureAdmission);
 
     
     public void deleteByCodePrestation(Integer codePrestation);   

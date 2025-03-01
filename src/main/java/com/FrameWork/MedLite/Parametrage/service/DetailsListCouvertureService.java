@@ -29,24 +29,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class DetailsListCouvertureService {
 
     private final DetailsListCouvertureRepo detailsListCouvertureRepo;
-   private final PrestationRepo prestationRepo;
+    private final PrestationRepo prestationRepo;
 
     public DetailsListCouvertureService(DetailsListCouvertureRepo detailsListCouvertureRepo, PrestationRepo prestationRepo) {
         this.detailsListCouvertureRepo = detailsListCouvertureRepo;
         this.prestationRepo = prestationRepo;
     }
-    
 
 //    public Boolean deleteByCodeListCouverture(Integer codeListCouverture) {
 //        detailsListCouvertureRepo.deleteByCodeListCouverture(codeListCouverture);
 //        return true;
 //    }
-        public void deleteByCodeListCouverture(Integer codeListCouverture) {
+    public void deleteByCodeListCouverture(Integer codeListCouverture) {
 //        Preconditions.checkArgument(detailsPriceListOperationRepo.existsById(codePriceList), "error.DetailsPriceListOperationNotFound");
         detailsListCouvertureRepo.deleteByCodeListCouverture(codeListCouverture);
     }
 
-    
 //    @Transactional(readOnly = true)
 //    public List<DetailsListCouvertureDTO> findOneWithCodeListCouverture(Integer codeListCouverture) {
 //        // Fetch existing DetailsListCouverture entries for the given codeListCouverture
@@ -97,24 +95,21 @@ public class DetailsListCouvertureService {
 //
 //        return missingPrestationDTOs;
 //    }
-        
-        
-         @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<DetailsListCouvertureDTO> findOneWithCodeListCouverture(Integer codeListCouverture) {
         // Fetch existing DetailsPriceList entries for the given codePriceList
         List<DetailsListCouverture> domaine = detailsListCouvertureRepo.findByCodeListCouverture(codeListCouverture);
-        Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound"); 
-        List<Prestation> prestationListDTO = prestationRepo.findByActif(true); 
+        Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound");
+        List<Prestation> prestationListDTO = prestationRepo.findByActif(true);
         List<DetailsListCouvertureDTO> existingDetailsDTOs = DetailsListCouvertureFactory.createDTOs(domaine);
-         
-        List<DetailsListCouvertureDTO> missingPrestationDTOs = findMissingPrestations(prestationListDTO, existingDetailsDTOs, codeListCouverture); 
-        
+
+        List<DetailsListCouvertureDTO> missingPrestationDTOs = findMissingPrestations(prestationListDTO, existingDetailsDTOs, codeListCouverture);
+
         List<DetailsListCouvertureDTO> allDetailsDTOs = new ArrayList<>(existingDetailsDTOs);
-        allDetailsDTOs.addAll(missingPrestationDTOs); 
+        allDetailsDTOs.addAll(missingPrestationDTOs);
         return allDetailsDTOs;
     }
 
-  
     private List<DetailsListCouvertureDTO> findMissingPrestations(List<Prestation> prestationListDTO, List<DetailsListCouvertureDTO> existingDetailsDTOs, Integer codeListCouverture) {
         // Extract codes of existing prestations in DetailsPriceList
         Set<Integer> existingPrestationCodes = existingDetailsDTOs.stream()
@@ -127,7 +122,7 @@ public class DetailsListCouvertureService {
             if (!existingPrestationCodes.contains(prestationDTO.getCode())) {
                 // Create a new DetailsPriceListDTO for the missing prestation
                 DetailsListCouvertureDTO newDetailsPriceListDTO = new DetailsListCouvertureDTO();
-                newDetailsPriceListDTO.setCodePrestation(prestationDTO.getCode()); 
+                newDetailsPriceListDTO.setCodePrestation(prestationDTO.getCode());
                 newDetailsPriceListDTO.setPrestationDTO(PrestationFactory.prestationToPrestationDTO(prestationDTO));
                 newDetailsPriceListDTO.setMontantPEC(BigDecimal.ZERO); // Set montant to prestation's montant    
                 newDetailsPriceListDTO.setMontantPatient(prestationDTO.getPrixPrestation()); // Set montant to prestation's montant
@@ -144,4 +139,25 @@ public class DetailsListCouvertureService {
         return missingPrestationDTOs;
     }
 
+    @Transactional(readOnly = true)
+    public List<DetailsListCouvertureDTO> findOneWithCodeListCouvertureAndCodePrestation(Integer codeListCouverture, Integer codePrestation) {
+        // Fetch existing DetailsPriceList entries for the given codePriceList
+        List<DetailsListCouverture> domaine = detailsListCouvertureRepo.findByCodeListCouvertureAndCodePrestation(codeListCouverture, codePrestation);
+        Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound");
+        List<DetailsListCouvertureDTO> existingDetailsDTOs = DetailsListCouvertureFactory.createDTOs(domaine);
+
+        return existingDetailsDTOs;
+    }
+    
+    
+     @Transactional(readOnly = true)
+    public  DetailsListCouvertureDTO  findOneWithCodeListCouvertureAndCodePrestationAndCodeNatureAdmission(Integer codeListCouverture, Integer codePrestation,Integer codeNatureAdmission) {
+        // Fetch existing DetailsPriceList entries for the given codePriceList
+        DetailsListCouverture  domaine = detailsListCouvertureRepo.findByCodeListCouvertureAndCodePrestationAndCodeNatureAdmission(codeListCouverture, codePrestation,codeNatureAdmission);
+        Preconditions.checkArgument(domaine != null, "error.DetailsListCouvertureNotFound");
+         DetailsListCouvertureDTO  existingDetailsDTOs = DetailsListCouvertureFactory.DetailsListCouvertureToDetailsListCouvertureDTONew(domaine);
+
+        return existingDetailsDTOs;
+    }
+     
 }

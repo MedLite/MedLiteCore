@@ -4,8 +4,7 @@
  */
 package com.FrameWork.MedLite.Parametrage.repository;
 
-import com.FrameWork.MedLite.Parametrage.domaine.Cabinet;
-import com.FrameWork.MedLite.Parametrage.domaine.Ville;
+import com.FrameWork.MedLite.Parametrage.domaine.MotifAdmission;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,11 +14,10 @@ import org.springframework.stereotype.Repository;
  * @author Administrator
  */
 @Repository
-public interface CabinetRepo extends JpaRepository<Cabinet, Integer> {
+public interface MotifAdmissionRepo extends JpaRepository<MotifAdmission, Integer> {
 
-    Cabinet findByCode(Integer code);
+    MotifAdmission findByCode(Integer code);
 
-    List<Cabinet> findByCodeSpecialiteCabinet(Integer codeSpecialiteCabinet);
- List<Cabinet> findByActif(Boolean actif);
+    List<MotifAdmission> findByActif(Boolean actif);
 
 }

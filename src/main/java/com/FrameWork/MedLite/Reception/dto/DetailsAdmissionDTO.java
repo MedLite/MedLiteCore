@@ -2,82 +2,50 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.FrameWork.MedLite.Reception.domaine;
+package com.FrameWork.MedLite.Reception.dto;
 
-import com.FrameWork.MedLite.Parametrage.domaine.ListCouverture;
-import com.FrameWork.MedLite.Parametrage.domaine.NatureAdmission;
 import com.FrameWork.MedLite.Parametrage.domaine.Prestation;
+import com.FrameWork.MedLite.Parametrage.dto.PrestationDTO;
+import com.FrameWork.MedLite.Reception.domaine.Admission;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.math.BigDecimal;
 import java.util.Date;
-import org.hibernate.envers.AuditTable;
-import org.hibernate.envers.Audited;
 
 /**
  *
  * @author Administrator
  */
-@Entity
-@Table(name = "Details_Admission", schema = "recept")
-@Audited
-@AuditTable("Details_Admission_AUD")
-public class DetailsAdmission {
-
-    @Id
-    @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Code")
+public class DetailsAdmissionDTO {
     private Integer code;
 
-    @JoinColumn(name = "Code_Admission", referencedColumnName = "Code", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Admission admission;
+     private AdmissionDTO admissionDTO;
 
-    @Column(name = "Code_Admission", insertable = false, updatable = false)
-    private Integer codeAdmission;
+     private Integer codeAdmission;
 
-    @JoinColumn(name = "Code_Prestation", referencedColumnName = "Code", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonBackReference
-    private Prestation prestation;
+    private PrestationDTO prestationDTO;
 
-    @Column(name = "Code_Prestation", insertable = false, updatable = false)
-    private Integer codePrestation;
+     private Integer codePrestation;
 
-    @Column(name = "Montant", nullable = false, columnDefinition = ("decimal(18,3) "))
-    private BigDecimal montant;
+     private BigDecimal montant;
 
-    @Column(name = "Montant_Patient", nullable = false, columnDefinition = ("decimal(18,3)"))
-    private BigDecimal montantPatient;
+     private BigDecimal montantPatient;
 
-    @Column(name = "Montant_PEC", nullable = false, columnDefinition = ("decimal(18,3)"))
     private BigDecimal montantPEC;
 
-    @Column(name = "User_Create", nullable = false, columnDefinition = "nvarchar(200)")
     private String usercreate;
 
-    @Basic(optional = false)
-    @Column(name = "Date_Create", nullable = false, columnDefinition = "datetime default (getdate())")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreate;
-    
-        @Column(name = "Etat_Paiement", nullable = false)
+     private Date dateCreate;
+     
     private boolean etatPaiement;
 
-    public DetailsAdmission() {
+    public DetailsAdmissionDTO() {
     }
 
     public Integer getCode() {
@@ -88,12 +56,12 @@ public class DetailsAdmission {
         this.code = code;
     }
 
-    public Admission getAdmission() {
-        return admission;
+    public AdmissionDTO getAdmissionDTO() {
+        return admissionDTO;
     }
 
-    public void setAdmission(Admission admission) {
-        this.admission = admission;
+    public void setAdmissionDTO(AdmissionDTO admissionDTO) {
+        this.admissionDTO = admissionDTO;
     }
 
     public Integer getCodeAdmission() {
@@ -104,12 +72,12 @@ public class DetailsAdmission {
         this.codeAdmission = codeAdmission;
     }
 
-    public Prestation getPrestation() {
-        return prestation;
+    public PrestationDTO getPrestationDTO() {
+        return prestationDTO;
     }
 
-    public void setPrestation(Prestation prestation) {
-        this.prestation = prestation;
+    public void setPrestationDTO(PrestationDTO prestationDTO) {
+        this.prestationDTO = prestationDTO;
     }
 
     public Integer getCodePrestation() {
@@ -169,7 +137,4 @@ public class DetailsAdmission {
     }
     
     
-    
-    
-
 }

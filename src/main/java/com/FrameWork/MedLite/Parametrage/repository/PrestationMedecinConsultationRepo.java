@@ -5,6 +5,7 @@
 package com.FrameWork.MedLite.Parametrage.repository;
 
 import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PrestationMedecinConsultationRepo extends JpaRepository<PrestationMedecinConsultation, Integer> {
 
-    PrestationMedecinConsultation findByCodeMedecin(Integer codeMedecin);
+    PrestationMedecinConsultation findByCodeMedecin(Integer codeMedecin);   
+    PrestationMedecinConsultation findByCodeMedecinAndCodeNatureAdmissionIn(Integer codeMedecin,List<Integer> codeNatureAdmission);
+
 
     List<PrestationMedecinConsultation> findByCodePrestation(Integer codePrestation);
     

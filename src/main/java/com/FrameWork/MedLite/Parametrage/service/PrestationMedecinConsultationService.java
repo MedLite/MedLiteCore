@@ -4,17 +4,18 @@
  */
 package com.FrameWork.MedLite.Parametrage.service;
 
-import com.FrameWork.MedLite.Parametrage.domaine.Compteur;
 import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
 import com.FrameWork.MedLite.Parametrage.dto.PrestationMedecinConsultationDTO;
 import com.FrameWork.MedLite.Parametrage.factory.PrestationMedecinConsultationFactory;
 import com.FrameWork.MedLite.Parametrage.repository.PrestationMedecinConsultationRepo;
 import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import static org.springframework.data.redis.serializer.RedisSerializationContext.java;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,15 +54,22 @@ public class PrestationMedecinConsultationService {
     }
     
    
- 
-
-    @Transactional(readOnly = true)
-    public PrestationMedecinConsultationDTO  findByCodeMedecin(Integer codeMedecin) {
-         PrestationMedecinConsultation  result = prestationMedecinConsultationRepo.findByCodeMedecin(codeMedecin);
-        return PrestationMedecinConsultationFactory.medecinToPrestationMedecinConsultationDTO(result);
+  
+    
+        @Transactional(readOnly = true)
+    public  PrestationMedecinConsultationDTO findByCodeMedecinAndcodeNatureAdmimssion(Integer code,List<Integer> codeNatureAdmission) {
+        PrestationMedecinConsultation domaine = prestationMedecinConsultationRepo.findByCodeMedecinAndCodeNatureAdmissionIn(code,codeNatureAdmission);
+        Preconditions.checkArgument(domaine.getCode() != null, "error.PrestationNotFound");
+        return PrestationMedecinConsultationFactory.medecinToPrestationMedecinConsultationDTO(domaine);
     }
-
-   
+  
+         @Transactional(readOnly = true)
+    public  PrestationMedecinConsultationDTO findByCodeMedecin(Integer code) {
+        PrestationMedecinConsultation domaine = prestationMedecinConsultationRepo.findByCodeMedecin(code);
+        Preconditions.checkArgument(domaine.getCode() != null, "error.PrestationNotFound");
+        return PrestationMedecinConsultationFactory.medecinToPrestationMedecinConsultationDTO(domaine);
+    }
+  
 
     
 

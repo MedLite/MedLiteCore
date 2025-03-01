@@ -7,11 +7,14 @@ package com.FrameWork.MedLite.Parametrage.web;
 import com.FrameWork.MedLite.Authentification.service.AccessUserService;
 import com.FrameWork.MedLite.Authentification.web.Response.ErrorResponse;
 import com.FrameWork.MedLite.Parametrage.domaine.Prestation;
+import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsPrestationDTO;
 import com.FrameWork.MedLite.Parametrage.dto.PrestationDTO;
+import com.FrameWork.MedLite.Parametrage.dto.PrestationMedecinConsultationDTO;
 import com.FrameWork.MedLite.Parametrage.factory.PrestationFactory;
 import com.FrameWork.MedLite.Parametrage.service.DetailsPrestationService;
 import com.FrameWork.MedLite.Parametrage.service.ParamService;
+import com.FrameWork.MedLite.Parametrage.service.PrestationMedecinConsultationService;
 import com.FrameWork.MedLite.Parametrage.service.PrestationService;
 import com.FrameWork.MedLite.Parametrage.service.SocService;
 import jakarta.validation.Valid;
@@ -51,13 +54,15 @@ public class PrestationRessource {
 
     private final AccessUserService accessUserService;
     private final DetailsPrestationService detailsPrestationService;
+    private final PrestationMedecinConsultationService prestationMedecinConsultationService;
 
-    public PrestationRessource(PrestationService prestationService, ParamService paramService, SocService societeService, AccessUserService accessUserService, DetailsPrestationService detailsPrestationService) {
+    public PrestationRessource(PrestationService prestationService, ParamService paramService, SocService societeService, AccessUserService accessUserService, DetailsPrestationService detailsPrestationService, PrestationMedecinConsultationService prestationMedecinConsultationService) {
         this.prestationService = prestationService;
         this.paramService = paramService;
         this.societeService = societeService;
         this.accessUserService = accessUserService;
         this.detailsPrestationService = detailsPrestationService;
+        this.prestationMedecinConsultationService = prestationMedecinConsultationService;
     }
 
     @GetMapping("prestation/{code}")
@@ -72,20 +77,37 @@ public class PrestationRessource {
         return ResponseEntity.ok().body(dTO);
     }
 
+    @GetMapping("prestation/FindByCodeIn")
+    public ResponseEntity<List<PrestationDTO>> getAllPrestationByCodeIn(@RequestParam List<Integer> code) {
+        return ResponseEntity.ok().body(prestationService.findAllPrestationByCodeIn(code));
+    }
+
 //   
     @GetMapping("prestation/findBy")
     public ResponseEntity<List<PrestationDTO>> getAllPrestationByActif(@RequestParam Boolean actif) {
         return ResponseEntity.ok().body(prestationService.findAllPrestationByActif(actif));
     }
-    
-      @GetMapping("prestation/prestationConsultation")
-    public ResponseEntity<List<PrestationDTO>> getPrestationConsultation() {
-        return ResponseEntity.ok().body(prestationService.findByCodeFamilleFacturationConsultation());
+
+    @GetMapping("prestation/prestationConsultation")
+    public ResponseEntity<List<PrestationDTO>> getPrestationConsultation(@RequestParam Integer CodeNatureAdmission) {
+        return ResponseEntity.ok().body(prestationService.findByCodeFamilleFacturationConsultation(CodeNatureAdmission));
     }
 
     @GetMapping("details_prestation/By")
     public ResponseEntity<Collection<DetailsPrestationDTO>> getDetailsPrestationByCodeAndCodeNaureAdmission(@RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
         Collection<DetailsPrestationDTO> dTO = prestationService.findOneWithDetailsCodePrestationAndCodeNatureAdmission(codePrestation, codeNatureAdmission);
+        return ResponseEntity.ok().body(dTO);
+    }
+
+    @GetMapping("prestation_consultation/codeMedecin")
+    public ResponseEntity<PrestationMedecinConsultationDTO> getPrestationConsultationByCodeMedecin(@RequestParam Integer codeMedecin) {
+        PrestationMedecinConsultationDTO dTO = prestationMedecinConsultationService.findByCodeMedecin(codeMedecin);
+        return ResponseEntity.ok().body(dTO);
+    }
+
+    @GetMapping("prestation_consultation/medecinAndNatureAdmission")
+    public ResponseEntity<PrestationMedecinConsultationDTO> getPrestationConsultationByCodeMedecinAndNatureAdmission(@RequestParam Integer codeMedecin, @RequestParam List<Integer> codeNatureAdmission) {
+        PrestationMedecinConsultationDTO dTO = prestationMedecinConsultationService.findByCodeMedecinAndcodeNatureAdmimssion(codeMedecin, codeNatureAdmission);
         return ResponseEntity.ok().body(dTO);
     }
 

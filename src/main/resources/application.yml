@@ -33,7 +33,7 @@ spring:
     main:
         allow-bean-definition-overriding: true
     profiles:
-      active: prod,javamelody
+      active: dev,javamelody
   
     data:
         rest:

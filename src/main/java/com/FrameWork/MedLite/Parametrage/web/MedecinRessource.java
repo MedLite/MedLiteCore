@@ -68,7 +68,12 @@ public class MedecinRessource {
     public ResponseEntity<List<MedecinDTO>> getAllMedecingetAllOperationByActif(@RequestParam Boolean actif) {
         return ResponseEntity.ok().body(medecinService.findAllMedecinByActif(actif));
     }
-
+    
+    
+      @GetMapping("medecin/have_consultation")
+    public ResponseEntity<List<MedecinDTO>> getAllMedecingetAllOperationByActifAndHaveConsultation(@RequestParam Boolean autorisConsultation,@RequestParam Boolean actif,@RequestParam Boolean opd,@RequestParam Boolean er) {
+        return ResponseEntity.ok().body(medecinService.findMedecinHasConsultation(autorisConsultation,actif,opd,er));
+    }
 
     @GetMapping("medecin/all")
     public ResponseEntity<List<MedecinDTO>> getAllMedecin() {

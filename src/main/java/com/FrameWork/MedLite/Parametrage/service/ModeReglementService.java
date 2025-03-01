@@ -32,7 +32,7 @@ public class ModeReglementService {
 
     @Transactional(readOnly = true)
     public List<ModeReglementDTO> findAllModeReglement() {
-        return ModeReglementFactory.listModeReglementToModeReglementDTOs(modeReglementRepo.findAll(Sort.by("code").descending()));
+        return ModeReglementFactory.listModeReglementToModeReglementDTOs(modeReglementRepo.findAll(Sort.by("code").ascending()));
 
     }
 
