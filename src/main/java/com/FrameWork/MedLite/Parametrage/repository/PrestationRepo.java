@@ -24,6 +24,11 @@ public interface PrestationRepo extends JpaRepository<Prestation, Integer> {
 
     List<Prestation> findByActif(Boolean actif);
 
-    List<Prestation> findByCodeFamilleFacturation(Integer codeFamilleFacturation);
+    List<Prestation> findByCodeFamilleFacturation(Integer codeFamilleFacturation); 
+    List<Prestation> findByCodeSousFamillePrestation(Integer codeSousFamillePrestation);
+    
+        List<Prestation> findByCodeTypePrestation(Integer codeTypePrestation);
+
+
 
 }

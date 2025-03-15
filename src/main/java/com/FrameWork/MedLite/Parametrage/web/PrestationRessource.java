@@ -92,7 +92,20 @@ public class PrestationRessource {
     public ResponseEntity<List<PrestationDTO>> getPrestationConsultation(@RequestParam Integer CodeNatureAdmission) {
         return ResponseEntity.ok().body(prestationService.findByCodeFamilleFacturationConsultation(CodeNatureAdmission));
     }
+    
+    @GetMapping("prestation/findBySousFamille")
+    public ResponseEntity<List<PrestationDTO>> getPrestationBySousFamille(@RequestParam Integer codeSousFamille) {
+        return ResponseEntity.ok().body(prestationService.findAllPrestationBySousFamille(codeSousFamille));
+    }
 
+    
+        
+    @GetMapping("prestation/findByTypePrestation")
+    public ResponseEntity<List<PrestationDTO>> getPrestationByTypePrestation(@RequestParam Integer codeTypePrestation) {
+        return ResponseEntity.ok().body(prestationService.findAllPrestationByTypePrestation(codeTypePrestation));
+    }
+    
+    
     @GetMapping("details_prestation/By")
     public ResponseEntity<Collection<DetailsPrestationDTO>> getDetailsPrestationByCodeAndCodeNaureAdmission(@RequestParam Integer codePrestation, @RequestParam Integer codeNatureAdmission) {
         Collection<DetailsPrestationDTO> dTO = prestationService.findOneWithDetailsCodePrestationAndCodeNatureAdmission(codePrestation, codeNatureAdmission);

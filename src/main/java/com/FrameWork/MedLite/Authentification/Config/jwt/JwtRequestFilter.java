@@ -14,16 +14,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,11 +42,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
+    private final static Logger log = LoggerFactory.getLogger(JwtRequestFilter.class);
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
@@ -57,7 +69,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwtToken = null;
 
-        if (requestUri.equals("/api/auth/login")  || requestUri.equals("/api/auth/signup") || requestUri.equals("/actuator")) {
+        if (requestUri.equals("/api/auth/login") || requestUri.equals("/api/auth/signup") || requestUri.equals("/actuator")) {
             chain.doFilter(request, response);
             System.out.println("com.DevPointS" + requestUri);
             return; // Stop processing the request
@@ -85,6 +97,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                 chain.doFilter(request, response);
 //                                System.out.println("V1");
                             } catch (Exception e) {
+                               
 //                                    System.out.println("V2");
                                 // Catch exceptions thrown by chain.doFilter()
                                 if (e instanceof DataIntegrityViolationException) {
@@ -93,20 +106,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                     logger.warn("Data integrity violation: " + e.getMessage());
                                     sendErrorResponse(response, HttpStatus.BAD_REQUEST, "Invalid data");
                                     return;
-                                } else {
+                                }else  {
 //                                        System.out.println("V4");
                                     // Handle other exceptions (potentially server errors)
                                     logger.error("Error processing request: " + e.getMessage(), e); // Log the full exception
                                     sendErrorResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, "Server error"); // 500 error for other issues
                                     return;
-                                }
+                                } 
+                               
                             }
-//                               System.out.println("V5");
-                            // Only proceed with the request if the token is valid
+//                              System.out.println("V5"); 
                             return; // Stop processing the request
-                        } else {
-//                                System.out.println("V6");
-                            // Token is not valid (expired or invalid)
+                        } else { 
                             logger.warn("JWT Token is not valid: " + jwt);
                             sendErrorResponse(response, HttpStatus.FORBIDDEN, "Token is not valid");
                             return; // Stop processing the request
@@ -120,10 +131,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                             }
                         }
-
-                        // User is already authenticated
+ 
                         chain.doFilter(request, response);
-                        return; // Stop processing the request
+                        return; 
                     }
 
                 } catch (IllegalArgumentException e) {
@@ -148,39 +158,51 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     }
 
-    private void sendErrorResponse(HttpServletResponse response, HttpStatus status, String message)
-            throws IOException {
+//    private void sendErrorResponse(HttpServletResponse response, HttpStatus status, String message)
+//            throws IOException {
+//        response.setStatus(status.value());
+//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+//
+//        Map<String, Object> errorResponse = new HashMap<>();
+//        errorResponse.put("error", status.value());
+//        errorResponse.put("description", message);
+//        ObjectMapper mapper = new ObjectMapper();
+//        response.getWriter().write(mapper.writeValueAsString(errorResponse));
+//    }
+//    private String traceResponseWhenError(HttpServletResponse response) throws IOException {
+////        log.error("============================response begin==========================================");
+////        log.error("Status code  : {}", response.getStatusCode());
+////        log.error("Status text      : {}", response.getStatusText());
+////        log.error("Headers     : {}", response.getHeaders());
+//
+//        StringBuilder inputStringBuilder = new StringBuilder();
+//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getBody(), "UTF-8"));
+//        String line = bufferedReader.readLine();
+//        while (line != null) {
+//            inputStringBuilder.append(line);
+//            inputStringBuilder.append('\n');
+//            line = bufferedReader.readLine();
+//        }
+////        log.error("Response body: {}", inputStringBuilder.toString());
+////        log.error("=======================response end=================================================");
+//        return inputStringBuilder.toString();
+//    }
+    private void sendErrorResponse(HttpServletResponse response, HttpStatus status, String message) throws IOException {
         response.setStatus(status.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("error", status.value());
         errorResponse.put("description", message);
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(errorResponse));
+////        ObjectMapper mapper = new ObjectMapper();
+//        JsonNode error = mapper.readTree(message);
+//        String description = error.get("message").asText();
+//        throw new IllegalBusinessLogiqueException(description);
     }
 
-    private String traceResponseWhenError(ClientHttpResponse response) throws IOException {
-//        log.error("============================response begin==========================================");
-//        log.error("Status code  : {}", response.getStatusCode());
-//        log.error("Status text      : {}", response.getStatusText());
-//        log.error("Headers     : {}", response.getHeaders());
-
-        StringBuilder inputStringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getBody(), "UTF-8"));
-        String line = bufferedReader.readLine();
-        while (line != null) {
-            inputStringBuilder.append(line);
-            inputStringBuilder.append('\n');
-            line = bufferedReader.readLine();
-        }
-//        log.error("Response body: {}", inputStringBuilder.toString());
-//        log.error("=======================response end=================================================");
-        return inputStringBuilder.toString();
-    }
-
-    private void shouldThrowIllegalBusinessException(ClientHttpResponse response, String responseBody) throws IOException {
-        int statusCodeValue = response.getStatusCode().value();
+    private void shouldThrowIllegalBusinessException(HttpServletResponse response, String responseBody) throws IOException {
+        int statusCodeValue = response.getStatus();
         if (statusCodeValue == 409) {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode error = mapper.readTree(responseBody);
@@ -199,6 +221,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String description = error.get("message").asText();
             throw new IllegalBusinessLogiqueException(description);
         }
+//        if (statusCodeValue == 500) {
+//            ObjectMapper mapper = new ObjectMapper();
+//            JsonNode error = mapper.readTree(responseBody);
+//            String description = error.get("message").asText();
+//            throw new IllegalBusinessLogiqueException(description);
+//        }
 
     }
 

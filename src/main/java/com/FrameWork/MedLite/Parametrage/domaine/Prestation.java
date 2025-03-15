@@ -87,6 +87,18 @@ public class Prestation {
 
     @Column(name = "Code_Famille_Prestation", updatable = false, insertable = false)
     private Integer codeFamillePrestation;
+    
+    
+    @JoinColumn(name = "Code_Type_Prestation", referencedColumnName = "Code", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private TypePrestation  typePrestation;
+
+    @Column(name = "Code_Type_Prestation", updatable = false, insertable = false)
+    private Integer codeTypePrestation;
+    
+    
+    
 
     @Column(name = "Montant_OPD", columnDefinition = ("decimal(18,3)"))
     private BigDecimal montantOPD;
@@ -281,5 +293,22 @@ public class Prestation {
         this.codeSousFamillePrestation = codeSousFamillePrestation;
     }
 
+    public TypePrestation getTypePrestation() {
+        return typePrestation;
+    }
+
+    public void setTypePrestation(TypePrestation typePrestation) {
+        this.typePrestation = typePrestation;
+    }
+
+    public Integer getCodeTypePrestation() {
+        return codeTypePrestation;
+    }
+
+    public void setCodeTypePrestation(Integer codeTypePrestation) {
+        this.codeTypePrestation = codeTypePrestation;
+    }
+
+    
     
 }

@@ -117,9 +117,24 @@ public class Admission {
     @OneToMany(mappedBy = "codeAdmission", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JsonBackReference("lisAdmission") // Unique name
     private List<DetailsAdmission> detailsAdmissions;
+    
+        @OneToMany(mappedBy = "codeAdmission", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonBackReference("listAdmission") // Unique name
+    private List<Reglement> detailsReglements;
+        
+              @OneToMany(mappedBy = "codeAdmission", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JsonBackReference("listAdmission") // Unique name
+    private List<AdmissionFacturation> admissionFacturations;  
 
     @Column(name = "Etat_Paiement", nullable = false)
     private boolean etatPaiement;
+    
+    
+    
+    @Column(name = "Reglement_Deferral", nullable = false)
+    private boolean regDeferral;
+    
+    
 
     public Admission() {
     }
@@ -283,6 +298,31 @@ public class Admission {
     public void setCodePriceList(Integer codePriceList) {
         this.codePriceList = codePriceList;
     }
+
+    public List<Reglement> getDetailsReglements() {
+        return detailsReglements;
+    }
+
+    public void setDetailsReglements(List<Reglement> detailsReglements) {
+        this.detailsReglements = detailsReglements;
+    }
+
+    public boolean isRegDeferral() {
+        return regDeferral;
+    }
+
+    public void setRegDeferral(boolean regDeferral) {
+        this.regDeferral = regDeferral;
+    }
+
+    public List<AdmissionFacturation> getAdmissionFacturations() {
+        return admissionFacturations;
+    }
+
+    public void setAdmissionFacturations(List<AdmissionFacturation> admissionFacturations) {
+        this.admissionFacturations = admissionFacturations;
+    }
+    
     
     
 

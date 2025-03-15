@@ -5,6 +5,7 @@
 package com.FrameWork.MedLite.Reception.dto;
 
 import com.FrameWork.MedLite.Parametrage.domaine.MotifAdmission;
+import com.FrameWork.MedLite.Parametrage.dto.CabinetDTO;
 import com.FrameWork.MedLite.Parametrage.dto.MedecinDTO;
 import com.FrameWork.MedLite.Parametrage.dto.MotifAdmissionDTO;
 import com.FrameWork.MedLite.Parametrage.dto.NatureAdmissionDTO;
@@ -49,14 +50,21 @@ public class AdmissionDTO {
     private Integer codeListCouverture;
  
     private Integer codeCabinet;
+    private CabinetDTO cabinetDTO;
  
     private List<DetailsAdmissionDTO> detailsAdmissionDTOs;
+        private List<AdmissionFacturationDTO> admissionFacturationDTOs;
+
+    
+        private List<ReglementDTO> reglementDTOs;
  
     private boolean etatPaiement;
     
        private PriceListDTO priceListDTO;
  
     private Integer codePriceList;
+    
+        private boolean regDeferral;
 
     public AdmissionDTO() {
     }
@@ -109,6 +117,15 @@ public class AdmissionDTO {
         this.codePatient = codePatient;
     }
 
+    public boolean isRegDeferral() {
+        return regDeferral;
+    }
+
+    public void setRegDeferral(boolean regDeferral) {
+        this.regDeferral = regDeferral;
+    }
+
+    
     public NatureAdmissionDTO getNatureAdmissionDTO() {
         return natureAdmissionDTO;
     }
@@ -222,6 +239,32 @@ public class AdmissionDTO {
     public void setCodePriceList(Integer codePriceList) {
         this.codePriceList = codePriceList;
     }
+
+    public List<ReglementDTO> getReglementDTOs() {
+        return reglementDTOs;
+    }
+
+    public void setReglementDTOs(List<ReglementDTO> reglementDTOs) {
+        this.reglementDTOs = reglementDTOs;
+    }
+
+    public List<AdmissionFacturationDTO> getAdmissionFacturationDTOs() {
+        return admissionFacturationDTOs;
+    }
+
+    public void setAdmissionFacturationDTOs(List<AdmissionFacturationDTO> admissionFacturationDTOs) {
+        this.admissionFacturationDTOs = admissionFacturationDTOs;
+    }
+
+    public CabinetDTO getCabinetDTO() {
+        return cabinetDTO;
+    }
+
+    public void setCabinetDTO(CabinetDTO cabinetDTO) {
+        this.cabinetDTO = cabinetDTO;
+    }
+    
+    
     
     
 }

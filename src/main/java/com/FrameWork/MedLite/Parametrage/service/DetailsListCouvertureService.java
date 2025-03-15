@@ -143,10 +143,8 @@ public class DetailsListCouvertureService {
     public List<DetailsListCouvertureDTO> findOneWithCodeListCouvertureAndCodePrestation(Integer codeListCouverture, Integer codePrestation) {
         // Fetch existing DetailsPriceList entries for the given codePriceList
         List<DetailsListCouverture> domaine = detailsListCouvertureRepo.findByCodeListCouvertureAndCodePrestation(codeListCouverture, codePrestation);
-        Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound");
-        List<DetailsListCouvertureDTO> existingDetailsDTOs = DetailsListCouvertureFactory.createDTOs(domaine);
-
-        return existingDetailsDTOs;
+        Preconditions.checkArgument(domaine != null, "error.DetailsPriceListNotFound"); 
+        return DetailsListCouvertureFactory.listDetailsListCouvertureToDetailsListCouvertureDTOs(domaine);
     }
     
     

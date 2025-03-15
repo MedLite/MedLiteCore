@@ -138,33 +138,33 @@ public class DetailsPriceListFactory {
         }
     }
 
-    public static List<DetailsPriceListDTO> groupByPrestationAndPriceList(List<DetailsPriceListDTO> dtos) {
-        if (dtos == null || dtos.isEmpty()) {
-            return List.of();
-        }
-
-        // Use a LinkedHashMap to preserve insertion order
-        Map<PrestationPriceListKey, DetailsPriceListDTO> grouped = dtos.stream()
-                .filter(Objects::nonNull) // Filter out null DTOs
-                .collect(Collectors.toMap(
-                        dto -> new PrestationPriceListKey(dto.getCodePrestation(), dto.getCodePriceList()), // Composite key
-                        dto -> dto, // Keep the first DTO for each key
-                        (dto1, dto2) -> {
-                            // Retain the first codeNatureAdmission and handle different codeTypeIntervenant
-                            if (!dto1.getCodeNatureAdmission().equals(dto2.getCodeNatureAdmission())) {
-                                // If codeNatureAdmission is different, keep the first one
-                                return dto1;
-                            }
-                            // If codeNatureAdmission is the same, sum montant and montantPere
-                            dto1.setMontant(dto1.getMontant().add(dto2.getMontant()));
-                            dto1.setMontantPere(dto1.getMontantPere().add(dto2.getMontantPere()));
-                            return dto1;
-                        },
-                        LinkedHashMap::new // Preserve insertion order
-                ));
-
-        return new ArrayList<>(grouped.values());
-    }
+//    public static List<DetailsPriceListDTO> groupByPrestationAndPriceList(List<DetailsPriceListDTO> dtos) {
+//        if (dtos == null || dtos.isEmpty()) {
+//            return List.of();
+//        }
+//
+//        // Use a LinkedHashMap to preserve insertion order
+//        Map<PrestationPriceListKey, DetailsPriceListDTO> grouped = dtos.stream()
+//                .filter(Objects::nonNull) // Filter out null DTOs
+//                .collect(Collectors.toMap(
+//                        dto -> new PrestationPriceListKey(dto.getCodePrestation(), dto.getCodePriceList()), // Composite key
+//                        dto -> dto, // Keep the first DTO for each key
+//                        (dto1, dto2) -> {
+//                            // Retain the first codeNatureAdmission and handle different codeTypeIntervenant
+//                            if (!dto1.getCodeNatureAdmission().equals(dto2.getCodeNatureAdmission())) {
+//                                // If codeNatureAdmission is different, keep the first one
+//                                return dto1;
+//                            }
+//                            // If codeNatureAdmission is the same, sum montant and montantPere
+//                            dto1.setMontant(dto1.getMontant().add(dto2.getMontant()));
+//                            dto1.setMontantPere(dto1.getMontantPere().add(dto2.getMontantPere()));
+//                            return dto1;
+//                        },
+//                        LinkedHashMap::new // Preserve insertion order
+//                ));
+//
+//        return new ArrayList<>(grouped.values());
+//    }
 
     public static List<DetailsPriceListDTO> createDTOs(List<DetailsPriceList> domainObjects) {
         List<DetailsPriceListDTO> dtos = domainObjects.stream()
@@ -172,38 +172,97 @@ public class DetailsPriceListFactory {
                 .filter(Objects::nonNull) // Filter out null DTOs
                 .collect(Collectors.toList());
 
-        return groupByPrestationAndPriceList(dtos);
+        return groupByPrestationAndPriceListNew(dtos);
     }
 
-    private static class PrestationPriceListKey {
+//    private static class PrestationPriceListKey {
+//
+//        private final Integer codePrestation;
+//        private final Integer codePriceList;
+//
+//        public PrestationPriceListKey(Integer codePrestation, Integer codePriceList) {
+//            this.codePrestation = codePrestation;
+//            this.codePriceList = codePriceList;
+//        }
+//
+//        @Override
+//        public boolean equals(Object o) {
+//            if (this == o) {
+//                return true;
+//            }
+//            if (o == null || getClass() != o.getClass()) {
+//                return false;
+//            }
+//            PrestationPriceListKey that = (PrestationPriceListKey) o;
+//            return Objects.equals(codePrestation, that.codePrestation)
+//                    && Objects.equals(codePriceList, that.codePriceList);
+//        }
+//
+//        @Override
+//        public int hashCode() {
+//            return Objects.hash(codePrestation, codePriceList);
+//        }
+//    }
 
-        private final Integer codePrestation;
-        private final Integer codePriceList;
-
-        public PrestationPriceListKey(Integer codePrestation, Integer codePriceList) {
-            this.codePrestation = codePrestation;
-            this.codePriceList = codePriceList;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            PrestationPriceListKey that = (PrestationPriceListKey) o;
-            return Objects.equals(codePrestation, that.codePrestation)
-                    && Objects.equals(codePriceList, that.codePriceList);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(codePrestation, codePriceList);
-        }
+    
+    
+    
+    
+    ////// newwww 
+    
+    public static List<DetailsPriceListDTO> groupByPrestationAndPriceListNew(List<DetailsPriceListDTO> dtos) {
+    if (dtos == null || dtos.isEmpty()) {
+        return List.of();
     }
 
+    Map<PrestationNatureAdmissionPriceListKey, DetailsPriceListDTO> grouped = dtos.stream()
+            .filter(Objects::nonNull)
+            .collect(Collectors.toMap(
+                    dto -> new PrestationNatureAdmissionPriceListKey(dto.getCodePrestation(), dto.getCodeNatureAdmission(), dto.getCodePriceList()),
+                    dto -> dto,
+                    (dto1, dto2) -> {
+                        // Sum montant for same Prestation, NatureAdmission, and PriceList regardless of codeTypeIntervenant
+                        dto1.setMontant(dto1.getMontant().add(dto2.getMontant()));   
+                        dto1.setMntApresMaj(dto1.getMontant()); 
+                        dto1.setMontantPere(dto1.getMontantPere().add(dto2.getMontantPere()));
+                        return dto1;
+                    },
+                    LinkedHashMap::new
+            ));
+
+    return new ArrayList<>(grouped.values());
+}
+
+private static class PrestationNatureAdmissionPriceListKey {
+    private final Integer codePrestation;
+    private final Integer codeNatureAdmission;
+    private final Integer codePriceList;
+
+    public PrestationNatureAdmissionPriceListKey(Integer codePrestation, Integer codeNatureAdmission, Integer codePriceList) {
+        this.codePrestation = codePrestation;
+        this.codeNatureAdmission = codeNatureAdmission;
+        this.codePriceList = codePriceList;
+    }
+
+    // equals and hashCode methods (similar to PrestationPriceListKey)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PrestationNatureAdmissionPriceListKey that = (PrestationNatureAdmissionPriceListKey) o;
+        return Objects.equals(codePrestation, that.codePrestation) &&
+                Objects.equals(codeNatureAdmission, that.codeNatureAdmission) &&
+                Objects.equals(codePriceList, that.codePriceList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codePrestation, codeNatureAdmission, codePriceList);
+    }
+}
+
+    
+    
     public static List<EditionPriceListParTypeIntervenant> listDetailsPriceListTOEditionPriceListDetailsParTypeIntervenant(List<DetailsPriceList> detailsPriceList) {
         if (detailsPriceList == null) {
             return null;

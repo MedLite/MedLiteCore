@@ -20,7 +20,9 @@ public interface AdmissionRepo extends JpaRepository<Admission, Integer> {
 
     List<Admission> findByEtatPaiement(Boolean etatPaiement);
 
-    List<Admission> findByCodeSociete(Integer codeSociete);
+    List<Admission> findByCodeSociete(Integer codeSociete);    
+    List<Admission> findByCodeNatureAdmission(Integer codeNatureAdmission);
+
 
     List<Admission> findByCodeConvention(Integer codeConvention);
 

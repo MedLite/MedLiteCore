@@ -39,13 +39,14 @@ public class AdmissionFactory {
         if (dto != null) {
             domaine.setCode(dto.getCode());
 
-            domaine.setCodeSaisie(dto.getCodeSaisie()); 
+            domaine.setCodeSaisie(dto.getCodeSaisie());
 
             domaine.setEtatPaiement(dto.isEtatPaiement());
             domaine.setCodeListCouverture(dto.getCodeListCouverture());
             domaine.setCodeSociete(dto.getCodeSociete());
             domaine.setCodeCabinet(dto.getCodeCabinet());
             domaine.setCodeConvention(dto.getCodeConvention());
+            domaine.setRegDeferral(dto.isRegDeferral());
 
             domaine.setCodeNatureAdmission(dto.getCodeNatureAdmission());
             if (domaine.getCodeNatureAdmission() != null) {
@@ -66,40 +67,12 @@ public class AdmissionFactory {
             if (domaine.getCodeMedecin() != null) {
                 domaine.setMedecin(MedecinFactory.createMedecinByCode(dto.getCodeMedecin()));
             }
-            
-              domaine.setCodePriceList(dto.getCodePriceList());
+
+            domaine.setCodePriceList(dto.getCodePriceList());
             if (domaine.getCodePriceList() != null) {
                 domaine.setPriceList(PriceListFactory.createPriceListByCode(dto.getCodePriceList()));
             }
-
  
-//            List<DetailsAdmission> detailsCollections = new ArrayList<>();
-//            dto.getDetailsAdmissionDTOs().forEach(x -> {
-//                DetailsAdmission detailsAdmission = new DetailsAdmission();
-// 
-//                detailsAdmission.setCodePrestation(x.getCodePrestation());
-//                if (x.getCodePrestation() != null) {
-//                    detailsAdmission.setPrestation(PrestationFactory.createPrestationByCode(x.getCodePrestation()));
-//                }
-//                
-//                  detailsAdmission.setCodeAdmission(x.getCodeAdmission());
-//                if (x.getCodeAdmission() != null) {
-//                    detailsAdmission.setAdmission(AdmissionFactory.createAdmissionByCode(x.getCodeAdmission()));
-//                }
-//
-//                detailsAdmission.setDateCreate(dto.getDateCreate());
-//                detailsAdmission.setUsercreate(dto.getUserCreate());
-//                detailsAdmission.setAdmission(domaine);
-//                detailsCollections.add(detailsAdmission);
-//            });
-//
-//            if (domaine.getDetailsAdmissions() != null) {
-//                domaine.getDetailsAdmissions().clear();
-//                domaine.getDetailsAdmissions().addAll(detailsCollections);
-//            } else {
-//                domaine.setDetailsAdmissions(detailsCollections);
-//            }
-
             return domaine;
         } else {
             return null;
@@ -131,12 +104,14 @@ public class AdmissionFactory {
 
             dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
             dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
-            
-            
+
             dto.setPriceListDTO(PriceListFactory.priceListToPriceListDTO(domaine.getPriceList()));
             dto.setCodePriceList(domaine.getCodePriceList());
+
+             
             
             
+            dto.setRegDeferral(domaine.isRegDeferral());
 
             return dto;
         } else {

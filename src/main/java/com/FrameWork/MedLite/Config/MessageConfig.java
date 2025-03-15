@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Profile;
 public class MessageConfig {
 //    @RefreshScope
     @Bean
-    @Profile("prod")
+    @Profile(value="prod")
     public ExposedResourceMessageBundleSource messageSource() {
         ExposedResourceMessageBundleSource messageSource = new ExposedResourceMessageBundleSource();
 //        messageSource.setBasename(CONFIG_SERVER_IP + "/confRepository/default/master/messages");
@@ -26,4 +26,9 @@ public class MessageConfig {
         messageSource.setUseCodeAsDefaultMessage(true);
         return messageSource;
     }
+    
+    
+ 
+    
+    
 }

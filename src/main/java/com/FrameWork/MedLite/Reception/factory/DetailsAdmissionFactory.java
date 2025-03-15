@@ -4,6 +4,9 @@
  */
 package com.FrameWork.MedLite.Reception.factory;
 
+import com.FrameWork.MedLite.Parametrage.domaine.Fournisseur;
+import com.FrameWork.MedLite.Parametrage.dto.FournisseurDTO;
+import static com.FrameWork.MedLite.Parametrage.factory.FournisseurFactory.fournisseurToFournisseurDTO;
 import com.FrameWork.MedLite.Parametrage.factory.MedecinFactory;
 import com.FrameWork.MedLite.Parametrage.factory.MotifAdmissionFactory;
 import com.FrameWork.MedLite.Parametrage.factory.NatureAdmissionFactory;
@@ -14,6 +17,8 @@ import com.FrameWork.MedLite.Reception.domaine.DetailsAdmission;
 import com.FrameWork.MedLite.Reception.dto.AdmissionDTO;
 import com.FrameWork.MedLite.Reception.dto.DetailsAdmissionDTO;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -77,5 +82,13 @@ public class DetailsAdmissionFactory {
         }
 
 
+    }
+    
+     public static List<DetailsAdmissionDTO> listDetailsAdmissionToDetailsADmissionDTOs(List<DetailsAdmission> detailsAdmissions) {
+        List<DetailsAdmissionDTO> list = new ArrayList<>();
+        for (DetailsAdmission detailsAdmission : detailsAdmissions) {
+            list.add(DetailsAdmissionToDetailsAdmissionDTONew(detailsAdmission));
+        }
+        return list;
     }
 }

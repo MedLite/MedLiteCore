@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Administrator
  */
 @RestController
-@RequestMapping("/api/recept/")
+@RequestMapping("/api/reception/")
 public class AdmissionRessource {
     
     
@@ -55,7 +56,10 @@ public class AdmissionRessource {
         return ResponseEntity.ok().body(admissionService.findAllAdmission());
     }
 
-  
+    @GetMapping("admission/findByCodeNatureAdmission")
+    public ResponseEntity<List<AdmissionDTO>> getAllAdmissionByCodeNatureAdmission( @RequestParam Integer codeNatureAdmission) {
+        return ResponseEntity.ok().body(admissionService.findAllAdmissionByCodeNatureAdmission(codeNatureAdmission));
+    }
 
    
 

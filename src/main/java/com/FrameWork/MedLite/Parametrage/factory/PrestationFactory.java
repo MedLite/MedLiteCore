@@ -84,11 +84,19 @@ public class PrestationFactory {
                 domaine.setFamilleFacturation(FamilleFacturationFactory.createFamilleFacturationByCode(dto.getCodeFamilleFacturation()));
             }
 
+            
             domaine.setCodeSousFamillePrestation(dto.getCodeSousFamillePrestation());
             if (domaine.getCodeSousFamillePrestation() != null) {
                 domaine.setSousFamillePrestation(SousFamillePrestationFactory.createSousFamillePrestationByCode(dto.getCodeSousFamillePrestation()));
             }
 
+            
+            domaine.setCodeTypePrestation(dto.getCodeTypePrestation());
+            if (domaine.getCodeTypePrestation() != null) {
+                domaine.setTypePrestation(TypePrestationFactory.createTypePrestationByCode(dto.getCodeTypePrestation()));
+            }
+
+            
             domaine.setCodeFamillePrestation(dto.getCodeFamillePrestation());
             if (domaine.getCodeFamillePrestation() != null) {
                 domaine.setFamillePrestation(FamillePrestationFactory.createFamillePrestationByCode(dto.getCodeFamillePrestation()));
@@ -168,6 +176,12 @@ public class PrestationFactory {
             dto.setSousFamillePrestationDTO(SousFamillePrestationFactory.sousFamillePrestationToSousFamillePrestationDTO(domaine.getSousFamillePrestation()));
             dto.setCodeSousFamillePrestation(domaine.getCodeSousFamillePrestation());
 
+            
+             dto.setTypePrestationDTO(TypePrestationFactory.typePrestationToTypePrestationDTO(domaine.getTypePrestation()));
+            dto.setCodeTypePrestation(domaine.getCodeTypePrestation());
+
+            
+            
             if (domaine.getDetailsPrestations() != null) {
                 Collection<DetailsPrestationDTO> detailsPrestationDTOs = new ArrayList<>();
                 domaine.getDetailsPrestations().forEach(x -> {
@@ -221,6 +235,11 @@ public class PrestationFactory {
             dto.setCodeFamillePrestation(domaine.getCodeFamillePrestation());
             dto.setSousFamillePrestationDTO(SousFamillePrestationFactory.sousFamillePrestationToSousFamillePrestationDTO(domaine.getSousFamillePrestation()));
             dto.setCodeSousFamillePrestation(domaine.getCodeSousFamillePrestation());
+            
+                   dto.setTypePrestationDTO(TypePrestationFactory.typePrestationToTypePrestationDTO(domaine.getTypePrestation()));
+            dto.setCodeTypePrestation(domaine.getCodeTypePrestation());
+
+            
             if (domaine.getDetailsPrestations() != null) {
                 Collection<DetailsPrestationDTO> detailsPrestationDTOs = new ArrayList<>();
                 domaine.getDetailsPrestations().forEach(x -> {

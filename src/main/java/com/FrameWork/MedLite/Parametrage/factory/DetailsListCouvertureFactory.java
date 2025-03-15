@@ -60,6 +60,15 @@ public class DetailsListCouvertureFactory {
             return null;
         }
     }
+    
+     public static List<DetailsListCouvertureDTO> listDetailsListCouvertureToDetailsListCouvertureDTOs(List<DetailsListCouverture> detailsListCouvertures) {
+        List<DetailsListCouvertureDTO> list = new ArrayList<>();
+        for (DetailsListCouverture detailsListCouverture : detailsListCouvertures) {
+            list.add(DetailsListCouvertureToDetailsListCouvertureDTONew(detailsListCouverture));
+        }
+        return list;
+    }
+    
 
    public static List<DetailsListCouvertureDTO> groupByPrestationAndPriceList(List<DetailsListCouvertureDTO> dtos) {
         if (dtos == null || dtos.isEmpty()) {

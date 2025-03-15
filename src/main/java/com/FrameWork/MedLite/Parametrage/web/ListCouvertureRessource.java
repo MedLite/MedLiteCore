@@ -86,9 +86,9 @@ public class ListCouvertureRessource {
     }
 
     @GetMapping("list_couverture/prestation/findBy")
-    public ResponseEntity<List<DetailsListCouvertureDTO>> getDetailsListCouvertureByCodeListCouvertureByCodePrestaion(@RequestParam Integer codeListCouverture, @RequestParam Integer codePrestation) {
-        List<DetailsListCouvertureDTO> dTO = detailsListCouvertureService.findOneWithCodeListCouvertureAndCodePrestation(codeListCouverture, codePrestation);
-        return ResponseEntity.ok().body(dTO);
+    public ResponseEntity<DetailsListCouvertureDTO> getDetailsListCouvertureByCodeListCouvertureByCodePrestaion(@RequestParam Integer codeListCouverture, @RequestParam Integer codePrestation,@RequestParam Integer codeNatureAdmission) {
+//        List<DetailsListCouvertureDTO> dTO = ;
+        return ResponseEntity.ok().body(detailsListCouvertureService.findOneWithCodeListCouvertureAndCodePrestationAndCodeNatureAdmission(codeListCouverture, codePrestation,codeNatureAdmission));
     }
 
     @GetMapping("list_couverture/operation")

@@ -5,6 +5,7 @@
 package com.FrameWork.MedLite.Parametrage.dto;
 
 import com.FrameWork.MedLite.Parametrage.domaine.SousFamillePrestation;
+import com.FrameWork.MedLite.Parametrage.domaine.TypePrestation;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -61,6 +62,13 @@ public class PrestationDTO {
 
     private List<DetailsPriceListDTO> detailsPriceLists;
 
+    
+        private TypePrestationDTO  typePrestationDTO;
+ 
+    private Integer codeTypePrestation;
+    
+    
+    
     public PrestationDTO() {
     }
 
@@ -246,6 +254,22 @@ public class PrestationDTO {
 
     public void setCodeSousFamillePrestation(Integer codeSousFamillePrestation) {
         this.codeSousFamillePrestation = codeSousFamillePrestation;
+    }
+
+    public TypePrestationDTO getTypePrestationDTO() {
+        return typePrestationDTO;
+    }
+
+    public void setTypePrestationDTO(TypePrestationDTO typePrestationDTO) {
+        this.typePrestationDTO = typePrestationDTO;
+    }
+
+    public Integer getCodeTypePrestation() {
+        return codeTypePrestation;
+    }
+
+    public void setCodeTypePrestation(Integer codeTypePrestation) {
+        this.codeTypePrestation = codeTypePrestation;
     }
     
     

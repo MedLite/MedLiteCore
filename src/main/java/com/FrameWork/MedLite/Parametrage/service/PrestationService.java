@@ -94,6 +94,19 @@ public class PrestationService {
 
     }
 
+     @Transactional(readOnly = true)
+    public List<PrestationDTO> findAllPrestationBySousFamille(Integer codeSousFamille) {
+        return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findByCodeSousFamillePrestation(codeSousFamille));
+
+    }
+    
+      @Transactional(readOnly = true)
+    public List<PrestationDTO> findAllPrestationByTypePrestation(Integer codeTypePrestation) {
+        return PrestationFactory.listPrestationToPrestationDTOs(prestationRepo.findByCodeTypePrestation(codeTypePrestation));
+
+    }
+    
+    
     @Transactional(readOnly = true)
     public List<PrestationDTO> findByCodeFamilleFacturationConsultation(Integer CodeNatureAdmission) {
         String codeFamilleConsultation = paramService.findParamByCodeParamS("CodeFamilleFacturationConsultation").getValeur();  
