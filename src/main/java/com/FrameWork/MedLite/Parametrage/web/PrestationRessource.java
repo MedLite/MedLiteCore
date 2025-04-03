@@ -4,8 +4,8 @@
  */
 package com.FrameWork.MedLite.Parametrage.web;
 
-import com.FrameWork.MedLite.Authentification.service.AccessUserService;
-import com.FrameWork.MedLite.Authentification.web.Response.ErrorResponse;
+//import com.FrameWork.MedLite.Authentification.service.AccessUserService;
+//import com.FrameWork.MedLite.Authentification.web.Response.ErrorResponse;
 import com.FrameWork.MedLite.Parametrage.domaine.Prestation;
 import com.FrameWork.MedLite.Parametrage.domaine.PrestationMedecinConsultation;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsPrestationDTO;
@@ -52,18 +52,19 @@ public class PrestationRessource {
     private final ParamService paramService;
     private final SocService societeService;
 
-    private final AccessUserService accessUserService;
+//    private final AccessUserService accessUserService;
     private final DetailsPrestationService detailsPrestationService;
     private final PrestationMedecinConsultationService prestationMedecinConsultationService;
 
-    public PrestationRessource(PrestationService prestationService, ParamService paramService, SocService societeService, AccessUserService accessUserService, DetailsPrestationService detailsPrestationService, PrestationMedecinConsultationService prestationMedecinConsultationService) {
+    public PrestationRessource(PrestationService prestationService, ParamService paramService, SocService societeService, DetailsPrestationService detailsPrestationService, PrestationMedecinConsultationService prestationMedecinConsultationService) {
         this.prestationService = prestationService;
         this.paramService = paramService;
         this.societeService = societeService;
-        this.accessUserService = accessUserService;
         this.detailsPrestationService = detailsPrestationService;
         this.prestationMedecinConsultationService = prestationMedecinConsultationService;
     }
+
+ 
 
     @GetMapping("prestation/{code}")
     public ResponseEntity<PrestationDTO> getPrestationByCode(@PathVariable Integer code) {

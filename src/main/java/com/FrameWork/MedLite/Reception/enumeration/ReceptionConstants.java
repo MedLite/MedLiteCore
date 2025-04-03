@@ -14,6 +14,11 @@ public enum ReceptionConstants {
 
     CODE_ETAT_PATIENT_RESIDANT("0"),     
     CODE_ETAT_PATIENT_LEAVE("1"), 
+    CODE_NATURE_ADMISSION_OPD("2"), 
+    CODE_NATURE_ADMISSION_IP("1"), 
+    CODE_NATURE_ADMISSION_ER("3"), 
+
+
 
     CODE_TVA_ZERO("codeTVAZero"),
     POURCENTAGE_MEDICALE("pourcentageMedicale"),

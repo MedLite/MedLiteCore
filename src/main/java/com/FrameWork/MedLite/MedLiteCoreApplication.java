@@ -29,7 +29,7 @@ public class MedLiteCoreApplication {
     private ObjectMapper objectMapper;
 
     private static final Logger log = LoggerFactory.getLogger(MedLiteCoreApplication.class);
-    public static String jwtSecret = "";
+    public static String jwtSecret = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleUpoYkdjaU9pSklVekkxTmlKOS5leUp6ZFdJaU9pSnpiM1ZtYVdWdUlpd2lhV0YwSWpveE56UXlNRGN6TkRNekxDSmxlSEFpT2pFM05ESXdOemN3TXpOOS5JNUlMMlZoZkNFbGhDeDVnZlNXa1ZZV3EtYVNldlo2Zy1zdVNiSGlLd3UwIiwiaWF0IjoxNzQyMDczNDMzLCJleHAiOjE3NDIwNzcwMzN9.Ngo_oiUp68rJ_-345Ex6hamxZrP5a_CFWXFYki4jDBk";
     
     public static void main(String[] args) throws UnknownHostException {
 //ConfigurableApplicationContext context = SpringApplication.run(MedLiteCoreApplication.class, args);

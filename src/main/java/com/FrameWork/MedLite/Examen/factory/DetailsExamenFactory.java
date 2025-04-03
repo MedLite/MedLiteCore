@@ -26,12 +26,12 @@ public class DetailsExamenFactory {
         if (domaine != null) {
             DetailsExamenDTO dto = new DetailsExamenDTO();
 
-            dto.setCodePrestation(domaine.getDetailsExamenPK().getCodePrestation());
+            dto.setCodeExamen(domaine.getDetailsExamenPK().getCodeExamen());
             dto.setCodePrestation(domaine.getPrestation().getCode());
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUserCreate()); 
             
-            dto.setCodePrestation(domaine.getCodePrestation());
+            dto.setCodePrestation(domaine.getDetailsExamenPK().getCodePrestation());
             dto.setPrestationDTO(PrestationFactory.prestationToPrestationDTO(domaine.getPrestation()));
             dto.setDesignationArPrestation(domaine.getPrestation().getDesignationAr());
             dto.setDesignationLtPrestation(domaine.getPrestation().getDesignationLt()); 
@@ -41,7 +41,7 @@ public class DetailsExamenFactory {
             dto.setCodeNatureAdmission(domaine.getCodeNatureAdmission());
             dto.setNatureAdmissionDTO(NatureAdmissionFactory.natureAdmissionToNatureAdmissionDTO(domaine.getNatureAdmission()));
 
-            dto.setCodeSaisiePrestation(domaine.getPrestation().getCodeSaisie());
+          
 
             return dto;
         } else {
@@ -71,6 +71,7 @@ public class DetailsExamenFactory {
             DetailsExamenDTO dto = new DetailsExamenDTO();
             dto.setDateCreate(domaine.getDateCreate());
             dto.setUsercreate(domaine.getUserCreate()); 
+      
 
             return dto;
         } else {

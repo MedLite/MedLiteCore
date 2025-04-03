@@ -1,6 +1,6 @@
 package com.FrameWork.MedLite.web.errors;
 
-import com.FrameWork.MedLite.Authentification.web.Response.ErrorResponse;
+//import com.FrameWork.MedLite.Authentification.web.Response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;

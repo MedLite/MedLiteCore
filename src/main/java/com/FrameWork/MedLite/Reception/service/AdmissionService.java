@@ -4,6 +4,10 @@
  */
 package com.FrameWork.MedLite.Reception.service;
 
+import com.FrameWork.MedLite.Examen.domaine.Examen;
+import com.FrameWork.MedLite.Examen.dto.ExamenDTO;
+import com.FrameWork.MedLite.Examen.factory.ExamenFactory;
+import com.FrameWork.MedLite.Examen.repository.ExamenRepo;
 import com.FrameWork.MedLite.Parametrage.domaine.Cabinet;
 import com.FrameWork.MedLite.Parametrage.domaine.Compteur;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureDTO;
@@ -61,32 +65,59 @@ public class AdmissionService {
     private final ReglementRepo reglementRepo;
     private final AdmissionFacturationRepo admissionFacturationRepo;
     private final CabinetRepo cabinetRepo;
+    private final ExamenRepo examenRepo;
 
     private final CompteurService compteurService;
     private final ParamService paramService;
     private final DetailsListCouvertureService detailsListCouvertureService;
     private final PrestationService prestationService;
 
-    public AdmissionService(AdmissionRepo admissionRepo, DetailsAdmissionRepo detailsAdmissionRepo, ReglementRepo reglementRepo, AdmissionFacturationRepo admissionFacturationRepo, CabinetRepo cabinetRepo, CompteurService compteurService, ParamService paramService, DetailsListCouvertureService detailsListCouvertureService, PrestationService prestationService) {
+    public AdmissionService(AdmissionRepo admissionRepo, DetailsAdmissionRepo detailsAdmissionRepo, ReglementRepo reglementRepo, AdmissionFacturationRepo admissionFacturationRepo, CabinetRepo cabinetRepo, ExamenRepo examenRepo, CompteurService compteurService, ParamService paramService, DetailsListCouvertureService detailsListCouvertureService, PrestationService prestationService) {
         this.admissionRepo = admissionRepo;
         this.detailsAdmissionRepo = detailsAdmissionRepo;
         this.reglementRepo = reglementRepo;
         this.admissionFacturationRepo = admissionFacturationRepo;
         this.cabinetRepo = cabinetRepo;
+        this.examenRepo = examenRepo;
         this.compteurService = compteurService;
         this.paramService = paramService;
         this.detailsListCouvertureService = detailsListCouvertureService;
         this.prestationService = prestationService;
     }
 
- 
-
     @Transactional(readOnly = true)
     public List<AdmissionDTO> findAllAdmission() {
         List<Admission> domaine = admissionRepo.findAll();
 
         Map<Integer, Cabinet> cabinetMap = new HashMap<>();
- 
+
+        List<Cabinet> allCabinets = cabinetRepo.findAll();  // Assuming cabinetRepo.findAll() is efficient.
+        for (Cabinet cabinet : allCabinets) {
+            cabinetMap.put(cabinet.getCode(), cabinet); // Populate the map
+        }
+
+        List<AdmissionDTO> admissionDTOs = new ArrayList<>();
+        for (Admission admission : domaine) {
+            AdmissionDTO admissionDTO = AdmissionFactory.admissionToAdmissionDTO(admission); //Your existing method
+
+            if (admission.getCodeCabinet() != null) { //Check for null before accessing the property
+                Cabinet cabinet = cabinetMap.get(admission.getCodeCabinet());
+                if (cabinet != null) {
+                    admissionDTO.setCabinetDTO(CabinetFactory.cabinetToCabinetDTO(cabinet)); //Assuming you have a CabinetFactory
+                }
+            }
+            admissionDTOs.add(admissionDTO);
+        }
+        return admissionDTOs;
+
+    }
+
+    @Transactional(readOnly = true)
+    public List<AdmissionDTO> findAllAdmissionByCodePatient(Integer codePatient) {
+        List<Admission> domaine = admissionRepo.findByCodePatient(codePatient);
+
+        Map<Integer, Cabinet> cabinetMap = new HashMap<>();
+
         List<Cabinet> allCabinets = cabinetRepo.findAll();  // Assuming cabinetRepo.findAll() is efficient.
         for (Cabinet cabinet : allCabinets) {
             cabinetMap.put(cabinet.getCode(), cabinet); // Populate the map
@@ -120,13 +151,13 @@ public class AdmissionService {
 
     }
 
-      @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<AdmissionDTO> findAllAdmissionByCodeNatureAdmission(Integer codeNatureAdmission) {
-        
-         List<Admission> domaine = admissionRepo.findByCodeNatureAdmission(codeNatureAdmission);
+
+        List<Admission> domaine = admissionRepo.findByCodeNatureAdmission(codeNatureAdmission);
 
         Map<Integer, Cabinet> cabinetMap = new HashMap<>();
- 
+
         List<Cabinet> allCabinets = cabinetRepo.findAll();  // Assuming cabinetRepo.findAll() is efficient.
         for (Cabinet cabinet : allCabinets) {
             cabinetMap.put(cabinet.getCode(), cabinet); // Populate the map
@@ -145,14 +176,115 @@ public class AdmissionService {
             admissionDTOs.add(admissionDTO);
         }
         return admissionDTOs;
-        
-        
-        
-//        return AdmissionFactory.listAdmissionToAdmissionDTOs(admissionRepo.findByCodeNatureAdmission(codeNatureAdmission));
 
     }
 
-    
+//    @Transactional(readOnly = true)
+//    public List<AdmissionDTO> findAllAdmissionForOPD( ) {
+//
+//        List<Admission> domaine = admissionRepo.findByCodeNatureAdmission(Integer.parseInt(ReceptionConstants.CODE_NATURE_ADMISSION_OPD.toString())  );
+//
+//        Map<Integer, Cabinet> cabinetMap = new HashMap<>();
+//
+//        List<Cabinet> allCabinets = cabinetRepo.findAll();  // Assuming cabinetRepo.findAll() is efficient.
+//        for (Cabinet cabinet : allCabinets) {
+//            cabinetMap.put(cabinet.getCode(), cabinet); // Populate the map
+//        }
+//
+//        List<AdmissionDTO> admissionDTOs = new ArrayList<>();
+//        for (Admission admission : domaine) {
+//            AdmissionDTO admissionDTO = AdmissionFactory.admissionToAdmissionDTO(admission); //Your existing method
+//            
+//            
+//            
+//            
+//            
+//            
+//
+//            if (admission.getCodeCabinet() != null) { //Check for null before accessing the property
+//                Cabinet cabinet = cabinetMap.get(admission.getCodeCabinet());
+//                if (cabinet != null) {
+//                    admissionDTO.setCabinetDTO(CabinetFactory.cabinetToCabinetDTO(cabinet)); //Assuming you have a CabinetFactory
+//                }
+//            }
+//            admissionDTOs.add(admissionDTO);
+//        }
+//        return admissionDTOs;
+//
+//    }
+    @Transactional(readOnly = true)
+    public List<AdmissionDTO> findAllAdmissionForOPD() {
+
+        List<Admission> domaine = admissionRepo.findByCodeNatureAdmission(Integer.parseInt(ReceptionConstants.CODE_NATURE_ADMISSION_OPD.toString()));
+
+        Map<Integer, Cabinet> cabinetMap = new HashMap<>();
+        cabinetRepo.findAll().forEach(cabinet -> cabinetMap.put(cabinet.getCode(), cabinet)); //More efficient map population
+
+        //Map to hold exams by admission ID for faster lookup.
+        Map<Integer, List<Examen>> examMap = new HashMap<>();
+        List<Examen> allExams = examenRepo.findAll(); //Fetch all exams once
+        for (Examen exam : allExams) {
+            if (exam.getAdmission() != null) { //Handle null Admission in Exam entity.
+                Integer admissionId = exam.getAdmission().getCode(); // Assuming Admission has an 'id' field.  Adjust as needed for your entity.
+                examMap.computeIfAbsent(admissionId, k -> new ArrayList<>()).add(exam);
+            }
+        }
+
+        List<AdmissionDTO> admissionDTOs = new ArrayList<>();
+        for (Admission admission : domaine) {
+            AdmissionDTO admissionDTO = AdmissionFactory.admissionToAdmissionDTO(admission);
+
+            if (admission.getCodeCabinet() != null) {
+                Cabinet cabinet = cabinetMap.get(admission.getCodeCabinet());
+                if (cabinet != null) {
+                    admissionDTO.setCabinetDTO(CabinetFactory.cabinetToCabinetDTO(cabinet));
+                }
+            }
+
+            List<Examen> exams = examMap.get(admission.getCode()); // Get exams associated with this admission
+
+            List<ExamenDTO> examDTOs = new ArrayList<>();
+            if (exams != null) {
+                for (Examen exam : exams) {
+//                    if (exam.getCodeEtatPaiement() == Integer.parseInt(ReceptionConstants.CODE_ETAT_PATIEMENT_NOT_PAIED.toString())) { // Check etat_paiement
+                        examDTOs.add(ExamenFactory.examenToExamenDTO(exam)); // Assuming you have an ExamFactory
+//                    }
+                }
+            }
+            admissionDTO.setExamenDTO(examDTOs); // Add the list of ExamDTOs to AdmissionDTO
+            admissionDTOs.add(admissionDTO);
+        }
+        return admissionDTOs;
+    }
+
+    @Transactional(readOnly = true)
+    public List<AdmissionDTO> findAllAdmissionByCodeNatureAdmissionAndCodeMedecin(Integer codeNatureAdmission, Integer codeMedecin) {
+
+        List<Admission> domaine = admissionRepo.findByCodeNatureAdmissionAndCodeMedecin(codeNatureAdmission, codeMedecin);
+
+        Map<Integer, Cabinet> cabinetMap = new HashMap<>();
+
+        List<Cabinet> allCabinets = cabinetRepo.findAll();  // Assuming cabinetRepo.findAll() is efficient.
+        for (Cabinet cabinet : allCabinets) {
+            cabinetMap.put(cabinet.getCode(), cabinet); // Populate the map
+        }
+
+        List<AdmissionDTO> admissionDTOs = new ArrayList<>();
+        for (Admission admission : domaine) {
+            AdmissionDTO admissionDTO = AdmissionFactory.admissionToAdmissionDTO(admission); //Your existing method
+
+            if (admission.getCodeCabinet() != null) { //Check for null before accessing the property
+                Cabinet cabinet = cabinetMap.get(admission.getCodeCabinet());
+                if (cabinet != null) {
+                    admissionDTO.setCabinetDTO(CabinetFactory.cabinetToCabinetDTO(cabinet)); //Assuming you have a CabinetFactory
+                }
+            }
+            admissionDTOs.add(admissionDTO);
+        }
+        return admissionDTOs;
+
+    }
+
     @Transactional(readOnly = true)
     public AdmissionDTO findOne(Integer code) {
         Admission domaine = admissionRepo.findByCode(code);
@@ -294,8 +426,8 @@ public class AdmissionService {
         //// AdmissionFacturation
         if (dto.getAdmissionFacturationDTOs() != null) {
 
-            List<AdmissionFacturationDTO> reglementDTOs = dto.getAdmissionFacturationDTOs();
-            for (AdmissionFacturationDTO detailsDto : reglementDTOs) {
+            List<AdmissionFacturationDTO> admissionFacturationDTOs = dto.getAdmissionFacturationDTOs();
+            for (AdmissionFacturationDTO detailsDto : admissionFacturationDTOs) {
                 AdmissionFacturation admissionFacturation = AdmissionFacturationFactory.admissionFacturationDTOToAdmissionFacturation(detailsDto, new AdmissionFacturation()); // Assuming you have this factory method
 //                admissionFacturation.setCodeAdmission(domaine.getCode()); // Associate with the saved Admission
                 admissionFacturation.setDateCreate(new Date());

@@ -4,7 +4,7 @@
  */
 package com.FrameWork.MedLite.Reception.dto;
 
-import com.FrameWork.MedLite.Authentification.dto.AccessUserDTO;
+//import com.FrameWork.MedLite.Authentification.dto.AccessUserDTO;
 import com.FrameWork.MedLite.Parametrage.domaine.ModeReglement;
 import com.FrameWork.MedLite.Parametrage.dto.ModeReglementDTO;
 import com.FrameWork.MedLite.Parametrage.dto.NatureAdmissionDTO;

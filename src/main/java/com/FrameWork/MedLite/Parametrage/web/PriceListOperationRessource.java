@@ -4,7 +4,7 @@
  */
 package com.FrameWork.MedLite.Parametrage.web;
 
-import com.FrameWork.MedLite.Authentification.service.AccessUserService;
+//import com.FrameWork.MedLite.Authentification.service.AccessUserService;
 import com.FrameWork.MedLite.Parametrage.domaine.PriceListOperation;
 import com.FrameWork.MedLite.Parametrage.dto.PriceListOperationDTO;
 import com.FrameWork.MedLite.Parametrage.service.DetailsPriceListOperationService;
@@ -40,16 +40,16 @@ public class PriceListOperationRessource {
     private final ParamService paramService;
     private final SocService societeService;
     private final DetailsPriceListOperationService detailsPriceListOperationService;
-    private final AccessUserService accessUserService;
+//    private final AccessUserService accessUserService;
 
-    public PriceListOperationRessource(PriceListOperationService priceListOperationService, ParamService paramService, SocService societeService, DetailsPriceListOperationService detailsPriceListOperationService, AccessUserService accessUserService) {
+    public PriceListOperationRessource(PriceListOperationService priceListOperationService, ParamService paramService, SocService societeService, DetailsPriceListOperationService detailsPriceListOperationService) {
         this.priceListOperationService = priceListOperationService;
         this.paramService = paramService;
         this.societeService = societeService;
         this.detailsPriceListOperationService = detailsPriceListOperationService;
-        this.accessUserService = accessUserService;
     }
 
+ 
      
 
     @GetMapping("price_list_operation/{code}")

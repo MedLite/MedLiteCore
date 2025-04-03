@@ -4,7 +4,7 @@
  */
 package com.FrameWork.MedLite.Reception.web;
 
-import com.FrameWork.MedLite.Authentification.service.AccessUserService;
+//import com.FrameWork.MedLite.Authentification.service.AccessUserService;
 import com.FrameWork.MedLite.Parametrage.service.ParamService;
 import com.FrameWork.MedLite.Parametrage.service.SocService;
 import com.FrameWork.MedLite.Reception.domaine.Admission;
@@ -35,15 +35,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/reception/")
 public class AdmissionRessource {
-    
-    
-     private final AdmissionService admissionService; 
+
+    private final AdmissionService admissionService;
 
     public AdmissionRessource(AdmissionService admissionService) {
         this.admissionService = admissionService;
     }
-
-  
 
     @GetMapping("admission/{code}")
     public ResponseEntity<AdmissionDTO> getAdmissionByCode(@PathVariable Integer code) {
@@ -57,26 +54,36 @@ public class AdmissionRessource {
     }
 
     @GetMapping("admission/findByCodeNatureAdmission")
-    public ResponseEntity<List<AdmissionDTO>> getAllAdmissionByCodeNatureAdmission( @RequestParam Integer codeNatureAdmission) {
+    public ResponseEntity<List<AdmissionDTO>> getAllAdmissionByCodeNatureAdmission(@RequestParam Integer codeNatureAdmission) {
         return ResponseEntity.ok().body(admissionService.findAllAdmissionByCodeNatureAdmission(codeNatureAdmission));
     }
+    
+    
+     @GetMapping("admission/findForOPD")
+    public ResponseEntity<List<AdmissionDTO>> getAllAdmissionForOPD( ) {
+        return ResponseEntity.ok().body(admissionService.findAllAdmissionForOPD());
+    }
+     @GetMapping("admission/findByCodePatient")
+    public ResponseEntity<List<AdmissionDTO>> getAllAdmissionByCodePatient(@RequestParam Integer codePatient) {
+        return ResponseEntity.ok().body(admissionService.findAllAdmissionByCodePatient(codePatient));
+    }
 
-   
+    @GetMapping("admission/findByCodeNatureAdmissionAndCodeMedecin")
+    public ResponseEntity<List<AdmissionDTO>> getAllAdmissionByCodeNatureAdmissionAndCodeMedecin(@RequestParam Integer codeNatureAdmission, @RequestParam Integer codeMedecin) {
+        return ResponseEntity.ok().body(admissionService.findAllAdmissionByCodeNatureAdmissionAndCodeMedecin(codeNatureAdmission, codeMedecin));
+    }
 
     @PostMapping("admission")
     public ResponseEntity<AdmissionDTO> postAdmission(@Valid @RequestBody AdmissionDTO dTO, BindingResult bindingResult) throws URISyntaxException, MethodArgumentNotValidException {
         AdmissionDTO result = admissionService.save(dTO);
         return ResponseEntity.created(new URI("/api/parametrage/" + result.getCode())).body(result);
     }
- 
+
     @PutMapping("admission/update")
     public ResponseEntity<AdmissionDTO> updateAdmission(@Valid @RequestBody AdmissionDTO dTO, BindingResult bindingResult) throws MethodArgumentNotValidException {
         AdmissionDTO result = admissionService.update(dTO);
         return ResponseEntity.ok().body(result);
     }
-
-  
-   
 
     @DeleteMapping("admission/delete/{code}")
     public ResponseEntity<Admission> deleteAdmission(@PathVariable("Code") Integer code) {

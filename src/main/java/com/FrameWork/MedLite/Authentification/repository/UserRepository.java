@@ -16,7 +16,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface UserRepository extends ListCrudRepository<User, Integer> {
+public interface UserRepository extends ListCrudRepository<User, Long> {
 
     Optional<User> findByUserName(String userName);
  

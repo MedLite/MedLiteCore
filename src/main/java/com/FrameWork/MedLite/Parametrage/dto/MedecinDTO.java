@@ -21,7 +21,7 @@ public class MedecinDTO {
     private String codeSaisie;
 
     private String nomIntervAr;
- 
+
     private String nomIntervLt;
 
     private boolean actif;
@@ -37,25 +37,23 @@ public class MedecinDTO {
     private SpecialiteMedecinDTO specialiteMedecinDTO;
 
     private Integer codeSpecialiteMedecin;
-    
-        private PrestationMedecinConsultationDTO prestationConsultationDTO;
- 
+
+    private PrestationMedecinConsultationDTO prestationConsultationDTO;
 
     private List<PrestationMedecinConsultationDTO> prestationMedecinConsultationDTOs;
-    
-    
-    private boolean autoriseFrais;
-    
-     private boolean autorisConsultation;
-     
-     
-         private Integer codePrestationConsultation;
- 
 
-           private boolean opd;
- 
+    private boolean autoriseFrais;
+
+    private boolean autorisConsultation;
+
+    private Integer codePrestationConsultation;
+
+    private boolean opd;
+
     private boolean er;
-    
+
+    private boolean haveSig;
+
     public MedecinDTO() {
     }
 
@@ -90,8 +88,6 @@ public class MedecinDTO {
     public void setNomIntervLt(String nomIntervLt) {
         this.nomIntervLt = nomIntervLt;
     }
-
-     
 
     public boolean isActif() {
         return actif;
@@ -157,8 +153,6 @@ public class MedecinDTO {
         this.prestationConsultationDTO = prestationConsultationDTO;
     }
 
- 
-
     public boolean isAutoriseFrais() {
         return autoriseFrais;
     }
@@ -207,9 +201,13 @@ public class MedecinDTO {
         this.er = er;
     }
 
-   
-    
-    
-    
+    public boolean isHaveSig() {
+        return haveSig;
+    }
 
+    public void setHaveSig(boolean haveSig) {
+        this.haveSig = haveSig;
+    }
+
+    
 }

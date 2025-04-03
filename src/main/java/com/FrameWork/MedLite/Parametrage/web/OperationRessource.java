@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.FrameWork.MedLite.Parametrage.web;
-
-import com.FrameWork.MedLite.Authentification.service.AccessUserService;
+ 
 import com.FrameWork.MedLite.Parametrage.domaine.Operation;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsOperationDTO;
 import com.FrameWork.MedLite.Parametrage.dto.OperationDTO;
@@ -45,15 +44,16 @@ public class OperationRessource {
     private final SocService societeService;
     private final DetailsOperationService detailsOperationService;
 
-    private final AccessUserService accessUserService;
+//    private final AccessUserService accessUserService;
 
-    public OperationRessource(OperationService operationService, ParamService paramService, SocService societeService, DetailsOperationService detailsOperationService, AccessUserService accessUserService) {
+    public OperationRessource(OperationService operationService, ParamService paramService, SocService societeService, DetailsOperationService detailsOperationService) {
         this.operationService = operationService;
         this.paramService = paramService;
         this.societeService = societeService;
         this.detailsOperationService = detailsOperationService;
-        this.accessUserService = accessUserService;
     }
+
+   
 
     @GetMapping("operation/{code}")
     public ResponseEntity<OperationDTO> getOperationByCode(@PathVariable Integer code) {

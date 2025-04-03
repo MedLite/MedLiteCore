@@ -4,15 +4,20 @@
  */
 package com.FrameWork.MedLite.Examen.service;
 
+import com.FrameWork.MedLite.Examen.domaine.DetailsExamen;
 import com.FrameWork.MedLite.Examen.domaine.Examen;
+import com.FrameWork.MedLite.Examen.dto.DetailsExamenDTO;
 import com.FrameWork.MedLite.Examen.dto.ExamenDTO;
+import com.FrameWork.MedLite.Examen.factory.DetailsExamenFactory;
 import com.FrameWork.MedLite.Examen.factory.ExamenFactory;
+import com.FrameWork.MedLite.Examen.repository.DetailsExamenRepo;
 import com.FrameWork.MedLite.Examen.repository.ExamenRepo;
 import com.FrameWork.MedLite.Parametrage.domaine.Compteur;
 import com.FrameWork.MedLite.Parametrage.service.CompteurService;
 import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -28,13 +33,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExamenService {
 
     private final ExamenRepo examenRepo;
+    private final DetailsExamenRepo detailsExamenRepo;
 
     private final CompteurService compteurService;
 
-    public ExamenService(ExamenRepo examenRepo, CompteurService compteurService) {
+    public ExamenService(ExamenRepo examenRepo, DetailsExamenRepo detailsExamenRepo, CompteurService compteurService) {
         this.examenRepo = examenRepo;
+        this.detailsExamenRepo = detailsExamenRepo;
         this.compteurService = compteurService;
     }
+
+    
 
     @Transactional(readOnly = true)
     public List<ExamenDTO> findAllExamen() {
@@ -74,7 +83,7 @@ public class ExamenService {
 
     @Transactional(readOnly = true)
     public List<ExamenDTO> findAllExamenByTypeExmaneAndCodeAdmission(String typeExamen, Integer codeAdmission) {
-        return ExamenFactory.listExamenToExamenDTOs(examenRepo.findByTypeExamenAndCodeAdmission(typeExamen, codeAdmission));
+        return ExamenFactory.listExamenToExamenDTOsWithDetails(examenRepo.findByTypeExamenAndCodeAdmission(typeExamen, codeAdmission));
     }
 
     @Transactional(readOnly = true)
@@ -146,5 +155,12 @@ public class ExamenService {
     public void deleteExamen(Integer code) {
         Preconditions.checkArgument(examenRepo.existsById(code), "error.ExamenNotFound");
         examenRepo.deleteById(code);
+    }
+    
+    
+      @Transactional(readOnly = true)
+    public Collection<DetailsExamenDTO> findOneWithDetails(Integer code) {
+        Collection<DetailsExamen> domaine = detailsExamenRepo.findByDetailsExamenPK_CodeExamen(code);
+        return DetailsExamenFactory.detailsExamenTodetailsExamenDTOCollections(domaine);
     }
 }

@@ -68,13 +68,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwtToken = null;
+//        if(requestTokenHeader.isBlank()){
+//             sendErrorResponse(response, HttpStatus.FORBIDDEN, "Token is not valid");
+//        }
+//        System.out.println("Get Token String " + requestTokenHeader);
 
         if (requestUri.equals("/api/auth/login") || requestUri.equals("/api/auth/signup") || requestUri.equals("/actuator")) {
             chain.doFilter(request, response);
-            System.out.println("com.DevPointS" + requestUri);
+//            System.out.println("com.DevPointS" + requestUri);
             return; // Stop processing the request
         } else {
-            if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+            if (  requestTokenHeader != null && requestTokenHeader.startsWith("Bearer " )) {
                 final String jwt = requestTokenHeader.substring(7);
                 try {
                     // ... your existing code for extracting userEmail ... 
@@ -115,9 +119,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                 } 
                                
                             }
-//                              System.out.println("V5"); 
+//                              System.out.println("V5");
+                            // Only proceed with the request if the token is valid
                             return; // Stop processing the request
-                        } else { 
+                        } else {
+//                                System.out.println("V6");
+                            // Token is not valid (expired or invalid)
                             logger.warn("JWT Token is not valid: " + jwt);
                             sendErrorResponse(response, HttpStatus.FORBIDDEN, "Token is not valid");
                             return; // Stop processing the request
@@ -131,9 +138,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                             }
                         }
- 
+
+                        // User is already authenticated
                         chain.doFilter(request, response);
-                        return; 
+                        return; // Stop processing the request
                     }
 
                 } catch (IllegalArgumentException e) {
@@ -147,8 +155,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                     sendErrorResponse(response, HttpStatus.FORBIDDEN, "Token has expired");
                     return; // Stop processing the request
                 }
+                catch(Exception ex){
+                    sendErrorResponse(response, HttpStatus.BAD_REQUEST, "JWT Token does not Existe with Bearer Header");
+                }
 
             } else {
+               
                 logger.warn("JWT Token does not begin with Bearer String");
                 sendErrorResponse(response, HttpStatus.UNAUTHORIZED, "Authorization header is missing or invalid");
                 return;
@@ -221,12 +233,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String description = error.get("message").asText();
             throw new IllegalBusinessLogiqueException(description);
         }
-//        if (statusCodeValue == 500) {
-//            ObjectMapper mapper = new ObjectMapper();
-//            JsonNode error = mapper.readTree(responseBody);
-//            String description = error.get("message").asText();
-//            throw new IllegalBusinessLogiqueException(description);
-//        }
+        if (statusCodeValue == 500) {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode error = mapper.readTree(responseBody);
+            String description = error.get("message").asText();
+            throw new IllegalBusinessLogiqueException(description);
+        }
 
     }
 

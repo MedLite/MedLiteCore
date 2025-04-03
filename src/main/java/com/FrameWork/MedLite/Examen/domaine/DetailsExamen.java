@@ -29,9 +29,9 @@ import org.hibernate.envers.Audited;
  * @author Administrator
  */
 @Entity
-@Table(name = "Details_Examen", schema = "examen")
+@Table(name = "Details_Demande_Examen", schema = "examen")
 @Audited
-@AuditTable("Details_Examen_AUD")
+@AuditTable("Details_Demande_Examen_AUD")
 public class DetailsExamen {
 
     @EmbeddedId
@@ -42,7 +42,7 @@ public class DetailsExamen {
     @ManyToOne(optional = false)
     private Examen examen;
 
-    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "Code_Nature_Admission", referencedColumnName = "Code", nullable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private NatureAdmission natureAdmission;
@@ -50,7 +50,7 @@ public class DetailsExamen {
     @Column(name = "Code_Nature_Admission", updatable = false, insertable = false)
     private Integer codeNatureAdmission;
 
-    @JoinColumn(name = "Code_Patient", referencedColumnName = "Code", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "Code_Patient", referencedColumnName = "Code", nullable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private Patient patient;
@@ -58,7 +58,7 @@ public class DetailsExamen {
     @Column(name = "Code_Patient", updatable = false, insertable = false)
     private Integer codePatient;
 
-    @JoinColumn(name = "Code_Admission", referencedColumnName = "Code", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "Code_Admission", referencedColumnName = "Code", nullable = false, updatable = false )
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonBackReference
     private Admission admission;

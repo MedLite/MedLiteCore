@@ -4,7 +4,7 @@
  */
 package com.FrameWork.MedLite.Reception.factory;
 
-import com.FrameWork.MedLite.Authentification.factory.AccessUserFactory;
+//import com.FrameWork.MedLite.Authentification.factory.AccessUserFactory;
 import com.FrameWork.MedLite.Parametrage.factory.ModeReglementFactory;
 import com.FrameWork.MedLite.Parametrage.factory.NatureAdmissionFactory;
 import com.FrameWork.MedLite.Reception.domaine.Reglement;

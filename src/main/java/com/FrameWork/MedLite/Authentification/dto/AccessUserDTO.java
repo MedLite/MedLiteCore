@@ -29,6 +29,14 @@ public class AccessUserDTO {
 
     private byte[] signature;
     private String sig;
+    
+        private byte[] imageProfil;
+            private String imgProfil;
+
+        
+      private Integer codeMedecin;
+      
+        private String permissionDMI;
 
     public AccessUserDTO() {
     }
@@ -113,5 +121,39 @@ public class AccessUserDTO {
         this.passwordDecry = passwordDecry;
     }
 
+    public Integer getCodeMedecin() {
+        return codeMedecin;
+    }
+
+    public void setCodeMedecin(Integer codeMedecin) {
+        this.codeMedecin = codeMedecin;
+    }
+
+    public String getPermissionDMI() {
+        return permissionDMI;
+    }
+
+    public void setPermissionDMI(String permissionDMI) {
+        this.permissionDMI = permissionDMI;
+    }
+
+    public byte[] getImageProfil() {
+        return imageProfil;
+    }
+
+    public void setImageProfil(byte[] imageProfil) {
+        this.imageProfil = imageProfil;
+    }
+
+    public String getImgProfil() {
+        return imgProfil;
+    }
+
+    public void setImgProfil(String imgProfil) {
+        this.imgProfil = imgProfil;
+    }
+
+    
+    
     
 }

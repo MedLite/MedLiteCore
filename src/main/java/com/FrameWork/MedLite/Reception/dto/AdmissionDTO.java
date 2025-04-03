@@ -4,6 +4,7 @@
  */
 package com.FrameWork.MedLite.Reception.dto;
 
+import com.FrameWork.MedLite.Examen.dto.ExamenDTO;
 import com.FrameWork.MedLite.Parametrage.domaine.MotifAdmission;
 import com.FrameWork.MedLite.Parametrage.dto.CabinetDTO;
 import com.FrameWork.MedLite.Parametrage.dto.MedecinDTO;
@@ -65,6 +66,13 @@ public class AdmissionDTO {
     private Integer codePriceList;
     
         private boolean regDeferral;
+        
+            private boolean HavePrestationNotPaied;         
+            private boolean HaveLaboNotPaied;  
+            private boolean HaveRadioNotPaied;
+
+   private List<ExamenDTO> examenDTO;
+
 
     public AdmissionDTO() {
     }
@@ -263,7 +271,40 @@ public class AdmissionDTO {
     public void setCabinetDTO(CabinetDTO cabinetDTO) {
         this.cabinetDTO = cabinetDTO;
     }
-    
+
+    public boolean isHavePrestationNotPaied() {
+        return HavePrestationNotPaied;
+    }
+
+    public void setHavePrestationNotPaied(boolean HavePrestationNotPaied) {
+        this.HavePrestationNotPaied = HavePrestationNotPaied;
+    }
+
+    public boolean isHaveLaboNotPaied() {
+        return HaveLaboNotPaied;
+    }
+
+    public void setHaveLaboNotPaied(boolean HaveLaboNotPaied) {
+        this.HaveLaboNotPaied = HaveLaboNotPaied;
+    }
+
+    public boolean isHaveRadioNotPaied() {
+        return HaveRadioNotPaied;
+    }
+
+    public void setHaveRadioNotPaied(boolean HaveRadioNotPaied) {
+        this.HaveRadioNotPaied = HaveRadioNotPaied;
+    }
+
+    public List<ExamenDTO> getExamenDTO() {
+        return examenDTO;
+    }
+
+    public void setExamenDTO(List<ExamenDTO> examenDTO) {
+        this.examenDTO = examenDTO;
+    }
+
+ 
     
     
     

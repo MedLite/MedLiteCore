@@ -43,7 +43,7 @@ public class ParamService {
     @Transactional(readOnly = true)
     public paramDTO findParamByCodeParamS(String codeParam) {
         param result = paramRepo.findParamByCodeParam(codeParam); 
-        Preconditions.checkBusinessLogique(result != null, "error.ParamNotFound");
+        Preconditions.checkBusinessLogique(result != null, "error.ParamNotFound " + codeParam);
         return paramFactory.paramToparamDTO(result);
     }
     

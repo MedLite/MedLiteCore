@@ -57,6 +57,15 @@ public class AccessUserService {
         AccessUserDTO dto = AccessUserFactory.accessUserToAccessUserDTO(domaine, false);
         return dto;
     }
+    
+     @Transactional(readOnly = true)
+    public AccessUserDTO findImage(String username) {
+        User domaine = accessUserRepo.findUserByUserName(username);
+        RestPreconditions.checkFound(domaine, "UserName.NotFound");
+        AccessUserDTO dto = AccessUserFactory.accessUserToAccessUserDTOImage(domaine, false);
+        return dto;
+    }
+
 
     @Transactional(readOnly = true)
     public AccessUserDTO findOneByCode(Long id) {

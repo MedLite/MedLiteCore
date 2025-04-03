@@ -4,8 +4,8 @@
  */
 package com.FrameWork.MedLite.Recette.web;
 
-import com.FrameWork.MedLite.Authentification.dto.AccessUserDTO;
-import com.FrameWork.MedLite.Authentification.service.AccessUserService;
+//import com.FrameWork.MedLite.Authentification.dto.AccessUserDTO;
+//import com.FrameWork.MedLite.Authentification.service.AccessUserService;
 import com.FrameWork.MedLite.Parametrage.dto.SocDTO;
 import com.FrameWork.MedLite.Parametrage.dto.paramDTO;
 import com.FrameWork.MedLite.Parametrage.service.ParamService;
@@ -59,14 +59,15 @@ public class TransfertCaisseRessource {
     private final ParamService paramService;
     private final SocService societeService;
 
-    private final AccessUserService accessUserService;
+//    private final AccessUserService accessUserService;
 
-    public TransfertCaisseRessource(TransfertCaisseService transfertCaisseService, ParamService paramService, SocService societeService, AccessUserService accessUserService) {
+    public TransfertCaisseRessource(TransfertCaisseService transfertCaisseService, ParamService paramService, SocService societeService) {
         this.transfertCaisseService = transfertCaisseService;
         this.paramService = paramService;
         this.societeService = societeService;
-        this.accessUserService = accessUserService;
     }
+
+   
 
     @GetMapping("transfert_caisse/{code}")
     public ResponseEntity<TransfertCaisseDTO> getTransfertCaisseByCode(@PathVariable Integer code) {
@@ -125,54 +126,54 @@ public class TransfertCaisseRessource {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("transfert_caisse/edition/{code}")
-    public ResponseEntity<byte[]> getReport(@PathVariable Integer code) throws Exception {
- 
-
-        String fileNameJrxml = "src/main/resources/Reports/AlimentCaisse.jrxml";
-        paramDTO dTOs = paramService.findParamByCodeParamS("NomSociete");
-        TransfertCaisseDTO rslt = transfertCaisseService.findOne(code);
-
-        AccessUserDTO getsignature = accessUserService.findOneByCode(rslt.getCodeUserApprouver());
-
-        SocDTO societeDTO = societeService.findOne(1);
-        JasperDesign jasperDesign = JRXmlLoader.load(fileNameJrxml);
-        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        Map<String, Object> params = new HashMap<>(); 
-        params.put("UserCreate", auth.getName());
-        params.put("CodeSaisie", rslt.getCodeSaisie());
-        params.put("societe", dTOs.getValeur());
-        params.put("devise", rslt.getDeviseDTO().getDesignationAr()); 
-        params.put("caisse", rslt.getCaisseDTO().getDesignationAr());
-        params.put("modeReglement", rslt.getModeReglementDTO().getDesignationAr());
-        params.put("montant", rslt.getMontant());
-        params.put("montantEnDevise", rslt.getMontantEnDevise());
-        params.put("tauxChange", rslt.getTauxChange());
-        params.put("Observation", rslt.getObservation());
-        params.put("dateCreate", rslt.getDateCreate());
-        params.put("designationEtatApprouve", rslt.getEtatApprouverDTO().getDesignation());
-
-        params.put("logo", societeDTO.getLogo());
-        params.put("signature", getsignature.getSignature());
-
-        JasperPrint print = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
-        JRPdfExporter exporter = new JRPdfExporter();
-        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
-        exporter.setExporterInput(new SimpleExporterInput(print));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfOutputStream));
-        SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
-        reportConfig.setSizePageToContent(true);
-        reportConfig.setForceLineBreakPolicy(false);
-        exporter.exportReport();
-        var res = pdfOutputStream.toByteArray();
-        var headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename= filename.pdf");
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(res);
-    }
+//    @GetMapping("transfert_caisse/edition/{code}")
+//    public ResponseEntity<byte[]> getReport(@PathVariable Integer code) throws Exception {
+// 
+//
+//        String fileNameJrxml = "src/main/resources/Reports/AlimentCaisse.jrxml";
+//        paramDTO dTOs = paramService.findParamByCodeParamS("NomSociete");
+//        TransfertCaisseDTO rslt = transfertCaisseService.findOne(code);
+//
+//        AccessUserDTO getsignature = accessUserService.findOneByCode(rslt.getCodeUserApprouver());
+//
+//        SocDTO societeDTO = societeService.findOne(1);
+//        JasperDesign jasperDesign = JRXmlLoader.load(fileNameJrxml);
+//        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+//        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//
+//        Map<String, Object> params = new HashMap<>(); 
+//        params.put("UserCreate", auth.getName());
+//        params.put("CodeSaisie", rslt.getCodeSaisie());
+//        params.put("societe", dTOs.getValeur());
+//        params.put("devise", rslt.getDeviseDTO().getDesignationAr()); 
+//        params.put("caisse", rslt.getCaisseDTO().getDesignationAr());
+//        params.put("modeReglement", rslt.getModeReglementDTO().getDesignationAr());
+//        params.put("montant", rslt.getMontant());
+//        params.put("montantEnDevise", rslt.getMontantEnDevise());
+//        params.put("tauxChange", rslt.getTauxChange());
+//        params.put("Observation", rslt.getObservation());
+//        params.put("dateCreate", rslt.getDateCreate());
+//        params.put("designationEtatApprouve", rslt.getEtatApprouverDTO().getDesignation());
+//
+//        params.put("logo", societeDTO.getLogo());
+//        params.put("signature", getsignature.getSignature());
+//
+//        JasperPrint print = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+//        JRPdfExporter exporter = new JRPdfExporter();
+//        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+//        exporter.setExporterInput(new SimpleExporterInput(print));
+//        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(pdfOutputStream));
+//        SimplePdfReportConfiguration reportConfig = new SimplePdfReportConfiguration();
+//        reportConfig.setSizePageToContent(true);
+//        reportConfig.setForceLineBreakPolicy(false);
+//        exporter.exportReport();
+//        var res = pdfOutputStream.toByteArray();
+//        var headers = new HttpHeaders();
+//        headers.add("Content-Disposition", "inline; filename= filename.pdf");
+//        return ResponseEntity
+//                .ok()
+//                .headers(headers)
+//                .contentType(MediaType.APPLICATION_PDF)
+//                .body(res);
+//    }
 }

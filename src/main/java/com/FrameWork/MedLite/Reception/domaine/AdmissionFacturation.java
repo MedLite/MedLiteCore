@@ -72,17 +72,15 @@ public class AdmissionFacturation {
     @Column(name = "Code_Etat_Patient", updatable = false, insertable = false, nullable = false)
     private Integer codeEtatPatient;
 
- 
-
     @Column(name = "Code_Convention")
-    private Integer codeConvention; 
+    private Integer codeConvention;
     @Column(name = "Code_Societe")
     private Integer codeSociete;
 
     @Column(name = "Code_Facture_Admission", columnDefinition = ("varchar(20)"))
     private String codeFactureAdmission;
-    
-        @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
+
+    @Column(name = "User_Create", nullable = false, length = 255, columnDefinition = "nvarchar(200)")
     private String userCreate;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -172,8 +170,6 @@ public class AdmissionFacturation {
         this.codeFactureAdmission = codeFactureAdmission;
     }
 
-  
-
     public Integer getCodeConvention() {
         return codeConvention;
     }
@@ -181,7 +177,6 @@ public class AdmissionFacturation {
     public void setCodeConvention(Integer codeConvention) {
         this.codeConvention = codeConvention;
     }
- 
 
     public Integer getCodeSociete() {
         return codeSociete;
@@ -206,7 +201,5 @@ public class AdmissionFacturation {
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
-    
-    
 
 }

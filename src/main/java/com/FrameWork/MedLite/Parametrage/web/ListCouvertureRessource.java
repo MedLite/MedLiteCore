@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.FrameWork.MedLite.Parametrage.web;
-
-import com.FrameWork.MedLite.Authentification.service.AccessUserService;
+ 
 import com.FrameWork.MedLite.Parametrage.domaine.ListCouverture;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureDTO;
 import com.FrameWork.MedLite.Parametrage.dto.DetailsListCouvertureOperationDTO;
@@ -62,16 +61,17 @@ public class ListCouvertureRessource {
 
     private final DetailsListCouvertureOperationService detailsListCouvertureOperationService;
 
-    private final AccessUserService accessUserService;
+//    private final AccessUserService accessUserService;
 
-    public ListCouvertureRessource(ListCouvertureService listCouvertureService, ParamService paramService, SocService societeService, DetailsListCouvertureService detailsListCouvertureService, DetailsListCouvertureOperationService detailsListCouvertureOperationService, AccessUserService accessUserService) {
+    public ListCouvertureRessource(ListCouvertureService listCouvertureService, ParamService paramService, SocService societeService, DetailsListCouvertureService detailsListCouvertureService, DetailsListCouvertureOperationService detailsListCouvertureOperationService) {
         this.listCouvertureService = listCouvertureService;
         this.paramService = paramService;
         this.societeService = societeService;
         this.detailsListCouvertureService = detailsListCouvertureService;
         this.detailsListCouvertureOperationService = detailsListCouvertureOperationService;
-        this.accessUserService = accessUserService;
     }
+
+  
 
     @GetMapping("list_couverture/{code}")
     public ResponseEntity<ListCouvertureDTO> getListCouvertureByCode(@PathVariable Integer code) {

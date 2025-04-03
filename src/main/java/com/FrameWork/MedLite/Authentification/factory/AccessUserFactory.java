@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AccessUserFactory {
-    
-   
 
     public static User accessUserDTOToAccessUser(AccessUserDTO dTO, User domaine) {
 //        AccessUser domaine = new AccessUser();
@@ -28,6 +26,8 @@ public class AccessUserFactory {
         domaine.setEmail(dTO.getEmail());
 
         domaine.setSignature(dTO.getSignature());
+        domaine.setImageProfil(dTO.getImageProfil());
+
         domaine.setPassword(dTO.getPassword());
         domaine.setPasswordDecry(dTO.getPasswordDecry());
 
@@ -74,6 +74,36 @@ public class AccessUserFactory {
                 domaine.setSignature(null);
             }
 
+            // Profil image
+            if (Dto.getImgProfil() != null) {
+
+                String[] strings = Dto.getImgProfil().split(",");
+                String extension;
+                switch (strings[0]) {//check image's extension
+                    case "data:image/jpeg;base64":
+                        extension = "jpeg";
+                        break;
+                    case "data:image/png;base64":
+                        extension = "png";
+                        break;
+                    case "data:application/pdf;base64":
+                        extension = "pdf";
+                        break;
+                    case "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64":
+                        extension = "docx";
+                        break;
+                    default://should write cases for more images types
+                        extension = "jpg";
+                        break;
+                }
+                //convert base64 string to binary data
+                byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
+
+                domaine.setImageProfil(data);
+            } else {
+                domaine.setImageProfil(null);
+            }
+
             return domaine;
         } else {
             return null;
@@ -90,8 +120,13 @@ public class AccessUserFactory {
             dTO.setFullName(domaine.getFullName());
             dTO.setEmail(domaine.getEmail());
 
+            dTO.setCodeMedecin(domaine.getCodeMedecin());
+            dTO.setPermissionDMI(domaine.getPermissionDMI());
+
             dTO.setUserName(domaine.getUserName());
             dTO.setSignature(domaine.getSignature());
+            dTO.setImageProfil(domaine.getImageProfil());
+
             return dTO;
         } else {
             return null;
@@ -103,8 +138,9 @@ public class AccessUserFactory {
         dTO.setUserName(domaine.getUserName());
 //        if (!Boolean.TRUE.equals(withoutLogo)) {
         dTO.setSignature(domaine.getSignature());
-//        }
+        dTO.setImageProfil(domaine.getImageProfil());
 
+//        }
         dTO.setId(domaine.getId());
         dTO.setFullName(domaine.getFullName());
 
@@ -116,12 +152,26 @@ public class AccessUserFactory {
         dTO.setUserName(domaine.getUserName());
 //        if (!Boolean.TRUE.equals(withoutLogo)) {
         dTO.setSignature(domaine.getSignature());
+        dTO.setImageProfil(domaine.getImageProfil());
+
 //        }
+        dTO.setCodeMedecin(domaine.getCodeMedecin());
+        dTO.setPermissionDMI(domaine.getPermissionDMI());
 
         dTO.setId(domaine.getId());
         dTO.setFullName(domaine.getFullName());
         dTO.setPassword(domaine.getPassword());
         dTO.setPasswordDecry(domaine.getPasswordDecry());
+
+        return dTO;
+    }
+    
+    public static AccessUserDTO accessUserToAccessUserDTOImage(User domaine, Boolean withoutLogo) {
+        AccessUserDTO dTO = new AccessUserDTO();
+        dTO.setUserName(domaine.getUserName());
+ 
+        dTO.setImageProfil(domaine.getImageProfil());
+ 
 
         return dTO;
     }
@@ -148,10 +198,14 @@ public class AccessUserFactory {
             AccessUserDTO dTO = new AccessUserDTO();
             dTO.setUserName(domaine.getUserName());
             dTO.setSignature(domaine.getSignature());
+            dTO.setImageProfil(domaine.getImageProfil());
+
             dTO.setId(domaine.getId());
             dTO.setFullName(domaine.getFullName());
             dTO.setPassword(domaine.getPassword());
             dTO.setPasswordDecry(domaine.getPasswordDecry());
+            dTO.setCodeMedecin(domaine.getCodeMedecin());
+            dTO.setPermissionDMI(domaine.getPermissionDMI());
 
             return dTO;
         } else {

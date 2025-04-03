@@ -50,6 +50,12 @@ public class MedecinRessource {
         List<MedecinDTO> dto = medecinService.findByCodeSpecialite(codeSpecialite);
         return ResponseEntity.ok().body(dto);
     }
+    
+     @GetMapping("medecin/findByHaveSignature")
+    public ResponseEntity<List<MedecinDTO>> getMedecinBySHaveSignature(@RequestParam Boolean haveSignature) {
+        List<MedecinDTO> dto = medecinService.findAllMedecinBySignature(haveSignature);
+        return ResponseEntity.ok().body(dto);
+    }
 
     @GetMapping("medecin/ByTypeIntervenantMedecin")
     public ResponseEntity<List<MedecinDTO>> getMedecinByTypeIntervenantMedecin(@RequestParam Integer codeTypeIntervenant) {

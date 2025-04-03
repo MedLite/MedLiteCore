@@ -5,7 +5,7 @@
 package com.FrameWork.MedLite.Parametrage.factory;
 
 import com.FrameWork.MedLite.Parametrage.domaine.Medecin;
-import com.FrameWork.MedLite.Parametrage.dto.MedecinDTO; 
+import com.FrameWork.MedLite.Parametrage.dto.MedecinDTO;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -16,9 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MedecinFactory {
-    
- 
-    
 
     public static Medecin createMedecinByCode(int code) {
         Medecin domaine = new Medecin();
@@ -34,15 +31,13 @@ public class MedecinFactory {
             domaine.setNomIntervLt(dto.getNomIntervLt());
             domaine.setCodeSaisie(dto.getCodeSaisie());
 
-            domaine.setActif(dto.isActif());  
-            domaine.setAutoriseFrais(dto.isAutoriseFrais());  
-            domaine.setAutorisConsultation(dto.isAutorisConsultation()); 
+            domaine.setActif(dto.isActif());
+            domaine.setAutoriseFrais(dto.isAutoriseFrais());
+            domaine.setAutorisConsultation(dto.isAutorisConsultation());
             domaine.setOpd(dto.isOpd());
             domaine.setEr(dto.isEr());
+            domaine.setHaveSig(dto.isAutoriseFrais());
 
-
-
-          
             domaine.setCodeSpecialiteMedecin(dto.getCodeSpecialiteMedecin());
             if (domaine.getCodeSpecialiteMedecin() != null) {
                 domaine.setSpecialiteMedecin(SpecialiteMedecinFactory.createSpecialiteMedecinByCode(dto.getCodeSpecialiteMedecin()));
@@ -63,16 +58,13 @@ public class MedecinFactory {
 
         if (domaine != null) {
             MedecinDTO dto = new MedecinDTO();
-            dto.setCode(domaine.getCode());    
-            dto.setAutoriseFrais(domaine.isAutoriseFrais());  
-            dto.setAutorisConsultation(domaine.isAutorisConsultation());  
-            dto.setOpd(domaine.isOpd());    
+            dto.setCode(domaine.getCode());
+            dto.setAutoriseFrais(domaine.isAutoriseFrais());
+            dto.setAutorisConsultation(domaine.isAutorisConsultation());
+            dto.setOpd(domaine.isOpd());
             dto.setEr(domaine.isEr());
 
-            
-
-
-
+            dto.setHaveSig(domaine.isHaveSig());
 
             dto.setNomIntervAr(domaine.getNomIntervAr());
             dto.setNomIntervLt(domaine.getNomIntervLt());
@@ -84,14 +76,9 @@ public class MedecinFactory {
 
             dto.setTypeIntervenantDTO(TypeIntervenantFactory.typeIntervenantToTypeIntervenantDTO(domaine.getTypeIntervenant()));
             dto.setCodeTypeIntervenant(domaine.getCodeTypeIntervenant());
- 
 
             dto.setSpecialiteMedecinDTO(SpecialiteMedecinFactory.specialiteMedecinToSpecialiteMedecinDTO(domaine.getSpecialiteMedecin()));
             dto.setCodeSpecialiteMedecin(domaine.getCodeSpecialiteMedecin());
-            
-            
-         
-       
 
             return dto;
         } else {

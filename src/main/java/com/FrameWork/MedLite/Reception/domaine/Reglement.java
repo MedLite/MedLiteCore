@@ -4,7 +4,7 @@
  */
 package com.FrameWork.MedLite.Reception.domaine;
 
-import com.FrameWork.MedLite.Authentification.domaine.User;
+//import com.FrameWork.MedLite.Authentification.domaine.User;
 import com.FrameWork.MedLite.Parametrage.domaine.ModeReglement;
 import com.FrameWork.MedLite.Parametrage.domaine.NatureAdmission;
 import com.fasterxml.jackson.annotation.JsonBackReference;

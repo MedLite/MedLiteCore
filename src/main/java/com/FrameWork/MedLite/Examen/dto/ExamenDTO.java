@@ -63,6 +63,8 @@ public class ExamenDTO {
     private Integer codeEtatPaiement;
     private String typeExamen;
     
+        private Long codeMedecinDemande;
+    
         private Collection<DetailsExamenDTO> detailsExamenDTOs;
     public ExamenDTO() {
     }
@@ -202,6 +204,16 @@ public class ExamenDTO {
     public void setDetailsExamenDTOs(Collection<DetailsExamenDTO> detailsExamenDTOs) {
         this.detailsExamenDTOs = detailsExamenDTOs;
     }
+
+    public Long getCodeMedecinDemande() {
+        return codeMedecinDemande;
+    }
+
+    public void setCodeMedecinDemande(Long codeMedecinDemande) {
+        this.codeMedecinDemande = codeMedecinDemande;
+    }
+    
+    
 
     
 }

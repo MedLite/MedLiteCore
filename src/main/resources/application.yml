@@ -11,8 +11,10 @@ management:
         
 security:
     jwt:
-        secret-key : 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
-        expiration-time:  86400000
+        secret-key : S8r3+G/0bJ1m/f4l8a/6e/h6l/s0k+r7p+d1n/a4h/t0q+t8n+y2s=
+        expiration-time:  4200000  
+#        expiration-time:  60000 
+        jwtRefreshExpirationMs : 8640000
 #                expiration-time:  600000  1min
  
 thymeleaf:
@@ -85,6 +87,10 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
             org.hibernate.envers.store_data_at_delete: true
+            hibernate:
+                transaction:
+                    jta:
+                        platform: org.hibernate.engine.transaction.jta.platform.internal.AtomikosJtaPlatform
     messages:
         basename: i18n/messages 
 lang:

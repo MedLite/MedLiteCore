@@ -3,10 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.FrameWork.MedLite.Parametrage.web;
-
-import com.FrameWork.MedLite.Authentification.dto.AccessUserDTO;
+ 
 import com.FrameWork.MedLite.Parametrage.dto.SocDTO;
-import com.FrameWork.MedLite.Parametrage.dto.SpecialiteCabinetDTO;
 import com.FrameWork.MedLite.Parametrage.service.SocService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;

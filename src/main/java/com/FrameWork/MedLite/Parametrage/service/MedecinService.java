@@ -68,6 +68,12 @@ public class MedecinService {
         return MedecinFactory.listMedecinToMedecinDTOs(medecinRepo.findByActif(actif));
 
     }
+    
+     @Transactional(readOnly = true)
+    public List<MedecinDTO> findAllMedecinBySignature(Boolean haveSig) {
+        return MedecinFactory.listMedecinToMedecinDTOs(medecinRepo.findByHaveSig(haveSig));
+
+    }
 
     @Transactional(readOnly = true)
     public MedecinDTO findOne(Integer code) {

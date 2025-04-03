@@ -4,6 +4,7 @@
  */
 package com.FrameWork.MedLite.Authentification.dto;
 
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -16,10 +17,17 @@ public class LoginResponse {
 
     private long expiresIn;
 
-    private Date expiration;
-
-  
+    private Instant expiration;
     
+        private String refreshToken;  
+        
+        private String userName;
+
+
+        private Integer codeMedecin;
+
+   
+  private String permissionDMI;
 
     public String getToken() {
         return token;
@@ -39,26 +47,66 @@ public class LoginResponse {
         return this;
     }
 
-    public Date getExpiration() {
+    public Instant getExpiration() {
         return expiration;
     }
 
-    public LoginResponse setExpiration(Date expiration) {
+    public LoginResponse setExpiration(Instant expiration) {
         this.expiration = expiration;
-        return this;
+           return this;
     }
 
-//    @Override
-//    public String toString() {
-//        return "LoginResponse{" +
-//                "token='" + token + '\'' +
-//                ", expiresIn=" + expiresIn +
-//                '}';
-//    }
-//    
-    @Override
-    public String toString() {
-        return "LoginResponse{" + "token=" + token + ", expiresIn=" + expiresIn + ", expiration=" + expiration + '}';
+  
+
+    public String getRefreshToken() {
+        return refreshToken;
     }
+
+    public LoginResponse setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+             return this;
+    }
+
+    public Integer getCodeMedecin() {
+        return codeMedecin;
+    }
+
+    public LoginResponse setCodeMedecin(Integer codeMedecin) {
+        this.codeMedecin = codeMedecin;
+            return this;
+    }
+
+    public String getPermissionDMI() {
+        return permissionDMI;
+    }
+
+    public LoginResponse setPermissionDMI(String permissionDMI) {
+        this.permissionDMI = permissionDMI;
+         return this;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public LoginResponse setUserName(String userName) {
+        this.userName = userName;
+           return this;
+    }
+
+    
+
+    
+    
+
+   
+    
+    
+ 
+
+  
+
+    
+     
 
 }

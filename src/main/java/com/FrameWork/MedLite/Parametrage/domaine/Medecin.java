@@ -86,6 +86,9 @@ public class Medecin {
 
     @Column(name = "ER", nullable = false, columnDefinition = "bit default (0)")
     private boolean er;
+    
+     @Column(name = "Have_Sig", nullable = false, columnDefinition = "bit default (0)")
+    private boolean haveSig;
 
     public Medecin() {
     }
@@ -224,5 +227,14 @@ public class Medecin {
         this.er = er;
     }
 
+    public boolean isHaveSig() {
+        return haveSig;
+    }
+
+    public void setHaveSig(boolean haveSig) {
+        this.haveSig = haveSig;
+    }
+
+    
     
 }

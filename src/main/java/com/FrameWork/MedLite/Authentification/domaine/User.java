@@ -50,9 +50,19 @@ public class User implements UserDetails {
     @Lob
     @Column(name = "Signature",columnDefinition = ("varbinary(MAX)"))
     private byte[] signature;
+    
+        @Lob
+    @Column(name = "Image_Profil",columnDefinition = ("varbinary(MAX)"))
+    private byte[] imageProfil;
 
     @Column(nullable = false, name = "Password")
     private String passwordDecry;
+    
+       @Column( name = "Code_Medecin" )
+    private Integer codeMedecin;
+       
+          @Column( name = "Permission_DMI")
+    private String permissionDMI;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -172,6 +182,30 @@ public class User implements UserDetails {
 
     public void setPasswordDecry(String passwordDecry) {
         this.passwordDecry = passwordDecry;
+    }
+
+    public Integer getCodeMedecin() {
+        return codeMedecin;
+    }
+
+    public void setCodeMedecin(Integer codeMedecin) {
+        this.codeMedecin = codeMedecin;
+    }
+
+    public String getPermissionDMI() {
+        return permissionDMI;
+    }
+
+    public void setPermissionDMI(String permissionDMI) {
+        this.permissionDMI = permissionDMI;
+    }
+
+    public byte[] getImageProfil() {
+        return imageProfil;
+    }
+
+    public void setImageProfil(byte[] imageProfil) {
+        this.imageProfil = imageProfil;
     }
     
     

@@ -24,7 +24,9 @@ public interface MedecinRepo extends JpaRepository<Medecin, Integer> {
 
 
 
-    List<Medecin> findByCodeTypeIntervenant(Integer codeTypeIntervenant);
+    List<Medecin> findByCodeTypeIntervenant(Integer codeTypeIntervenant);  
+    List<Medecin> findByHaveSig(Boolean haveSig);
+
 
     List<Medecin> findByCodeSpecialiteMedecin(Integer codeSpecialiteMedecin);  
     

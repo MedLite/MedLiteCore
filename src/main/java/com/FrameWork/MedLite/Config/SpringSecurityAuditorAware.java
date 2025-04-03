@@ -4,7 +4,8 @@
  */
 package com.FrameWork.MedLite.Config;
 
-import com.FrameWork.MedLite.Authentification.domaine.User;
+//import com.FrameWork.MedLite.Authentification.domaine.User;
+import com.FrameWork.MedLite.Authentification.domaine.User; 
 import java.util.Optional;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

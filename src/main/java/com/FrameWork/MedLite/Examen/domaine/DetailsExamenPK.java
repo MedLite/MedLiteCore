@@ -21,25 +21,25 @@ public class DetailsExamenPK {
     @Column(name = "Code_Examen", nullable = false)
     private int codeExamen;
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Code_Nature_Admission", nullable = false)
-    private int codeNatureAdmission;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Code_Patient", nullable = false)
-    private int codePatient;
-
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "Code_Nature_Admission", nullable = false)
+//    private int codeNatureAdmission;
+//
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "Code_Patient", nullable = false)
+//    private int codePatient;
+//
     @Basic(optional = false)
     @NotNull
     @Column(name = "Code_Prestation", nullable = false)
     private int codePrestation;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Code_Admission", nullable = false)
-    private int codeAdmission;
+//
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "Code_Admission", nullable = false)
+//    private int codeAdmission;
 
     public DetailsExamenPK() {
     }
@@ -52,22 +52,6 @@ public class DetailsExamenPK {
         this.codeExamen = codeExamen;
     }
 
-    public int getCodeNatureAdmission() {
-        return codeNatureAdmission;
-    }
-
-    public void setCodeNatureAdmission(int codeNatureAdmission) {
-        this.codeNatureAdmission = codeNatureAdmission;
-    }
-
-    public int getCodePatient() {
-        return codePatient;
-    }
-
-    public void setCodePatient(int codePatient) {
-        this.codePatient = codePatient;
-    }
-
     public int getCodePrestation() {
         return codePrestation;
     }
@@ -76,22 +60,11 @@ public class DetailsExamenPK {
         this.codePrestation = codePrestation;
     }
 
-    public int getCodeAdmission() {
-        return codeAdmission;
-    }
-
-    public void setCodeAdmission(int codeAdmission) {
-        this.codeAdmission = codeAdmission;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + this.codeExamen;
-        hash = 23 * hash + this.codeNatureAdmission;
-        hash = 23 * hash + this.codePatient;
-        hash = 23 * hash + this.codePrestation;
-        hash = 23 * hash + this.codeAdmission;
+        hash = 67 * hash + this.codeExamen;
+        hash = 67 * hash + this.codePrestation;
         return hash;
     }
 
@@ -110,21 +83,15 @@ public class DetailsExamenPK {
         if (this.codeExamen != other.codeExamen) {
             return false;
         }
-        if (this.codeNatureAdmission != other.codeNatureAdmission) {
-            return false;
-        }
-        if (this.codePatient != other.codePatient) {
-            return false;
-        }
-        if (this.codePrestation != other.codePrestation) {
-            return false;
-        }
-        return this.codeAdmission == other.codeAdmission;
+        return this.codePrestation == other.codePrestation;
     }
 
     @Override
     public String toString() {
-        return "DetailsExamenPK{" + "codeExamen=" + codeExamen + ", codeNatureAdmission=" + codeNatureAdmission + ", codePatient=" + codePatient + ", codePrestation=" + codePrestation + ", codeAdmission=" + codeAdmission + '}';
+        return "DetailsExamenPK{" + "codeExamen=" + codeExamen + ", codePrestation=" + codePrestation + '}';
     }
+ 
+    
+    
 
 }

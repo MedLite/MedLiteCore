@@ -60,14 +60,14 @@
 	<style name="Style1">
 		<pen lineWidth="1.0" lineColor="#FFFFFF"/>
 	</style>
+	<style name="TimesNewRomanStyle" fontName="Times New Roman" fontSize="12" isItalic="false"/>
 	<subDataset name="ItemDataset1" uuid="9e342ca0-e96d-4db7-a64f-a51f90d004b2">
-		<field name="designationAr" class="java.lang.String"/>
-		<field name="codeSaisie" class="java.lang.String"/>
+		<field name="designationArPrestation" class="java.lang.String"/>
+		<field name="codeSaisiePrestation" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="societe" class="java.lang.String"/>
 	<parameter name="logo" class="byte[]"/>
 	<parameter name="CodeSaisie" class="java.lang.String"/>
-	<parameter name="devise" class="java.lang.String"/>
 	<parameter name="UserCreate" class="java.lang.String"/>
 	<parameter name="dateCreate" class="java.sql.Timestamp"/>
 	<parameter name="ItemDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
@@ -106,16 +106,16 @@
 	<columnHeader>
 		<band height="58" splitType="Stretch">
 			<textField>
-				<reportElement x="201" y="10" width="120" height="28" uuid="4ca8c8ff-9cbc-4812-956f-10a522792add"/>
+				<reportElement key="" style="TimesNewRomanStyle" x="201" y="10" width="120" height="28" uuid="4ca8c8ff-9cbc-4812-956f-10a522792add"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Calibri" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CodeSaisie}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="90" y="10" width="110" height="28" uuid="f168c3d8-54f7-4945-aac8-341f32dc5c6b"/>
+				<reportElement key="" style="TimesNewRomanStyle" x="90" y="10" width="110" height="28" uuid="f168c3d8-54f7-4945-aac8-341f32dc5c6b"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="13" isBold="true" isItalic="false"/>
+					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Request Number :]]></text>
 			</staticText>
@@ -124,7 +124,7 @@
 	<detail>
 		<band height="56" splitType="Stretch">
 			<componentElement>
-				<reportElement key="" mode="Transparent" x="0" y="10" width="336" height="30" uuid="ba5c734c-a51b-47d4-aa19-cc942c7df860">
+				<reportElement key="" style="TimesNewRomanStyle" mode="Transparent" x="0" y="10" width="336" height="30" uuid="ba5c734c-a51b-47d4-aa19-cc942c7df860">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
@@ -138,7 +138,7 @@
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:columnHeader style="Table 1_CH" height="15" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="110" height="15" uuid="2c3d3fbc-f9a3-4737-93e2-521f1b1e8e54">
+								<reportElement style="TimesNewRomanStyle" x="0" y="0" width="110" height="15" uuid="2c3d3fbc-f9a3-4737-93e2-521f1b1e8e54">
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
 								<box>
@@ -157,7 +157,7 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table 1_TD" height="15">
 							<textField>
-								<reportElement x="0" y="0" width="110" height="15" uuid="3f578f49-98bf-4206-88eb-a47ba375479b">
+								<reportElement style="TimesNewRomanStyle" x="0" y="0" width="110" height="15" uuid="3f578f49-98bf-4206-88eb-a47ba375479b">
 									<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 									<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 								</reportElement>
@@ -170,7 +170,7 @@
 									<font fontName="Calibri"/>
 									<paragraph leftIndent="10" rightIndent="0"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{codeSaisie}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{codeSaisiePrestation}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -197,7 +197,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#D9D9D9"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="181" height="15" uuid="7c9a4807-f551-4c8b-9c01-af2843c5031e">
+									<reportElement style="TimesNewRomanStyle" x="0" y="0" width="181" height="15" uuid="7c9a4807-f551-4c8b-9c01-af2843c5031e">
 										<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 									</reportElement>
@@ -225,7 +225,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#D9D9D9"/>
 								</box>
 								<textField>
-									<reportElement x="0" y="0" width="181" height="15" uuid="85414343-7099-4898-a3db-7f77473cc649">
+									<reportElement key="" style="TimesNewRomanStyle" x="0" y="0" width="181" height="15" uuid="85414343-7099-4898-a3db-7f77473cc649">
 										<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 									</reportElement>
 									<box>
@@ -239,7 +239,7 @@
 										<font fontName="Calibri" size="10"/>
 										<paragraph leftIndent="10" rightIndent="0"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{designationAr}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{designationArPrestation}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -257,7 +257,7 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="10" y="10" width="90" height="19" uuid="2e804f9c-a2f7-47f7-9a5f-9e508efad376"/>
+				<reportElement style="TimesNewRomanStyle" x="10" y="10" width="90" height="19" uuid="2e804f9c-a2f7-47f7-9a5f-9e508efad376"/>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>

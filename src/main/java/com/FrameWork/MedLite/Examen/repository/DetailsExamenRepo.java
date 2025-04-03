@@ -25,7 +25,7 @@ public interface DetailsExamenRepo extends JpaRepository<DetailsExamen , Details
 
 //    Collection<DetailsExamen> findByDetailsExamenPK_codePrestationAndCodeNatureAdmission(Integer codeExamen, Integer codeNatureAdmission);
     
-        List<DetailsExamen> findByDetailsExamenPK_codePatient(Integer codePatient);
+        List<DetailsExamen> findByCodePatient(Integer codePatient);
 
 
     List<DetailsExamen> findByDetailsExamenPK_CodeExamen(int codeExamen);  

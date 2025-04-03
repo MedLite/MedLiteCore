@@ -4,9 +4,11 @@
  */
 package com.FrameWork.MedLite.Parametrage.service;
 
+import com.FrameWork.MedLite.Parametrage.domaine.Medecin;
 import com.FrameWork.MedLite.Parametrage.domaine.SignatureMedecin;
 import com.FrameWork.MedLite.Parametrage.dto.SignatureMedecinDTO;
 import com.FrameWork.MedLite.Parametrage.factory.SignatureMedecinFactory;
+import com.FrameWork.MedLite.Parametrage.repository.MedecinRepo;
 import com.FrameWork.MedLite.Parametrage.repository.SignatureMedecinRepo;
 import com.FrameWork.MedLite.web.Util.Helper;
 import com.google.common.base.Preconditions;
@@ -23,10 +25,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SignatureMedecinService {
-    private final SignatureMedecinRepo signatureMedecinRepo;
 
-    public SignatureMedecinService(SignatureMedecinRepo signatureMedecinRepo) {
+    private final SignatureMedecinRepo signatureMedecinRepo;
+    private final MedecinRepo medecinRepo;
+
+    public SignatureMedecinService(SignatureMedecinRepo signatureMedecinRepo, MedecinRepo medecinRepo) {
         this.signatureMedecinRepo = signatureMedecinRepo;
+        this.medecinRepo = medecinRepo;
     }
 
     @Transactional(readOnly = true)
@@ -41,8 +46,8 @@ public class SignatureMedecinService {
         Preconditions.checkArgument(domaine != null, "error.SignatureMedecinNotFound");
         return SignatureMedecinFactory.signatureMedecinTosignatureMedecinDTO(domaine);
     }
-    
-     @Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
     public SignatureMedecinDTO findOneByCodeMedecin(Integer codeMdecin) {
         SignatureMedecin domaine = signatureMedecinRepo.findByCodeMedecin(codeMdecin);
         Preconditions.checkArgument(domaine != null, "error.SignatureMedecinNotFound");
@@ -52,9 +57,13 @@ public class SignatureMedecinService {
 //
     public SignatureMedecinDTO save(SignatureMedecinDTO dto) {
         SignatureMedecin domaine = SignatureMedecinFactory.accessSignatureMedecinDTOToSignatureMedecinx(dto, new SignatureMedecin());
-            domaine.setDateCreate(new Date());  // Set in domaine
+        domaine.setDateCreate(new Date());  // Set in domaine
         domaine.setUserCreate(Helper.getUserAuthenticated());
         domaine = signatureMedecinRepo.save(domaine);
+
+        Medecin md = medecinRepo.findByCode(dto.getCodeMedecin()); 
+        md.setHaveSig(Boolean.TRUE);
+        medecinRepo.save(md);
         return SignatureMedecinFactory.signatureMedecinTosignatureMedecinDTO(domaine);
     }
 
@@ -63,6 +72,11 @@ public class SignatureMedecinService {
         Preconditions.checkArgument(domaine != null, "error.SignatureMedecinNotFound");
         dto.setCode(domaine.getCode());
         SignatureMedecinFactory.accessSignatureMedecinDTOToSignatureMedecinx(dto, domaine);
+        
+        Medecin md = medecinRepo.findByCode(dto.getCodeMedecin()); 
+        md.setHaveSig(Boolean.TRUE);
+        medecinRepo.save(md);
+        
         return signatureMedecinRepo.save(domaine);
     }
 

@@ -37,9 +37,9 @@ import org.hibernate.envers.Audited;
  * @author Administrator
  */
 @Entity
-@Table(name = "Examen", schema = "examen")
+@Table(name = "Demande_Examen", schema = "examen")
 @Audited
-@AuditTable("Examen_AUD")
+@AuditTable("Demande_Examen_AUD")
 public class Examen {
 
     @Id
@@ -93,6 +93,9 @@ public class Examen {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "examen")
     private Collection<DetailsExamen> detailsExamens;
+
+    @Column(name = "Code_Medecin_Demander", nullable = false)
+    private Long codeMedecinDemande;
 
     public Examen() {
     }
@@ -200,7 +203,15 @@ public class Examen {
     public void setDetailsExamens(Collection<DetailsExamen> detailsExamens) {
         this.detailsExamens = detailsExamens;
     }
-    
-    
 
+    public Long getCodeMedecinDemande() {
+        return codeMedecinDemande;
+    }
+
+    public void setCodeMedecinDemande(Long codeMedecinDemande) {
+        this.codeMedecinDemande = codeMedecinDemande;
+    }
+
+    
+    
 }
